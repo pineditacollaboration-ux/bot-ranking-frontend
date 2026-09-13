@@ -13,9 +13,6 @@ export default defineConfig({
         target: 'http://localhost:3001',
         changeOrigin: true,
       }
-    },
-    headers: {
-      'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: http:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://discord.com https://cdn.discordapp.com http://localhost:3001 https://localhost:3001 ws://localhost:3001 wss://localhost:3001; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"
     }
   }
 })
