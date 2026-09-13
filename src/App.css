@@ -1,3 +1,17 @@
+:root {
+  --color-bg-dark: #050505;
+  --color-bg-panel: #09090b;
+  --color-primary: #FF0038;
+  --color-primary-glow: rgba(255, 0, 56, 0.5);
+  --color-accent: #E50914;
+  --color-text-main: #FFFFFF;
+  --color-text-muted: #94A3B8;
+  --color-border: #27272A;
+  
+  --font-heading: 'Rajdhani', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -5,16 +19,30 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: #0a0a0a;
-  color: #ffffff;
+  font-family: var(--font-body);
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-main);
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
 .app {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Skew class utility for buttons / containers */
+.btn-skewed {
+  transform: skewX(-12deg);
+  display: inline-block;
+}
+
+.btn-skewed-content {
+  transform: skewX(12deg);
+  display: inline-block;
 }
 
 /* Scrollbar */

@@ -30,17 +30,17 @@ const Navbar = () => {
                 href={item.path}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="nav-link"
+                className="nav-link btn-skewed"
               >
-                {item.label}
+                <span className="btn-skewed-content">{item.label}</span>
               </a>
             ) : (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`nav-link ${location.pathname === item.path ? 'active' : ''}`}
+                className={`nav-link btn-skewed ${location.pathname === item.path ? 'active' : ''}`}
               >
-                {item.label}
+                <span className="btn-skewed-content">{item.label}</span>
               </Link>
             )
           ))}
@@ -49,21 +49,23 @@ const Navbar = () => {
         <div className="navbar-auth">
           {user ? (
             <div className="user-menu">
-              <Link to={`/profile/${user.id}`} className="user-profile">
-                <img
-                  src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`}
-                  alt={user.username}
-                  className="user-avatar"
-                />
-                <span className="user-name">{user.username}</span>
+              <Link to={`/profile/${user.id}`} className="user-profile btn-skewed">
+                <span className="btn-skewed-content" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <img
+                    src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`}
+                    alt={user.username}
+                    className="user-avatar"
+                  />
+                  <span className="user-name">{user.username}</span>
+                </span>
               </Link>
-              <button onClick={logout} className="logout-btn">
-                Cerrar Sesión
+              <button onClick={logout} className="logout-btn btn-skewed">
+                <span className="btn-skewed-content">Cerrar Sesión</span>
               </button>
             </div>
           ) : (
-            <Link to="/login" className="login-btn">
-              ENTRAR
+            <Link to="/login" className="login-btn btn-skewed">
+              <span className="btn-skewed-content">ENTRAR</span>
             </Link>
           )}
         </div>
