@@ -22,7 +22,7 @@ const Navbar = () => {
     setTimeout(() => {
       setIsMobileMenuOpen(false);
       setIsMenuClosing(false);
-    }, 200);
+    }, 400);
   };
 
   useEffect(() => {
