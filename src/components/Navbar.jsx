@@ -112,31 +112,46 @@ const Navbar = () => {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="mobile-menu-overlay">
-          <div className="mobile-menu">
-            {navItems.map((item) => (
-              item.external ? (
-                <a
-                  key={item.path}
-                  href={item.path}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mobile-nav-link"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={`mobile-nav-link ${location.pathname === item.path ? 'active' : ''}`}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              )
-            ))}
+        <div className="mobile-menu-overlay" onClick={() => setIsMobileMenuOpen(false)}>
+          <div className="mobile-menu" onClick={(e) => e.stopPropagation()}>
+            <div className="mobile-menu-header">
+              <h3 className="mobile-menu-title">MENÚ</h3>
+              <button 
+                className="mobile-close-button"
+                onClick={() => setIsMobileMenuOpen(false)}
+                aria-label="Cerrar menú"
+              >
+                ✕
+              </button>
+            </div>
+            
+            <div className="mobile-nav-links">
+              {navItems.map((item) => (
+                item.external ? (
+                  <a
+                    key={item.path}
+                    href={item.path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mobile-nav-link"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span className="mobile-link-icon">→</span>
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`mobile-nav-link ${location.pathname === item.path ? 'active' : ''}`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span className="mobile-link-icon">{location.pathname === item.path ? '●' : '○'}</span>
+                    {item.label}
+                  </Link>
+                )
+              ))}
+            </div>
             
             <div className="mobile-auth-section">
               {user ? (
@@ -151,7 +166,10 @@ const Navbar = () => {
                       alt={user.username}
                       className="mobile-user-avatar"
                     />
-                    <span>{user.username}</span>
+                    <div className="mobile-user-info">
+                      <span className="mobile-user-name">{user.username}</span>
+                      <span className="mobile-user-label">Ver Perfil</span>
+                    </div>
                   </Link>
                   <button 
                     onClick={() => {
@@ -160,6 +178,7 @@ const Navbar = () => {
                     }} 
                     className="mobile-logout-btn"
                   >
+                    <span className="mobile-btn-icon">🚪</span>
                     Cerrar Sesión
                   </button>
                 </>
@@ -169,7 +188,8 @@ const Navbar = () => {
                   className="mobile-login-btn"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  ENTRAR
+                  <span className="mobile-btn-icon">🔐</span>
+                  Iniciar Sesión
                 </Link>
               )}
             </div>
