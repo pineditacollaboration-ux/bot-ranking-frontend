@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { API_CONFIG } from '../config/api';
 import RestrictedContent from '../components/RestrictedContent';
 import './Estadisticas.css';
 
@@ -17,7 +18,7 @@ const Estadisticas = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/stats');
+      const response = await axios.get(API_CONFIG.ENDPOINTS.API.STATS);
       setStats(response.data);
     } catch (error) {
       console.error('Error al obtener estadísticas:', error);

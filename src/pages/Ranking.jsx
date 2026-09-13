@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { API_CONFIG } from '../config/api';
 import { useAuth } from '../context/AuthContext';
 import RestrictedContent from '../components/RestrictedContent';
 import { Link } from 'react-router-dom';
@@ -23,7 +24,7 @@ const Ranking = () => {
 
   const fetchRanking = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/ranking', {
+      const response = await axios.get(API_CONFIG.ENDPOINTS.API.RANKING, {
         params: { sortBy }
       });
       setPlayers(response.data);

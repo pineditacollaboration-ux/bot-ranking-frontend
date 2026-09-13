@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { API_CONFIG } from '../config/api';
 import RestrictedContent from '../components/RestrictedContent';
 import './Seasons.css';
 
@@ -21,7 +22,7 @@ const Seasons = () => {
 
   const fetchSeasons = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/seasons');
+      const response = await axios.get(API_CONFIG.ENDPOINTS.API.SEASONS);
       setSeasons(response.data);
       if (response.data.length > 0) {
         setSelectedSeason(response.data[0]);
@@ -36,7 +37,7 @@ const Seasons = () => {
 
   const fetchSeasonStats = async (season) => {
     try {
-      const response = await axios.get('http://localhost:3001/api/ranking', {
+      const response = await axios.get(API_CONFIG.ENDPOINTS.API.RANKING, {
         params: { season, limit: 10 }
       });
       setSeasonStats(response.data);

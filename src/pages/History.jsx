@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { API_CONFIG } from '../config/api';
 import RestrictedContent from '../components/RestrictedContent';
 import './History.css';
 
@@ -23,7 +24,7 @@ const History = () => {
 
   const fetchMatches = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/matches', {
+      const response = await axios.get(API_CONFIG.ENDPOINTS.API.MATCHES, {
         params: { limit: 50 }
       });
       setMatches(response.data);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { API_CONFIG } from '../config/api';
 import RestrictedContent from '../components/RestrictedContent';
 import './Profile.css';
 
@@ -24,7 +25,7 @@ const Profile = () => {
 
   const fetchProfile = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/api/profile/${discordId}`);
+      const response = await axios.get(API_CONFIG.ENDPOINTS.API.PROFILE(discordId));
       setProfile(response.data.user);
       setRecentMatches(response.data.recentMatches);
     } catch (error) {
