@@ -7,6 +7,7 @@ const Navbar = () => {
   const { user, logout } = useAuth();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMenuClosing, setIsMenuClosing] = useState(false);
 
   const navItems = [
     { path: '/', label: 'HOME' },
@@ -16,15 +17,23 @@ const Navbar = () => {
   ];
 
   // Close mobile menu when route changes
+  const closeMobileMenu = () => {
+    setIsMenuClosing(true);
+    setTimeout(() => {
+      setIsMobileMenuOpen(false);
+      setIsMenuClosing(false);
+    }, 200);
+  };
+
   useEffect(() => {
-    setIsMobileMenuOpen(false);
+    closeMobileMenu();
   }, [location.pathname]);
 
   // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (isMobileMenuOpen && !event.target.closest('.navbar') && !event.target.closest('.mobile-menu-overlay')) {
-        setIsMobileMenuOpen(false);
+        closeMobileMenu();
       }
     };
 
@@ -114,13 +123,13 @@ const Navbar = () => {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="mobile-menu-overlay" onClick={() => setIsMobileMenuOpen(false)}>
-          <div className="mobile-menu" onClick={(e) => e.stopPropagation()}>
+        <div className={`mobile-menu-overlay ${isMenuClosing ? 'closing' : ''}`} onClick={closeMobileMenu}>
+          <div className={`mobile-menu ${isMenuClosing ? 'closing' : ''}`} onClick={(e) => e.stopPropagation()}>
             <div className="mobile-menu-header">
               <h3 className="mobile-menu-title">MENÚ</h3>
               <button 
                 className="mobile-close-button"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={closeMobileMenu}
                 aria-label="Cerrar menú"
               >
                 ✕
@@ -136,7 +145,7 @@ const Navbar = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mobile-nav-link"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={closeMobileMenu}
                   >
                     <span className="mobile-link-icon">→</span>
                     {item.label}
@@ -146,7 +155,7 @@ const Navbar = () => {
                     key={item.path}
                     to={item.path}
                     className={`mobile-nav-link ${location.pathname === item.path ? 'active' : ''}`}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={closeMobileMenu}
                   >
                     <span className="mobile-link-icon">{location.pathname === item.path ? '●' : '○'}</span>
                     {item.label}
@@ -161,7 +170,7 @@ const Navbar = () => {
                   <Link 
                     to={`/profile/${user.id}`} 
                     className="mobile-user-link"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={closeMobileMenu}
                   >
                     <img
                       src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`}
@@ -176,7 +185,7 @@ const Navbar = () => {
                   <button 
                     onClick={() => {
                       logout();
-                      setIsMobileMenuOpen(false);
+                      closeMobileMenu();
                     }} 
                     className="mobile-logout-btn"
                   >
@@ -188,7 +197,7 @@ const Navbar = () => {
                 <Link 
                   to="/login" 
                   className="mobile-login-btn"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={closeMobileMenu}
                 >
                   <span className="mobile-btn-icon">🔐</span>
                   Iniciar Sesión
