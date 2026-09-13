@@ -33,82 +33,84 @@ const Navbar = () => {
   }, [isMobileMenuOpen]);
 
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <Link to="/" className="navbar-logo">
-          <img 
-            src="/logo.gif" 
-            alt="ROYAL RANKED" 
-            className="logo-image" 
-            loading="lazy"
-            width="200"
-            height="50"
-          />
-        </Link>
+    <>
+      <nav className="navbar">
+        <div className="navbar-container">
+          <Link to="/" className="navbar-logo">
+            <img 
+              src="/logo.gif" 
+              alt="ROYAL RANKED" 
+              className="logo-image" 
+              loading="lazy"
+              width="200"
+              height="50"
+            />
+          </Link>
 
-        {/* Mobile Menu Button */}
-        <button 
-          className="mobile-menu-button"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          <span className={`hamburger ${isMobileMenuOpen ? 'open' : ''}`}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </span>
-        </button>
+          {/* Mobile Menu Button */}
+          <button 
+            className="mobile-menu-button"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span className={`hamburger ${isMobileMenuOpen ? 'open' : ''}`}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
 
-        {/* Desktop Menu */}
-        <div className="navbar-menu">
-          {navItems.map((item) => (
-            item.external ? (
-              <a
-                key={item.path}
-                href={item.path}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="nav-link btn-skewed"
-              >
-                <span className="btn-skewed-content">{item.label}</span>
-              </a>
+          {/* Desktop Menu */}
+          <div className="navbar-menu">
+            {navItems.map((item) => (
+              item.external ? (
+                <a
+                  key={item.path}
+                  href={item.path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="nav-link btn-skewed"
+                >
+                  <span className="btn-skewed-content">{item.label}</span>
+                </a>
+              ) : (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`nav-link btn-skewed ${location.pathname === item.path ? 'active' : ''}`}
+                >
+                  <span className="btn-skewed-content">{item.label}</span>
+                </Link>
+              )
+            ))}
+          </div>
+
+          {/* Desktop Auth */}
+          <div className="navbar-auth">
+            {user ? (
+              <div className="user-menu">
+                <Link to={`/profile/${user.id}`} className="user-profile btn-skewed">
+                  <span className="btn-skewed-content" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <img
+                      src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`}
+                      alt={user.username}
+                      className="user-avatar"
+                    />
+                    <span className="user-name">{user.username}</span>
+                  </span>
+                </Link>
+                <button onClick={logout} className="logout-btn btn-skewed">
+                  <span className="btn-skewed-content">Cerrar Sesión</span>
+                </button>
+              </div>
             ) : (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`nav-link btn-skewed ${location.pathname === item.path ? 'active' : ''}`}
-              >
-                <span className="btn-skewed-content">{item.label}</span>
+              <Link to="/login" className="login-btn btn-skewed">
+                <span className="btn-skewed-content">ENTRAR</span>
               </Link>
-            )
-          ))}
+            )}
+          </div>
         </div>
-
-        {/* Desktop Auth */}
-        <div className="navbar-auth">
-          {user ? (
-            <div className="user-menu">
-              <Link to={`/profile/${user.id}`} className="user-profile btn-skewed">
-                <span className="btn-skewed-content" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                  <img
-                    src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`}
-                    alt={user.username}
-                    className="user-avatar"
-                  />
-                  <span className="user-name">{user.username}</span>
-                </span>
-              </Link>
-              <button onClick={logout} className="logout-btn btn-skewed">
-                <span className="btn-skewed-content">Cerrar Sesión</span>
-              </button>
-            </div>
-          ) : (
-            <Link to="/login" className="login-btn btn-skewed">
-              <span className="btn-skewed-content">ENTRAR</span>
-            </Link>
-          )}
-        </div>
-      </div>
+      </nav>
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
@@ -196,7 +198,7 @@ const Navbar = () => {
           </div>
         </div>
       )}
-    </nav>
+    </>
   );
 };
 

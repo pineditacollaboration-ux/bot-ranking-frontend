@@ -7,11 +7,9 @@
   padding: 1rem 2rem;
   position: sticky;
   top: 0;
-  z-index: 999998;
+  z-index: 100;
   font-family: 'Inter', sans-serif;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-  will-change: transform;
-  transform: translateZ(0);
 }
 
 .navbar-container {
@@ -192,7 +190,7 @@
   border-radius: 8px;
   padding: 0.75rem;
   cursor: pointer;
-  z-index: 999999;
+  z-index: 9999;
   transition: all 0.3s ease;
 }
 
@@ -241,7 +239,7 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(8px);
-  z-index: 999999;
+  z-index: 10000;
   animation: fadeIn 0.3s ease;
 }
 
@@ -269,7 +267,7 @@
   flex-direction: column;
   animation: slideIn 0.3s ease;
   overflow-y: auto;
-  z-index: 1000000;
+  z-index: 10001;
 }
 
 @keyframes slideIn {
