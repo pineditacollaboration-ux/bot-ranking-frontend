@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
@@ -6,6 +6,7 @@ import './Navbar.css';
 const Navbar = () => {
   const { user, logout } = useAuth();
   const location = useLocation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
     { path: '/', label: 'HOME' },
@@ -13,6 +14,23 @@ const Navbar = () => {
     { path: '/temporadas', label: 'TEMPORADA' },
     { path: '/estadisticas', label: 'ESTADÍSTICAS' },
   ];
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isMobileMenuOpen && !event.target.closest('.navbar') && !event.target.closest('.mobile-menu-overlay')) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isMobileMenuOpen]);
 
   return (
     <nav className="navbar">
@@ -28,6 +46,20 @@ const Navbar = () => {
           />
         </Link>
 
+        {/* Mobile Menu Button */}
+        <button 
+          className="mobile-menu-button"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span className={`hamburger ${isMobileMenuOpen ? 'open' : ''}`}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+
+        {/* Desktop Menu */}
         <div className="navbar-menu">
           {navItems.map((item) => (
             item.external ? (
@@ -52,6 +84,7 @@ const Navbar = () => {
           ))}
         </div>
 
+        {/* Desktop Auth */}
         <div className="navbar-auth">
           {user ? (
             <div className="user-menu">
@@ -76,6 +109,73 @@ const Navbar = () => {
           )}
         </div>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="mobile-menu-overlay">
+          <div className="mobile-menu">
+            {navItems.map((item) => (
+              item.external ? (
+                <a
+                  key={item.path}
+                  href={item.path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mobile-nav-link"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`mobile-nav-link ${location.pathname === item.path ? 'active' : ''}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              )
+            ))}
+            
+            <div className="mobile-auth-section">
+              {user ? (
+                <>
+                  <Link 
+                    to={`/profile/${user.id}`} 
+                    className="mobile-user-link"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <img
+                      src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`}
+                      alt={user.username}
+                      className="mobile-user-avatar"
+                    />
+                    <span>{user.username}</span>
+                  </Link>
+                  <button 
+                    onClick={() => {
+                      logout();
+                      setIsMobileMenuOpen(false);
+                    }} 
+                    className="mobile-logout-btn"
+                  >
+                    Cerrar Sesión
+                  </button>
+                </>
+              ) : (
+                <Link 
+                  to="/login" 
+                  className="mobile-login-btn"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  ENTRAR
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
