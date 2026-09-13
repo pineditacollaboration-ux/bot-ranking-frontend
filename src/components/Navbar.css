@@ -39,6 +39,14 @@
   transform: scale(1.05);
 }
 
+.logo-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-left: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
 .navbar-menu {
   display: flex;
   gap: 2rem;

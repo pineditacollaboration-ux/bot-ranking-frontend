@@ -18,7 +18,8 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          <img src="/logo.gif" alt="ROYAL RANKED" className="logo-image" />
+          <img src="/logo.png" alt="ROYAL RANKED" className="logo-image" />
+          <span className="logo-text">Royal Ranked</span>
         </Link>
 
         <div className="navbar-menu">
