@@ -87,6 +87,8 @@
   margin-bottom: 3rem;
 }
 
+/* Red/black premium design with specular reflection effects */
+
 .stat-card {
   background: rgba(26, 26, 46, 0.5);
   backdrop-filter: blur(20px);
