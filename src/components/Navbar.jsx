@@ -12,7 +12,6 @@ const Navbar = () => {
     { path: '/ranking', label: 'RANKING' },
     { path: '/temporadas', label: 'TEMPORADA' },
     { path: '/estadisticas', label: 'ESTADÍSTICAS' },
-    { path: 'https://discord.gg', label: 'DISCORD', external: true },
   ];
 
   return (
