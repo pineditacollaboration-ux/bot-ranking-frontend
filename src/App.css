@@ -32,6 +32,7 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  z-index: 1;
 }
 
 /* Skew class utility for buttons / containers */
