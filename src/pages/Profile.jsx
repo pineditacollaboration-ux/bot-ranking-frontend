@@ -18,6 +18,8 @@ const Profile = () => {
 
   useEffect(() => {
     fetchProfile();
+    const interval = setInterval(fetchProfile, 10000);
+    return () => clearInterval(interval);
   }, [discordId]);
 
   const fetchProfile = async () => {

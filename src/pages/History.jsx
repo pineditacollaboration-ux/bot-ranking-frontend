@@ -17,6 +17,8 @@ const History = () => {
 
   useEffect(() => {
     fetchMatches();
+    const interval = setInterval(fetchMatches, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   const fetchMatches = async () => {

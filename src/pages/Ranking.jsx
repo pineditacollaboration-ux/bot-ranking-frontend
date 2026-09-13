@@ -17,6 +17,8 @@ const Ranking = () => {
 
   useEffect(() => {
     fetchRanking();
+    const interval = setInterval(fetchRanking, 10000);
+    return () => clearInterval(interval);
   }, [sortBy]);
 
   const fetchRanking = async () => {
