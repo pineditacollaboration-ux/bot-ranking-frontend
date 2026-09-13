@@ -1,6 +1,6 @@
 .ranking {
   flex: 1;
-  background: #ffffff;
+  background: #0a0a0a;
   padding: 2rem;
   font-family: 'Inter', sans-serif;
 }
@@ -16,9 +16,12 @@
 }
 
 .ranking-title {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
-  color: #111827;
+  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   letter-spacing: -0.02em;
 }
 
@@ -30,55 +33,59 @@
 }
 
 .sort-label {
-  color: #6b7280;
+  color: #94a3b8;
   font-size: 0.875rem;
   margin-right: 0.5rem;
   font-weight: 500;
 }
 
 .sort-btn {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  color: #6b7280;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  color: #94a3b8;
   padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   font-size: 0.875rem;
   font-weight: 500;
+  backdrop-filter: blur(10px);
 }
 
 .sort-btn:hover {
-  background: #f9fafb;
-  border-color: #d1d5db;
-  color: #111827;
+  background: rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.3);
+  color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .sort-btn.active {
-  background: #111827;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   color: #ffffff;
-  border-color: #111827;
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
 }
 
 .ranking-table {
   max-width: 1400px;
   margin: 0 auto;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  background: rgba(26, 26, 46, 0.5);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .ranking-table-header {
   display: grid;
   grid-template-columns: 60px 1fr 100px 100px 100px 80px 80px;
   gap: 1rem;
-  padding: 1rem 1.5rem;
-  background: #f9fafb;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 1.25rem 1.5rem;
+  background: rgba(99, 102, 241, 0.1);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.2);
   font-weight: 600;
-  color: #6b7280;
+  color: #818cf8;
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -104,16 +111,17 @@
   display: grid;
   grid-template-columns: 60px 1fr 100px 100px 100px 80px 80px;
   gap: 1rem;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid #f3f4f6;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(99, 102, 241, 0.05);
   text-decoration: none;
-  color: #111827;
-  transition: all 0.2s ease;
+  color: #ffffff;
+  transition: all 0.3s ease;
   align-items: center;
 }
 
 .ranking-row:hover {
-  background: #f9fafb;
+  background: rgba(99, 102, 241, 0.1);
+  transform: translateX(4px);
 }
 
 .ranking-row:last-child {
@@ -124,7 +132,7 @@
   text-align: center;
   font-weight: 700;
   font-size: 1rem;
-  color: #6b7280;
+  color: #818cf8;
 }
 
 .rank-icon {
@@ -141,13 +149,13 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 2px solid #e5e7eb;
+  border: 2px solid rgba(99, 102, 241, 0.3);
 }
 
 .player-name {
   font-weight: 600;
   font-size: 0.9rem;
-  color: #111827;
+  color: #ffffff;
 }
 
 .player-platform {
@@ -162,7 +170,7 @@
   text-align: center;
   font-weight: 600;
   font-size: 0.9rem;
-  color: #6b7280;
+  color: #94a3b8;
 }
 
 .loading {
@@ -171,7 +179,7 @@
   align-items: center;
   min-height: 50vh;
   font-size: 1.5rem;
-  color: #6366f1;
+  color: #818cf8;
   font-family: 'Inter', sans-serif;
 }
 
@@ -197,14 +205,14 @@
   }
 
   .ranking-title {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
 
   .ranking-table-header,
   .ranking-row {
     grid-template-columns: 40px 1fr 60px;
     gap: 0.5rem;
-    padding: 0.875rem;
+    padding: 1rem;
   }
 
   .header-wins,
@@ -221,7 +229,7 @@
   }
 
   .ranking-title {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
   }
 
   .sort-btn {

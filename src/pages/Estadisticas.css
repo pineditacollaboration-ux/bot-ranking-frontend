@@ -1,6 +1,6 @@
 .estadisticas {
   flex: 1;
-  background: #ffffff;
+  background: #0a0a0a;
   min-height: calc(100vh - 70px);
   font-family: 'Inter', sans-serif;
 }
@@ -14,14 +14,17 @@
 .page-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #111827;
+  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 0.5rem;
   letter-spacing: -0.02em;
 }
 
 .page-subtitle {
   font-size: 1.125rem;
-  color: #6b7280;
+  color: #94a3b8;
   margin-bottom: 3rem;
 }
 
@@ -33,18 +36,20 @@
 }
 
 .stat-card-large {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  background: rgba(26, 26, 46, 0.5);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  border-radius: 16px;
   padding: 2rem;
   text-align: center;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .stat-card-large:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.2);
 }
 
 .stat-icon {
@@ -54,7 +59,7 @@
 
 .stat-card-large h3 {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: #94a3b8;
   margin-bottom: 0.5rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -63,8 +68,11 @@
 
 .stat-value {
   font-size: 2rem;
-  color: #111827;
   font-weight: 700;
+  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .stats-section {
@@ -73,10 +81,13 @@
 
 .section-title {
   font-size: 1.75rem;
-  color: #111827;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 2rem;
   text-align: center;
-  font-weight: 700;
   letter-spacing: -0.02em;
 }
 
@@ -87,18 +98,20 @@
 }
 
 .top-player-card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  background: rgba(26, 26, 46, 0.5);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  border-radius: 16px;
   padding: 2rem;
   text-align: center;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .top-player-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.2);
 }
 
 .top-badge {
@@ -110,7 +123,7 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  border: 2px solid #e5e7eb;
+  border: 2px solid rgba(99, 102, 241, 0.3);
   margin-bottom: 1rem;
 }
 
@@ -118,13 +131,16 @@
   font-size: 1.125rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #111827;
+  color: #ffffff;
 }
 
 .top-player-score {
   font-size: 1.5rem;
-  color: #6366f1;
   font-weight: 700;
+  background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .activity-stats {
@@ -134,18 +150,20 @@
 }
 
 .activity-card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  background: rgba(26, 26, 46, 0.5);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  border-radius: 16px;
   padding: 2rem;
   text-align: center;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .activity-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.2);
 }
 
 .activity-icon {
@@ -155,7 +173,7 @@
 
 .activity-card h3 {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: #94a3b8;
   margin-bottom: 0.5rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -164,8 +182,11 @@
 
 .activity-value {
   font-size: 1.75rem;
-  color: #111827;
   font-weight: 700;
+  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .loading {
@@ -174,6 +195,6 @@
   align-items: center;
   min-height: 50vh;
   font-size: 1.5rem;
-  color: #6366f1;
+  color: #818cf8;
   font-family: 'Inter', sans-serif;
 }

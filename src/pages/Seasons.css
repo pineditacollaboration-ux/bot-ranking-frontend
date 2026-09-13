@@ -147,7 +147,8 @@
   align-items: center;
   min-height: 50vh;
   font-size: 1.5rem;
-  color: #dc2626;
+  color: #818cf8;
+  font-family: 'Inter', sans-serif;
 }
 
 .seasons-container {
@@ -159,14 +160,17 @@
 .page-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #111827;
+  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 0.5rem;
   letter-spacing: -0.02em;
 }
 
 .page-subtitle {
   font-size: 1.125rem;
-  color: #6b7280;
+  color: #94a3b8;
   margin-bottom: 3rem;
 }
 
@@ -178,65 +182,70 @@
 }
 
 .season-card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  background: rgba(26, 26, 46, 0.5);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  border-radius: 16px;
   padding: 2rem;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .season-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.2);
 }
 
 .season-card.active {
-  background: #111827;
-  border-color: #111827;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+  border-color: rgba(99, 102, 241, 0.3);
 }
 
 .season-number {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #6366f1;
+  background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 0.5rem;
 }
 
 .season-card.active .season-number {
-  color: #ffffff;
+  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .season-name {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #111827;
-  margin-bottom: 1rem;
-}
-
-.season-card.active .season-name {
   color: #ffffff;
+  margin-bottom: 1rem;
 }
 
 .season-status {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 500;
 }
 
 .season-card.active .season-status {
-  color: rgba(255, 255, 255, 0.8);
+  color: #818cf8;
 }
 
 .season-stats {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  background: rgba(26, 26, 46, 0.5);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  border-radius: 16px;
   padding: 2rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .stats-grid {
@@ -251,7 +260,7 @@
 
 .stat-label {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 0.5rem;
@@ -261,7 +270,10 @@
 .stat-value {
   font-size: 2rem;
   font-weight: 700;
-  color: #111827;
+  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 @media (max-width: 768px) {

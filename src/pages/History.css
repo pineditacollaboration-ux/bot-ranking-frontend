@@ -1,6 +1,6 @@
 .history {
   flex: 1;
-  background: #ffffff;
+  background: #0a0a0a;
   padding: 2rem;
   font-family: 'Inter', sans-serif;
 }
@@ -14,14 +14,17 @@
 .page-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #111827;
+  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 0.5rem;
   letter-spacing: -0.02em;
 }
 
 .page-subtitle {
   font-size: 1.125rem;
-  color: #6b7280;
+  color: #94a3b8;
   margin-bottom: 3rem;
 }
 
@@ -32,17 +35,19 @@
 }
 
 .match-card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  background: rgba(26, 26, 46, 0.5);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  border-radius: 16px;
   padding: 2rem;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .match-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.2);
 }
 
 .match-header {
@@ -51,12 +56,12 @@
   align-items: center;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid rgba(99, 102, 241, 0.1);
 }
 
 .match-date {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: #94a3b8;
   font-weight: 500;
 }
 
@@ -64,17 +69,19 @@
   font-size: 0.875rem;
   font-weight: 600;
   padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 .match-result.win {
-  background: #dcfce7;
-  color: #166534;
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
 }
 
 .match-result.loss {
-  background: #fee2e2;
-  color: #991b1b;
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .match-players {
@@ -89,20 +96,21 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem;
-  background: #f9fafb;
+  background: rgba(99, 102, 241, 0.05);
   border-radius: 8px;
+  border: 1px solid rgba(99, 102, 241, 0.1);
 }
 
 .player-slot.mvp {
-  background: #fef9c3;
-  border: 1px solid #facc15;
+  background: rgba(250, 204, 21, 0.1);
+  border: 1px solid rgba(250, 204, 21, 0.3);
 }
 
 .player-avatar {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 2px solid #e5e7eb;
+  border: 2px solid rgba(99, 102, 241, 0.3);
 }
 
 .player-info {
@@ -112,19 +120,22 @@
 .player-name {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #111827;
+  color: #ffffff;
 }
 
 .player-stats {
   font-size: 0.8rem;
-  color: #6b7280;
+  color: #94a3b8;
 }
 
 .match-score {
   text-align: center;
   font-size: 1.75rem;
   font-weight: 700;
-  color: #6366f1;
+  background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 1rem;
 }
 
@@ -134,7 +145,7 @@
   align-items: center;
   min-height: 50vh;
   font-size: 1.5rem;
-  color: #6366f1;
+  color: #818cf8;
   font-family: 'Inter', sans-serif;
 }
 
