@@ -1,3 +1,5 @@
+/* Red/black premium design with enhanced glassmorphism effects */
+
 .navbar {
   background: rgba(10, 10, 10, 0.85);
   backdrop-filter: blur(25px) saturate(180%);
