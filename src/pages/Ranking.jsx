@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
+import RestrictedContent from '../components/RestrictedContent';
 import { Link } from 'react-router-dom';
 import './Ranking.css';
 
 const Ranking = () => {
+  const { user } = useAuth();
   const [players, setPlayers] = useState([]);
   const [sortBy, setSortBy] = useState('points');
   const [loading, setLoading] = useState(true);
+
+  if (!user) {
+    return <RestrictedContent />;
+  }
 
   useEffect(() => {
     fetchRanking();

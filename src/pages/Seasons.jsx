@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
+import RestrictedContent from '../components/RestrictedContent';
 import './Seasons.css';
 
 const Seasons = () => {
+  const { user } = useAuth();
   const [seasons, setSeasons] = useState([]);
   const [selectedSeason, setSelectedSeason] = useState(null);
   const [seasonStats, setSeasonStats] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  if (!user) {
+    return <RestrictedContent />;
+  }
 
   useEffect(() => {
     fetchSeasons();

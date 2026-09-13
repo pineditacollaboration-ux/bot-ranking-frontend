@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import RestrictedContent from '../components/RestrictedContent';
 import './History.css';
 
 const History = () => {
+  const { user } = useAuth();
+  const { discordId } = useParams();
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  if (!user) {
+    return <RestrictedContent />;
+  }
 
   useEffect(() => {
     fetchMatches();

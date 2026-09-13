@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import RestrictedContent from '../components/RestrictedContent';
 import './Home.css';
 
 const Home = () => {
+  const { user } = useAuth();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  if (!user) {
+    return <RestrictedContent />;
+  }
 
   useEffect(() => {
     fetchStats();
@@ -31,10 +38,10 @@ const Home = () => {
       <div className="hero">
         <div className="hero-content">
           <h1 className="hero-title">
-            RANKING <span className="hero-accent">OFICIAL</span>
+            ROYAL <span className="hero-accent">RANKED</span>
           </h1>
           <p className="hero-subtitle">
-            Compite con los mejores jugadores y sube en el ranking
+            DOMINA EL RANKING Y CONVIÉRTETE EN LEYENDA
           </p>
           
           <div className="hero-stats">
@@ -60,9 +67,15 @@ const Home = () => {
             <Link to="/ranking" className="btn btn-primary">
               VER RANKING
             </Link>
-            <Link to="/login" className="btn btn-secondary">
-              INICIAR SESIÓN
-            </Link>
+            <a href="https://discord.gg" target="_blank" rel="noopener noreferrer" className="btn btn-discord">
+              ÚNETE A NUESTRO DISCORD
+            </a>
+          </div>
+        </div>
+        
+        <div className="hero-character">
+          <div className="character-placeholder">
+            <div className="character-silhouette"></div>
           </div>
         </div>
       </div>

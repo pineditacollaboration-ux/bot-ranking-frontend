@@ -8,29 +8,42 @@ const Navbar = () => {
   const location = useLocation();
 
   const navItems = [
-    { path: '/', label: 'INICIO' },
+    { path: '/', label: 'HOME' },
     { path: '/ranking', label: 'RANKING' },
-    { path: '/temporadas', label: 'TEMPORADAS' },
-    { path: '/historial', label: 'HISTORIAL' },
+    { path: '/temporadas', label: 'TEMPORADA' },
+    { path: '/estadisticas', label: 'ESTADÍSTICAS' },
+    { path: 'https://discord.gg', label: 'DISCORD', external: true },
   ];
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          <span className="logo-text">RANKING</span>
-          <span className="logo-accent">BOT</span>
+          <span className="logo-text">ROYAL</span>
+          <span className="logo-accent">RANKED</span>
         </Link>
 
         <div className="navbar-menu">
           {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`nav-link ${location.pathname === item.path ? 'active' : ''}`}
-            >
-              {item.label}
-            </Link>
+            item.external ? (
+              <a
+                key={item.path}
+                href={item.path}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nav-link"
+              >
+                {item.label}
+              </a>
+            ) : (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`nav-link ${location.pathname === item.path ? 'active' : ''}`}
+              >
+                {item.label}
+              </Link>
+            )
           ))}
         </div>
 
