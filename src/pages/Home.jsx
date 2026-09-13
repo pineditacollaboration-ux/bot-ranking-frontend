@@ -21,8 +21,11 @@ const Home = () => {
             </div>
             <h1 className="hero-title">
               <span className="title-line">ROYAL</span>
-              <span className="title-line title-accent">RANKED</span>
+              <span className="title-line title-accent">MEJOR RANKED</span>
             </h1>
+            <div className="hero-logo-container">
+              <img src="/logo.gif" alt="ROYAL RANKED" className="hero-logo" />
+            </div>
             <p className="hero-description">
               La plataforma definitiva para competidores de Free Fire. 
               Rankings, estadísticas y una comunidad activa.
