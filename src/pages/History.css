@@ -1,0 +1,228 @@
+.history {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  flex: 1;
+}
+
+.history-header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.history-title {
+  font-size: 2.5rem;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.history-subtitle {
+  color: #a0a0a0;
+  font-size: 1.1rem;
+}
+
+.matches-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.match-card {
+  background: linear-gradient(180deg, #1a0000 0%, #0a0a0a 100%);
+  border: 2px solid #333;
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.match-card:hover {
+  border-color: #dc2626;
+  box-shadow: 0 10px 30px rgba(220, 38, 38, 0.2);
+}
+
+.match-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #333;
+}
+
+.match-info {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.match-type {
+  background: #dc2626;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.match-season {
+  background: rgba(220, 38, 38, 0.2);
+  color: #dc2626;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.match-date {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+}
+
+.match-body {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.match-team {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #333;
+}
+
+.match-team.winner {
+  background: rgba(220, 38, 38, 0.15);
+  border-color: #dc2626;
+}
+
+.match-team.loser {
+  opacity: 0.7;
+}
+
+.team-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #333;
+}
+
+.team-name {
+  font-weight: bold;
+  color: #ffffff;
+  font-size: 1.1rem;
+}
+
+.winner-badge {
+  background: #dc2626;
+  color: #ffffff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.team-players {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.team-player {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.player-avatar-small {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #333;
+}
+
+.player-name-small {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.mvp-badge-small {
+  font-size: 1rem;
+}
+
+.match-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #dc2626;
+}
+
+.match-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #333;
+  margin-top: 1rem;
+}
+
+.wager-info {
+  color: #dc2626;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.transcript-link {
+  color: #dc2626;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.transcript-link:hover {
+  color: #ef4444;
+  text-decoration: underline;
+}
+
+.no-matches {
+  text-align: center;
+  padding: 4rem;
+  color: #a0a0a0;
+  font-size: 1.2rem;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  font-size: 1.5rem;
+  color: #dc2626;
+}
+
+@media (max-width: 768px) {
+  .match-body {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .match-divider {
+    transform: rotate(90deg);
+  }
+  
+  .match-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .match-footer {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+}
