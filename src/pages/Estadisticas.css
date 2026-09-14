@@ -1,274 +1,156 @@
 .estadisticas {
   flex: 1;
-  background: #0a0a0a;
-  min-height: calc(100vh - 70px);
-  font-family: 'Inter', sans-serif;
+  padding: 3rem 2rem;
+  font-family: var(--font-body);
+  background: transparent;
 }
 
 .estadisticas-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 4rem 2rem;
 }
 
 .page-title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, #ffffff 0%, #fca5a5 50%, #ef4444 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  text-align: center;
+  font-size: 3.5rem;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  color: #fff;
   margin-bottom: 0.5rem;
-  letter-spacing: -0.03em;
-  text-shadow: 0 0 40px rgba(220, 38, 38, 0.3);
-  filter: drop-shadow(0 0 20px rgba(220, 38, 38, 0.4));
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 20px rgba(248,0,47,0.3);
 }
 
 .page-subtitle {
-  font-size: 1.125rem;
-  color: #94a3b8;
-  margin-bottom: 3rem;
+  text-align: center;
+  color: var(--color-text-muted);
+  margin-bottom: 4rem;
+  font-size: 1.1rem;
 }
 
 .stats-overview {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
   margin-bottom: 4rem;
 }
 
-/* Red/black premium design with specular reflection effects */
-
-.stat-card-large {
-  background: rgba(26, 26, 46, 0.5);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(220, 38, 38, 0.1);
-  border-radius: 16px;
+.stats-section {
+  background: rgba(17, 17, 22, 0.6);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(10px);
   padding: 2rem;
-  text-align: center;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  margin-bottom: 3rem;
   position: relative;
   overflow: hidden;
 }
 
-.stat-card-large::before {
+.stats-section::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.1), transparent);
-  transition: left 0.6s ease;
-  backdrop-filter: blur(5px);
-}
-
-.stat-card-large::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    45deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0.05) 50%,
-    transparent 60%
-  );
-  transform: rotate(45deg) translateY(-100%);
-  transition: transform 0.6s ease;
-  pointer-events: none;
-}
-
-.stat-card-large:hover::before {
-  left: 100%;
-}
-
-.stat-card-large:hover::after {
-  transform: rotate(45deg) translateY(100%);
-}
-
-.stat-card-large:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 20px 60px rgba(220, 38, 38, 0.3),
-              0 0 40px rgba(220, 38, 38, 0.2) inset;
-  border-color: rgba(220, 38, 38, 0.3);
-  backdrop-filter: blur(30px);
-}
-
-.stat-icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.stat-card-large h3 {
-  font-size: 0.875rem;
-  color: #94a3b8;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.stat-value {
-  font-size: 2rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #ffffff 0%, #fca5a5 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.stats-section {
-  margin-bottom: 4rem;
+  top: 0; left: 0; width: 4px; height: 100%;
+  background: var(--color-primary);
 }
 
 .section-title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #ffffff 0%, #fca5a5 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 2rem;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 1rem;
   margin-bottom: 2rem;
-  text-align: center;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.05em;
 }
 
 .top-players-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
 }
 
 .top-player-card {
-  background: rgba(26, 26, 46, 0.5);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(220, 38, 38, 0.1);
-  border-radius: 16px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
   padding: 2rem;
   text-align: center;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  position: relative;
+  transition: all 0.3s;
 }
 
 .top-player-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(220, 38, 38, 0.2);
-  border-color: rgba(220, 38, 38, 0.2);
+  background: rgba(248, 0, 47, 0.05);
+  border-color: var(--color-border-glow);
+  transform: translateY(-5px);
 }
 
 .top-badge {
-  font-size: 1.25rem;
-  margin-bottom: 1rem;
+  position: absolute;
+  top: -15px; left: 50%; transform: translateX(-50%);
+  background: var(--color-bg-panel);
+  border: 1px solid var(--color-primary);
+  color: #fff;
+  padding: 0.3rem 1.5rem;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.9rem;
+  box-shadow: 0 0 15px rgba(248,0,47,0.3);
 }
 
 .top-player-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 2px solid rgba(220, 38, 38, 0.3);
-  margin-bottom: 1rem;
+  width: 100px;
+  height: 100px;
+  border-radius: 4px;
+  border: 2px solid var(--color-border);
+  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+}
+.top-player-card:hover .top-player-avatar {
+  border-color: var(--color-primary);
 }
 
 .top-player-name {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  color: #fff;
   margin-bottom: 0.5rem;
-  color: #ffffff;
 }
 
 .top-player-score {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  color: var(--color-primary);
   font-weight: 700;
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .activity-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
 }
 
 .activity-card {
-  background: rgba(26, 26, 46, 0.5);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(220, 38, 38, 0.1);
-  border-radius: 16px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.05);
   padding: 2rem;
   text-align: center;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-.activity-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(220, 38, 38, 0.2);
-  border-color: rgba(220, 38, 38, 0.2);
 }
 
 .activity-icon {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
 }
 
 .activity-card h3 {
-  font-size: 0.875rem;
-  color: #94a3b8;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-family: var(--font-heading);
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
 }
 
 .activity-value {
-  font-size: 1.75rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #ffffff 0%, #fca5a5 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.loading {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 50vh;
-  font-family: 'Inter', sans-serif;
-}
-
-.loading::before {
-  content: '';
-  width: 50px;
-  height: 50px;
-  border: 3px solid rgba(220, 38, 38, 0.1);
-  border-top-color: #ef4444;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
-}
-
-.loading::after {
-  content: 'Cargando estadísticas...';
-  font-size: 1.25rem;
-  color: #ef4444;
-  font-weight: 600;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+  font-size: 3rem;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  color: #fff;
 }
