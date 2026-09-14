@@ -10,6 +10,7 @@ const RestrictedContent = () => {
     <div className="restricted-content">
       <div className="restricted-overlay">
         <div className="restricted-box">
+          <span className="restricted-icon">🔒</span>
           <div className="restricted-header">
             <h1 className="restricted-title">ACCESO RESTRINGIDO</h1>
             <p className="restricted-subtitle">INICIA SESIÓN PARA VER</p>
