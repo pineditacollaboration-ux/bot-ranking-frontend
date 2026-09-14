@@ -2,6 +2,16 @@
   "installCommand": "npm install",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "http://45.126.208.136:7000/api/:path*"
+    },
+    {
+      "source": "/auth/:path*",
+      "destination": "http://45.126.208.136:7000/auth/:path*"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
