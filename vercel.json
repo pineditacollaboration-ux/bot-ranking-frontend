@@ -18,6 +18,10 @@
     {
       "source": "/auth/discord/callback",
       "destination": "http://45.126.208.136:7000/auth/discord/callback"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [

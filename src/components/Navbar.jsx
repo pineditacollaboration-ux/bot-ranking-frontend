@@ -3,6 +3,14 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
+const ExitIcon = () => (
+  <svg className="logout-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+    <polyline points="16 17 21 12 16 7"/>
+    <line x1="21" y1="12" x2="9" y2="12"/>
+  </svg>
+);
+
 const Navbar = () => {
   const { user, logout } = useAuth();
   const location = useLocation();
@@ -98,18 +106,29 @@ const Navbar = () => {
           <div className="navbar-auth">
             {user ? (
               <div className="user-menu">
-                <Link to={`/profile/${user.id}`} className="user-profile btn-skewed">
-                  <span className="btn-skewed-content" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <img
-                      src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`}
-                      alt={user.username}
-                      className="user-avatar"
-                    />
-                    <span className="user-name">{user.username}</span>
-                  </span>
+                <Link to={`/profile/${user.id}`} className="user-profile">
+                  <div className="user-avatar-wrapper">
+                    {user.avatar ? (
+                      <img
+                        src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`}
+                        alt={user.username}
+                        className="user-avatar"
+                        onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
+                      />
+                    ) : null}
+                    <div
+                      className="user-avatar-fallback"
+                      style={{ display: user.avatar ? 'none' : 'flex' }}
+                    >
+                      {user.username?.[0] ?? '?'}
+                    </div>
+                    <span className="user-status-dot" />
+                  </div>
+                  <span className="user-name">{user.username}</span>
                 </Link>
-                <button onClick={logout} className="logout-btn btn-skewed">
-                  <span className="btn-skewed-content">Cerrar Sesión</span>
+                <button onClick={logout} className="logout-btn">
+                  <ExitIcon />
+                  Salir
                 </button>
               </div>
             ) : (

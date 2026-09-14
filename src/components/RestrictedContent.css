@@ -62,16 +62,19 @@
   border-width: 0 2px 2px 0;
 }
 
-/* Lock icon area */
-.restricted-icon {
-  font-size: 3.5rem;
-  margin-bottom: 1.5rem;
+/* Lock SVG icon */
+.restricted-lock-svg {
+  width: 56px;
+  height: 56px;
+  color: var(--color-primary);
+  margin: 0 auto 1.5rem;
   display: block;
-  animation: lockPulse 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(248,0,47,0.5));
+  animation: lockPulse 2.5s ease-in-out infinite;
 }
 @keyframes lockPulse {
   0%,100% { filter: drop-shadow(0 0 8px rgba(248,0,47,0.4)); }
-  50%      { filter: drop-shadow(0 0 20px rgba(248,0,47,0.9)); }
+  50%      { filter: drop-shadow(0 0 22px rgba(248,0,47,0.95)); }
 }
 
 .restricted-header { margin-bottom: 1.5rem; }
@@ -125,6 +128,7 @@
   letter-spacing: 0.1em;
   position: relative;
   overflow: hidden;
+  clip-path: polygon(14px 0%, 100% 0%, calc(100% - 14px) 100%, 0% 100%);
 }
 
 /* Sheen sweep on hover */

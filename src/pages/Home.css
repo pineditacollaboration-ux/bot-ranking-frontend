@@ -200,11 +200,11 @@
   transform: translateX(-30px);
 }
 .card-2 {
-  border-top: 4px solid #00ffff;
+  border-top: 4px solid var(--color-primary);
   transform: translateX(10px);
 }
 .card-3 {
-  border-right: 4px solid #ff2a55;
+  border-right: 4px solid var(--color-primary);
   transform: translateX(-40px);
 }
 
