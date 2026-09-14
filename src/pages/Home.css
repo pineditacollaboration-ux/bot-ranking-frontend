@@ -164,61 +164,53 @@
   transform: translateY(-2px);
 }
 
-/* RIGHT COLUMN - ANIMATED CSS CARDS */
+/* RIGHT COLUMN - CLEAN FLOATING CARDS */
 .hero-graphics {
   position: relative;
   height: 500px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
+  gap: 2rem;
+  padding-right: 2rem;
 }
 
 .floating-card {
-  position: absolute;
-  width: 250px;
-  background: rgba(10, 10, 14, 0.8);
+  width: 280px;
+  background: rgba(10, 10, 14, 0.7);
   border: 1px solid rgba(255,255,255,0.05);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 1.5rem;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-  border-radius: 6px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 1.5rem 2rem;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+  border-radius: 8px;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .floating-card:hover { 
-  transform: translateY(-5px) !important;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(248,0,47,0.3);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 45px rgba(0,0,0,0.6), 0 0 25px rgba(248,0,47,0.15) inset;
   border-color: var(--color-primary);
   z-index: 10;
 }
 
 .card-1 {
-  z-index: 3;
-  animation: gentleFloat 6s ease-in-out infinite;
-  transform: translateX(-40px);
-  border-left: 3px solid var(--color-primary);
+  border-left: 4px solid var(--color-primary);
+  transform: translateX(-30px);
 }
 .card-2 {
-  z-index: 2;
-  animation: gentleFloat 7s ease-in-out infinite reverse;
-  width: 220px;
-  right: 0; top: 40px;
-  border-top: 3px solid #00ffff;
+  border-top: 4px solid #00ffff;
+  transform: translateX(10px);
 }
 .card-3 {
-  z-index: 1;
-  animation: gentleFloat 8s ease-in-out infinite;
-  width: 210px;
-  bottom: 20px; left: 10px;
-  border-right: 3px solid #ff2a55;
-  background: rgba(10,10,14,0.6);
+  border-right: 4px solid #ff2a55;
+  transform: translateX(-40px);
 }
 
-@keyframes gentleFloat {
-  0%, 100% { margin-top: 0; }
-  50% { margin-top: -15px; }
-}
+.card-1:hover { transform: translateX(-30px) translateY(-8px) scale(1.02); }
+.card-2:hover { transform: translateX(10px) translateY(-8px) scale(1.02); }
+.card-3:hover { transform: translateX(-40px) translateY(-8px) scale(1.02); }
 
 .f-card-header {
   font-family: var(--font-heading);
