@@ -49,7 +49,6 @@ function App() {
     <AuthProvider>
       <Router>
         <ScrollToTop />
-        <div className="cyber-grid"></div>
         <div className="scanlines"></div>
         <div className="app">
           <Navbar />
