@@ -19,6 +19,10 @@ export const AuthProvider = ({ children }) => {
 
   const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001';
   const FRONTEND_URL = process.env.REACT_APP_FRONTEND_URL || 'http://localhost:3000';
+  
+  // Debug: Log the actual API URL being used
+  console.log('AuthContext - API_URL:', API_URL);
+  console.log('AuthContext - REACT_APP_BACKEND_URL env var:', process.env.REACT_APP_BACKEND_URL);
 
   useEffect(() => {
     checkAuth();
