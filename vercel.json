@@ -9,15 +9,15 @@
     },
     {
       "source": "/auth/:path*",
-      "destination": "http://45.126.208.136:7000/auth/:path*"
+      "destination": "http://45.126.208.136:7001/auth/:path*"
     },
     {
       "source": "/auth/discord",
-      "destination": "http://45.126.208.136:7000/auth/discord"
+      "destination": "http://45.126.208.136:7001/auth/discord"
     },
     {
       "source": "/auth/discord/callback",
-      "destination": "http://45.126.208.136:7000/auth/discord/callback"
+      "destination": "http://45.126.208.136:7001/auth/discord/callback"
     }
   ],
   "headers": [
