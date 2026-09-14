@@ -1,6 +1,6 @@
 // API Configuration
-const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001';
-const FRONTEND_URL = process.env.REACT_APP_FRONTEND_URL || 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
+const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL || 'http://localhost:3000';
 
 export const API_CONFIG = {
   BASE_URL: API_URL,
