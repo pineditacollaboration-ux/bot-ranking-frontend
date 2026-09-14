@@ -94,16 +94,79 @@ body {
     to bottom,
     rgba(255,255,255,0),
     rgba(255,255,255,0) 50%,
-    rgba(0,0,0,0.1) 50%,
-    rgba(0,0,0,0.1)
+    rgba(0,0,0,0.15) 50%,
+    rgba(0,0,0,0.15)
   );
   background-size: 100% 4px;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 9998;
   opacity: 0.15;
 }
 
-/* Glitch Title Animation */
+/* CYBERPUNK 3D MOVING GRID BACKGROUND */
+.cyber-grid {
+  position: fixed;
+  bottom: -30%;
+  left: -50%;
+  width: 200%;
+  height: 60vh;
+  background-image: 
+    linear-gradient(rgba(248,0,47,0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(248,0,47,0.3) 1px, transparent 1px);
+  background-size: 40px 40px;
+  transform: perspective(600px) rotateX(60deg);
+  animation: gridMove 3s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+  border-top: 2px solid var(--color-primary);
+  box-shadow: 0 -20px 100px rgba(248,0,47,0.5);
+}
+@keyframes gridMove {
+  0% { transform: perspective(600px) rotateX(60deg) translateY(0); }
+  100% { transform: perspective(600px) rotateX(60deg) translateY(40px); }
+}
+
+/* INFINITE TICKER MARQUEE */
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  position: absolute;
+  top: 40%;
+  left: -10vw;
+  width: 120vw;
+  transform: rotate(-5deg);
+  z-index: 0;
+  opacity: 0.05;
+  pointer-events: none;
+}
+.marquee-content {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 8rem;
+  font-weight: 900;
+  color: white;
+  text-transform: uppercase;
+  animation: marquee-scroll 40s linear infinite;
+}
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ENTRANCE ANIMATION UTILITIES */
+.animate-fade-up {
+  opacity: 0;
+  animation: fadeUpReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+
+@keyframes fadeUpReveal {
+  0% { opacity: 0; transform: translateY(40px); filter: blur(10px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
 .glitch-wrapper {
   position: relative;
   display: inline-block;
