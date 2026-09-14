@@ -86,7 +86,7 @@ const Home = () => {
                 <span className="title-line title-accent">MEJOR RANKED</span>
               </h1>
               <p className="hero-description animate-fade-up delay-2">
-                La plataforma definitiva para jugadores serios. Sincronización en tiempo real con Discord, Leaderboards globales y análisis de ligas privadas E-Sports.
+                La plataforma definitiva para jugadores serios. Sincronización en tiempo real con Discord.
               </p>
               <div className="hero-buttons animate-fade-up delay-3">
                 <button onClick={login} className="btn btn-primary btn-skewed">
