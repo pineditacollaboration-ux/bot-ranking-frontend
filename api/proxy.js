@@ -18,13 +18,13 @@ export default async function handler(req, res) {
     // Extraer el path de la URL (eliminar /api/proxy)
     let path = req.url;
     
-    // Si la URL empieza con /api/proxy, eliminarlo
+    // Si la URL empieza con /api/proxy, eliminarlo completamente
     if (path.startsWith('/api/proxy')) {
-      path = path.replace(/^\/api\/proxy/, '');
+      path = path.substring('/api/proxy'.length);
     }
     
     // Si el path está vacío, usar /api/stats por defecto
-    if (!path || path === '/') {
+    if (!path || path === '' || path === '/') {
       path = '/api/stats';
     }
     
