@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { isValidDiscordID, sanitizeInput } from '../utils/security';
+import { API_CONFIG } from '../config/api';
 
 const AuthContext = createContext();
 
@@ -17,12 +18,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
-  const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL || 'http://localhost:3000';
-  
-  // Debug: Log the actual API URL being used
-  console.log('AuthContext - API_URL:', API_URL);
-  console.log('AuthContext - VITE_BACKEND_URL env var:', import.meta.env.VITE_BACKEND_URL);
+  const FRONTEND_URL = API_CONFIG.FRONTEND_URL;
 
   useEffect(() => {
     checkAuth();
@@ -52,7 +48,7 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const response = await axios.get(`${API_URL}/auth/user`, {
+      const response = await axios.get(API_CONFIG.ENDPOINTS.AUTH.USER, {
         withCredentials: true,
         timeout: 10000
       });
@@ -73,14 +69,14 @@ export const AuthProvider = ({ children }) => {
     const state = Math.random().toString(36).substring(7);
     sessionStorage.setItem('oauth_state', state);
     
-    const authUrl = new URL(`${API_URL}/auth/discord`);
+    const authUrl = new URL(API_CONFIG.ENDPOINTS.AUTH.DISCORD);
     authUrl.searchParams.append('state', state);
     window.location.href = authUrl.toString();
   };
 
   const logout = async () => {
     try {
-      await axios.get(`${API_URL}/auth/logout`, {
+      await axios.get(API_CONFIG.ENDPOINTS.AUTH.LOGOUT, {
         withCredentials: true,
         timeout: 10000
       });
