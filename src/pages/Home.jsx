@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { API_CONFIG } from '../config/api';
@@ -15,7 +15,10 @@ const Home = () => {
   const [stats, setStats] = useState(null);
   const [statsLoading, setStatsLoading] = useState(true);
 
-  // Siempre cargar stats reales, con o sin login
+  // Parallax Tilt Engine
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const containerRef = useRef(null);
+
   useEffect(() => {
     fetchStats();
     const interval = setInterval(fetchStats, 10000);
@@ -33,15 +36,32 @@ const Home = () => {
     }
   };
 
-  // Calcular winRate real
+  const handleMouseMove = (e) => {
+    if (!containerRef.current) return;
+    const { left, top, width, height } = containerRef.current.getBoundingClientRect();
+    // Normalize coordinates from -1 to 1 based on center of container
+    const x = ((e.clientX - left) / width - 0.5) * 2;
+    const y = ((e.clientY - top) / height - 0.5) * 2;
+    setMousePos({ x, y });
+  };
+
+  // Convert stats real or display skeleton
   const winRate = stats && stats.totalMatches > 0
     ? ((stats.totalWins / stats.totalMatches) * 100).toFixed(1)
     : null;
 
-  // Tarjetas flotantes con datos reales
+  // Render variables for mouse tilt tracking
+  const transformStyle = {
+    transform: `perspective(1000px) rotateY(${mousePos.x * 20}deg) rotateX(${mousePos.y * -20}deg)`,
+    transition: 'transform 0.1s ease-out'
+  };
+
   const floatingCards = (
-    <div className="hero-graphics">
-      <div className="floating-card card-1">
+    <div className="hero-graphics" style={transformStyle}>
+      {/* Animated HUD Backing */}
+      <div className="hero-radar"></div>
+
+      <div className="floating-card card-1" style={{ transform: `translateZ(80px) rotateY(${mousePos.x * 10}deg)` }}>
         <div className="f-card-header">
           <span>PARTIDAS TOTALES</span>
           <span>⚔️</span>
@@ -52,7 +72,7 @@ const Home = () => {
         <div className="f-card-sub">Registradas en el servidor</div>
       </div>
 
-      <div className="floating-card card-2">
+      <div className="floating-card card-2" style={{ transform: `translateZ(100px) rotateY(${mousePos.x * -10}deg)` }}>
         <div className="f-card-header">
           <span>WIN RATE AVG</span>
           <span>📈</span>
@@ -63,7 +83,7 @@ const Home = () => {
         <div className="f-card-sub">Rendimiento global</div>
       </div>
 
-      <div className="floating-card card-3">
+      <div className="floating-card card-3" style={{ transform: `translateZ(120px) rotateX(${mousePos.y * 15}deg)` }}>
         <div className="f-card-header">
           <span>JUGADORES</span>
         </div>
@@ -77,34 +97,41 @@ const Home = () => {
 
   if (!user) {
     return (
-      <div className="home">
+      <div className="home" onMouseMove={handleMouseMove} ref={containerRef}>
+        
+        {/* Dynamic Light Orbs */}
+        <div className="light-orb orb-red" style={{ 
+          transform: `translate(${mousePos.x * -50}px, ${mousePos.y * -50}px)` 
+        }}></div>
+        <div className="light-orb orb-cyan" style={{ 
+          transform: `translate(${mousePos.x * 50}px, ${mousePos.y * 50}px)` 
+        }}></div>
+
         <div className="hero-section">
           {/* Marquee Background */}
           <div className="marquee-container">
             <div className="marquee-content">
-              ROYAL RANKED • PREMIUM LEAGUE • E-SPORTS PLATFORM • REAL TIME DATA • PURE COMPETITION • ROYAL RANKED • PREMIUM LEAGUE • E-SPORTS PLATFORM • 
+              ROYAL RANKED • PREMIUM LEAGUE • E-SPORTS PLATFORM • REAL TIME DATA • PURE COMPETITION • ROYAL RANKED • PREMIUM LEAGUE • 
             </div>
           </div>
           
           <div className="hero-layout">
-
-            {/* LEFT: Contenido principal */}
             <div className="hero-content">
               <div className="hero-badge animate-fade-up">
-                <span className="badge-text">🔥 COMUNIDAD GAMING</span>
+                <span className="badge-text" style={{margin: '0'}}>🔥 COMUNIDAD COMPETITIVA</span>
               </div>
               <h1 className="hero-title glitch-wrapper animate-fade-up delay-1">
                 <span className="title-line glitch" data-text="ROYAL">ROYAL</span>
                 <span className="title-line title-accent">MEJOR RANKED</span>
               </h1>
               <p className="hero-description animate-fade-up delay-2">
-                La plataforma definitiva para competidores. Registra stats en tiempo real, compite en nuestras ligas y monitorea la actividad del servidor.
+                La plataforma definitiva para jugadores serios. Sincronización en tiempo real con Discord, Leaderboards globales y análisis de ligas privadas E-Sports.
               </p>
               <div className="hero-buttons animate-fade-up delay-3">
                 <button onClick={login} className="btn btn-primary btn-skewed">
                   <span className="btn-skewed-content" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <DiscordIcon />
-                    ENTRAR
+                    ENTRAR AL DASHBOARD
                   </span>
                 </button>
                 <a href="https://discord.gg/VBrarJu9DP" target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-skewed">
@@ -113,7 +140,6 @@ const Home = () => {
               </div>
             </div>
 
-            {/* RIGHT: Tarjetas con datos REALES del bot */}
             {floatingCards}
 
           </div>
@@ -122,31 +148,33 @@ const Home = () => {
     );
   }
 
-  // Vista para usuario logueado: stats completas
   if (statsLoading) {
-    return <div className="loading"></div>;
+    return <div className="loading">Cargando Sistema...</div>;
   }
 
   return (
-    <div className="home">
+    <div className="home" onMouseMove={handleMouseMove} ref={containerRef}>
+      
+      <div className="light-orb orb-red"></div>
+      
       <div className="stats-section">
-        <h1 className="page-title">ESTADÍSTICAS</h1>
-        <p className="page-subtitle">Métricas en tiempo real del servidor · Actualiza cada 10 segundos</p>
+        <h1 className="page-title animate-fade-up">DASHBOARD EN VIVO</h1>
+        <p className="page-subtitle animate-fade-up delay-1">Métricas procesadas en tiempo real de la API de Discord</p>
 
         <div className="stats-overview">
-          <div className="stat-card-large">
-            <div className="stat-icon">👥</div>
-            <h3>JUGADORES TOTALES</h3>
+          <div className="stat-card-large animate-fade-up delay-2" style={{ transform: `translateY(${mousePos.y * 10}px)` }}>
+            <div className="stat-icon pulse-icon">👥</div>
+            <h3>JUGADORES VINCULADOS</h3>
             <p className="stat-value">{(stats?.totalPlayers ?? 0).toLocaleString()}</p>
           </div>
-          <div className="stat-card-large">
-            <div className="stat-icon">⚔️</div>
-            <h3>PARTIDAS JUGADAS</h3>
+          <div className="stat-card-large animate-fade-up delay-3" style={{ transform: `translateY(${mousePos.y * -10}px)` }}>
+            <div className="stat-icon pulse-icon" style={{ animationDelay: '0.2s'}}>⚔️</div>
+            <h3>BATALLAS REGISTRADAS</h3>
             <p className="stat-value">{(stats?.totalMatches ?? 0).toLocaleString()}</p>
           </div>
-          <div className="stat-card-large">
-            <div className="stat-icon">🏆</div>
-            <h3>VICTORIAS TOTALES</h3>
+          <div className="stat-card-large animate-fade-up delay-4" style={{ transform: `translateY(${mousePos.y * 10}px)` }}>
+            <div className="stat-icon pulse-icon" style={{ animationDelay: '0.4s'}}>🏆</div>
+            <h3>VICTORIAS OTORGADAS</h3>
             <p className="stat-value">{(stats?.totalWins ?? 0).toLocaleString()}</p>
           </div>
         </div>

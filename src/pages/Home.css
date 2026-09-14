@@ -36,6 +36,31 @@
   100% { opacity: 1; }
 }
 
+/* VOLUMETRIC LIGHT ORBS */
+.light-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  transition: transform 0.5s ease-out;
+}
+.orb-red {
+  width: 600px; height: 600px;
+  background: var(--color-primary);
+  top: -10%; right: -10%;
+  animation: orbDrift 20s infinite alternate linear;
+}
+.orb-cyan {
+  width: 500px; height: 500px;
+  background: #00ffff;
+  bottom: -20%; left: -10%;
+  animation: orbDriftReverse 25s infinite alternate linear;
+}
+@keyframes orbDrift { 100% { transform: translateY(100px) scale(1.2); } }
+@keyframes orbDriftReverse { 100% { transform: translateX(100px) scale(0.8); } }
+
 .hero-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -43,6 +68,8 @@
   max-width: 1400px;
   width: 100%;
   align-items: center;
+  position: relative;
+  z-index: 5;
 }
 
 /* LEFT COLUMN */
@@ -50,7 +77,21 @@
   position: relative;
   z-index: 2;
   text-align: left;
+  background: rgba(10, 10, 14, 0.4);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 3rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: inset 0 0 60px rgba(0,0,0,0.5), 0 20px 50px rgba(0,0,0,0.5);
 }
+/* HUD Brackets around the content box */
+.hero-content::before, .hero-content::after {
+  content: ''; position: absolute; width: 30px; height: 30px;
+  border-style: solid; border-color: rgba(248,0,47,0.8); z-index: 5; pointer-events: none;
+}
+.hero-content::before { top: -2px; left: -2px; border-width: 3px 0 0 3px; }
+.hero-content::after { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; }
 
 .hero-badge {
   display: inline-flex;
@@ -148,57 +189,111 @@
   transform: translateY(-2px);
 }
 
+/* CUSTOM ANIMATED CROSSHAIR/RADAR BACKGROUND */
+.hero-radar {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  border: 4px dashed rgba(248,0,47,0.15);
+  animation: radarSpin 40s linear infinite;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.hero-radar::before {
+  content: '';
+  position: absolute;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  border: 2px solid rgba(248,0,47,0.05);
+  border-left: 2px solid var(--color-primary);
+  border-right: 2px solid var(--color-primary);
+  animation: radarSpinReverse 15s linear infinite;
+}
+.hero-radar::after {
+  content: '';
+  position: absolute;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(248,0,47,0.5), transparent);
+}
+
+@keyframes radarSpin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+@keyframes radarSpinReverse { 100% { transform: rotate(-360deg); } }
+
 /* RIGHT COLUMN - ANIMATED CSS CARDS */
 .hero-graphics {
   position: relative;
-  height: 500px;
+  height: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
-  perspective: 1000px;
+  perspective: 1200px;
 }
 
 .floating-card {
   position: absolute;
-  width: 250px;
-  background: rgba(17, 17, 22, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  padding: 1.5rem;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  width: 260px;
+  background: rgba(10, 10, 14, 0.85);
+  backdrop-filter: blur(20px);
+  padding: 1.8rem;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(248,0,47,0.1) inset;
   border-radius: 4px;
   transform-style: preserve-3d;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.floating-card:hover { border-color: var(--color-primary); }
+/* Neon Conic Border Effect */
+.floating-card::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -2px;
+  background: linear-gradient(90deg, transparent 50%, rgba(248,0,47,0.8), transparent);
+  background-size: 200% 200%;
+  animation: borderRotate 4s linear infinite;
+  border-radius: 6px;
+  opacity: 0.5;
+}
+@keyframes borderRotate {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 200%; }
+}
+
+.floating-card:hover { 
+  border-color: var(--color-primary);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.9), 0 0 50px rgba(248,0,47,0.2) inset;
+}
+.floating-card:hover::before { opacity: 1; }
 
 .card-1 {
   z-index: 3;
   animation: float-1 6s ease-in-out infinite;
-  border-left: 3px solid var(--color-primary);
-  transform: translateX(-40px) translateZ(50px);
+  transform: translateX(-50px) translateZ(80px);
 }
 .card-2 {
   z-index: 2;
   animation: float-2 7s ease-in-out infinite reverse;
-  border-top: 3px solid #00ffff;
-  width: 220px;
-  right: 0; top: 20px;
-  background: rgba(17, 17, 22, 0.5);
+  width: 230px;
+  right: -20px; top: 40px;
+  background: rgba(17, 17, 22, 0.7);
 }
+.card-2::before { background: linear-gradient(90deg, transparent 50%, #00ffff, transparent); }
 .card-3 {
   z-index: 1;
   animation: float-3 8s ease-in-out infinite;
-  border-right: 3px solid #ff2a55;
-  width: 200px;
-  bottom: 0; left: 10px;
-  opacity: 0.8;
+  width: 210px;
+  bottom: 20px; left: 0px;
+  opacity: 0.9;
 }
 
 @keyframes float-1 {
-  0%, 100% { transform: translateX(-40px) translateY(0) translateZ(50px) rotateY(10deg); }
-  50% { transform: translateX(-40px) translateY(-20px) translateZ(50px) rotateY(15deg) rotateX(5deg); }
+  0%, 100% { transform: translateX(-50px) translateY(0) translateZ(80px) rotateY(10deg); }
+  50% { transform: translateX(-50px) translateY(-20px) translateZ(80px) rotateY(15deg) rotateX(5deg); }
 }
 @keyframes float-2 {
   0%, 100% { transform: translate(40px, -20px) translateZ(-50px) rotateY(-10deg); }
@@ -292,6 +387,14 @@
   color: #fff;
 }
 
+.pulse-icon {
+  animation: heartPulse 2s infinite ease-in-out;
+}
+@keyframes heartPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(248,0,47,0)); }
+  50% { transform: scale(1.15); filter: drop-shadow(0 0 15px rgba(248,0,47,0.8)); }
+}
+
 @media (max-width: 1100px) {
   .hero-layout { 
     grid-template-columns: 1fr; 
@@ -316,6 +419,7 @@
     gap: 1.5rem;
     justify-content: center;
   }
+  .hero-radar { display: none; }
   .floating-card {
     position: relative;
     width: 250px;
