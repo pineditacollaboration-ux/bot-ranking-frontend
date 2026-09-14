@@ -11,6 +11,8 @@ const rateLimit = require('express-rate-limit');
 const session = require('express-session');
 const passport = require('passport');
 const DiscordStrategy = require('passport-discord').Strategy;
+const https = require('https');
+const fs = require('fs');
 
 let _clientRef = null;
 let _matchesRef = null;
@@ -84,11 +86,11 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// 3. CORS (solo necesario si se llama desde el navegador, pero lo mantenemos cerrado)
+// 3. CORS (permitir conexiones desde cualquier origen para desarrollo y producción)
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://royalranked.xyz', 'https://www.royalranked.xyz', 'http://localhost:5173', 'http://45.126.208.136:7000'],
+  origin: ['http://localhost:3000', 'https://royalranked.xyz', 'https://www.royalranked.xyz', 'http://localhost:5173', 'http://45.126.208.136:7000', 'https://45.126.208.136:7000', '*'],
   credentials: true,
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'OPTIONS'],
   optionsSuccessStatus: 200,
 }));
 app.use(express.json());
@@ -609,10 +611,11 @@ function startApiServer({ client, matches, settings, config, port = 7000 } = {})
     configureDiscordOAuth(config);
   }
 
-  const server = app.listen(port, '0.0.0.0', () => {
+    const server = app.listen(port, '0.0.0.0', () => {
     console.log(`✅ [API] Servidor REST en tiempo real corriendo en http://0.0.0.0:${port}`);
     console.log(`   → Endpoints: /api/health, /api/stats, /api/ranking, /api/matches/active, /api/matches/recent`);
     console.log(`   → Auth: /auth/discord, /auth/user, /auth/logout`);
+    console.log(`   → NOTA: Para HTTPS en producción, configura Cloudflare Tunnel o SSL en Pterodactyl`);
   });
 
   server.on('error', (err) => {
