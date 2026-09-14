@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      width: 750px;
+      height: 850px;
+      background: #0a0a0a;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    .container {
+      width: 700px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .avatar {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+      border: 4px solid #ff0000;
+    }
+    
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .card {
+      width: 680px;
+      background: #151515;
+      border-radius: 20px;
+      padding: 40px 50px 45px 50px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+    }
+    
+    .header {
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    
+    .header-left {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-right {
+      display: flex;
+      gap: 15px;
+      padding-bottom: 5px;
+    }
+
+    .currency-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      min-width: 85px;
+    }
+
+    .currency-label {
+      font-size: 10px;
+      font-weight: 800;
+      color: #7a7a7a;
+      margin-bottom: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .currency-content {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .currency-icon {
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+    }
+
+    .currency-value {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+
+    .username {
+      font-size: 52px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 6px;
+      letter-spacing: -0.8px;
+      line-height: 1;
+    }
+    
+    .subtitle {
+      font-size: 17px;
+      font-weight: 500;
+      color: #9a9a9a;
+      margin-top: 8px;
+    }
+    
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: #252525;
+      margin-bottom: 32px;
+    }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px 10px;
+      margin-bottom: 35px;
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #5a5a5a;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      margin-bottom: 7px;
+    }
+    
+    .stat-value {
+      font-size: 40px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1;
+    }
+    
+    .perks {
+      display: flex;
+      gap: 18px;
+      opacity: 0.28;
+    }
+    
+    .perk {
+      font-size: 22px;
+      font-weight: 800;
+      color: #9a9a9a;
+    }
+    
+    .perk.hidden {
+      display: none;
+    }
+  </style>
+  {{CUSTOM_CSS}}
+</head>
+<body>
+  <div class="container">
+    <div class="avatar">
+      <img src="{{AVATAR_URL}}" alt="Avatar" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+    </div>
+    
+    <div class="card">
+      <div class="header">
+        <div class="header-left">
+          <div class="username">{{USERNAME}}</div>
+          <div class="subtitle">{{SUBTITLE}}</div>
+        </div>
+        <div class="header-right">
+          <div class="currency-item">
+            <div class="currency-label">COINS</div>
+            <div class="currency-content">
+              <div class="currency-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="9" stroke="#FFD700" stroke-width="2.5" fill="#FFD700" fill-opacity="0.15"/>
+                  <path d="M12 7V17M12 17C10 17 9 16 9 14.5C9 13 10 12 12 12C14 12 15 11 15 9.5C15 8 14 7 12 7" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="currency-value">{{COINS}}</span>
+            </div>
+          </div>
+          <div class="currency-item">
+            <div class="currency-label">GIROS</div>
+            <div class="currency-content">
+              <span class="currency-icon">🎰</span>
+              <span class="currency-value">{{SPINS}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="divider"></div>
+      
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">RANK</div>
+          <div class="stat-value">{{RANK}}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">PUNTOS</div>
+          <div class="stat-value">{{POINTS}}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">VICTORIAS</div>
+          <div class="stat-value">{{WINS}}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">DERROTAS</div>
+          <div class="stat-value">{{LOSSES}}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">MVPS</div>
+          <div class="stat-value">{{MVPS}}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">PARTIDAS</div>
+          <div class="stat-value">{{MATCHES}}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">SEG. VICTORIAS</div>
+          <div class="stat-value">{{STREAK}}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">WINRATE</div>
+          <div class="stat-value">{{WINRATE}}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">CREACIONES</div>
+          <div class="stat-value">{{CREATIONS}}</div>
+        </div>
+      </div>
+      
+      <div class="perks">
+        <div class="perk {{SHOW_X2}}">X2</div>
+        <div class="perk {{SHOW_SHIELD}}">🛡️</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
