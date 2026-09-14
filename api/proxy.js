@@ -16,10 +16,26 @@ export default async function handler(req, res) {
   
   try {
     // Extraer el path de la URL (eliminar /api/proxy)
-    const path = req.url.replace(/^\/api\/proxy/, '');
+    let path = req.url;
+    
+    // Si la URL empieza con /api/proxy, eliminarlo
+    if (path.startsWith('/api/proxy')) {
+      path = path.replace(/^\/api\/proxy/, '');
+    }
+    
+    // Si el path está vacío, usar /api/stats por defecto
+    if (!path || path === '/') {
+      path = '/api/stats';
+    }
+    
     const url = `${BOT_API_URL}${path}`;
     
-    console.log('Proxying to:', url);
+    console.log('Proxy request:', {
+      originalUrl: req.url,
+      path,
+      targetUrl: url,
+      method: req.method
+    });
     
     const response = await fetch(url, {
       method: req.method,
@@ -30,11 +46,29 @@ export default async function handler(req, res) {
       body: req.method === 'POST' ? JSON.stringify(req.body) : undefined,
     });
 
-    const data = await response.json();
+    console.log('Proxy response:', {
+      status: response.status,
+      statusText: response.statusText
+    });
+
+    const contentType = response.headers.get('content-type') || '';
+    let data;
+    
+    if (contentType.includes('application/json')) {
+      data = await response.json();
+    } else {
+      data = await response.text();
+    }
+    
+    console.log('Proxy response data:', data);
     
     return res.status(response.status).json(data);
   } catch (error) {
     console.error('Proxy error:', error);
-    return res.status(500).json({ error: 'Error en proxy', message: error.message });
+    return res.status(500).json({ 
+      error: 'Error en proxy', 
+      message: error.message,
+      stack: error.stack 
+    });
   }
 }
