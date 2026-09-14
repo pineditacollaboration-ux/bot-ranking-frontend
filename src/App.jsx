@@ -12,19 +12,8 @@ const Login = lazy(() => import('./pages/Login'));
 const Seasons = lazy(() => import('./pages/Seasons'));
 const Estadisticas = lazy(() => import('./pages/Estadisticas'));
 
-// Loading component for lazy loaded routes
 const LoadingFallback = () => (
-  <div style={{
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '50vh',
-    fontSize: '1.5rem',
-    color: '#ef4444',
-    fontFamily: 'Inter, sans-serif'
-  }}>
-    Cargando...
-  </div>
+  <div className="loading" style={{ minHeight: '100vh', background: '#0a0a0a' }}></div>
 );
 
 // Scroll to top component
@@ -60,6 +49,7 @@ function App() {
     <AuthProvider>
       <Router>
         <ScrollToTop />
+        <div className="scanlines"></div>
         <div className="app">
           <Navbar />
           <Suspense fallback={<LoadingFallback />}>
