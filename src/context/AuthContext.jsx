@@ -69,9 +69,9 @@ export const AuthProvider = ({ children }) => {
     const state = Math.random().toString(36).substring(7);
     sessionStorage.setItem('oauth_state', state);
     
-    const authUrl = new URL(API_CONFIG.ENDPOINTS.AUTH.DISCORD);
-    authUrl.searchParams.append('state', state);
-    window.location.href = authUrl.toString();
+    const authUrl = API_CONFIG.ENDPOINTS.AUTH.DISCORD;
+    const urlWithState = `${authUrl}?state=${state}`;
+    window.location.href = urlWithState;
   };
 
   const logout = async () => {
