@@ -35,6 +35,15 @@
     <title>Royal Ranked</title>
   </head>
   <body>
+    <script>
+      // Force scroll to top on page load
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
