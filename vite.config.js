@@ -6,11 +6,11 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3001',
+        target: 'http://45.126.208.136:7000',
         changeOrigin: true,
       },
       '/auth': {
-        target: 'http://localhost:3001',
+        target: 'http://45.126.208.136:7000',
         changeOrigin: true,
       }
     }

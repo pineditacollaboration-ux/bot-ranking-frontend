@@ -15,7 +15,11 @@ export default async function handler(req, res) {
   const BOT_API_URL = 'http://45.126.208.136:7000';
   
   try {
-    const url = `${BOT_API_URL}${req.url}`;
+    // Extraer el path de la URL (eliminar /api/proxy)
+    const path = req.url.replace(/^\/api\/proxy/, '');
+    const url = `${BOT_API_URL}${path}`;
+    
+    console.log('Proxying to:', url);
     
     const response = await fetch(url, {
       method: req.method,
