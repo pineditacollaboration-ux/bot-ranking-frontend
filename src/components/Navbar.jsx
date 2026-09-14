@@ -86,17 +86,17 @@ const Navbar = () => {
                   href={item.path}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="nav-link btn-skewed"
+                  className="nav-link"
                 >
-                  <span className="btn-skewed-content">{item.label}</span>
+                  {item.label}
                 </a>
               ) : (
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`nav-link btn-skewed ${location.pathname === item.path ? 'active' : ''}`}
+                  className={`nav-link ${location.pathname === item.path ? 'active' : ''}`}
                 >
-                  <span className="btn-skewed-content">{item.label}</span>
+                  {item.label}
                 </Link>
               )
             ))}
@@ -132,8 +132,8 @@ const Navbar = () => {
                 </button>
               </div>
             ) : (
-              <Link to="/login" className="login-btn btn-skewed">
-                <span className="btn-skewed-content">ENTRAR</span>
+              <Link to="/login" className="login-btn">
+                ENTRAR
               </Link>
             )}
           </div>

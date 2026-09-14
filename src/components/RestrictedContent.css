@@ -1,10 +1,6 @@
-/* ============================================
-   RESTRICTED CONTENT — Premium Esports UI
-   ============================================ */
-
 .restricted-content {
   flex: 1;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 85px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,145 +13,121 @@
 .restricted-content::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 60% 60% at 50% 50%, rgba(248,0,47,0.08) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40VW;
+  height: 40VW;
+  background: radial-gradient(circle, rgba(245, 0, 49, 0.15) 0%, transparent 60%);
+  filter: blur(80px);
+  z-index: -1;
   animation: pulseGlow 4s ease-in-out infinite alternate;
-  pointer-events: none;
 }
 
 @keyframes pulseGlow {
-  from { opacity: 0.5; transform: scale(1); }
-  to   { opacity: 1;   transform: scale(1.1); }
+  from { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+  to   { opacity: 1;   transform: translate(-50%, -50%) scale(1.1); }
 }
 
-.restricted-overlay { position: relative; z-index: 1; width: 100%; max-width: 520px; }
+.restricted-overlay { position: relative; z-index: 1; width: 100%; max-width: 500px; }
 
 .restricted-box {
-  background: rgba(17, 17, 22, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-top: 3px solid var(--color-primary);
-  padding: 3.5rem 3rem;
+  background: var(--color-bg-panel);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--panel-radius);
+  padding: 4rem 3rem;
   text-align: center;
   position: relative;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(248,0,47,0.06) inset;
-}
-
-/* Top corner accent lines (HUD style) */
-.restricted-box::before,
-.restricted-box::after {
-  content: '';
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-color: var(--color-primary);
-  border-style: solid;
-}
-.restricted-box::before {
-  bottom: -1px; left: -1px;
-  border-width: 0 0 2px 2px;
-}
-.restricted-box::after {
-  bottom: -1px; right: -1px;
-  border-width: 0 2px 2px 0;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Lock SVG icon */
-.restricted-lock-svg {
-  width: 56px;
-  height: 56px;
-  color: var(--color-primary);
-  margin: 0 auto 1.5rem;
-  display: block;
-  filter: drop-shadow(0 0 12px rgba(248,0,47,0.5));
-  animation: lockPulse 2.5s ease-in-out infinite;
-}
-@keyframes lockPulse {
-  0%,100% { filter: drop-shadow(0 0 8px rgba(248,0,47,0.4)); }
-  50%      { filter: drop-shadow(0 0 22px rgba(248,0,47,0.95)); }
+.restricted-lock-wrapper {
+  width: 72px;
+  height: 72px;
+  background: rgba(245, 0, 49, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 30px rgba(245, 0, 49, 0.2);
 }
 
-.restricted-header { margin-bottom: 1.5rem; }
+.restricted-lock-svg {
+  width: 36px;
+  height: 36px;
+  color: var(--color-primary);
+  animation: lockPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes lockPulse {
+  0% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(245,0,49,0.5)); }
+  50% { transform: scale(1.1); filter: drop-shadow(0 0 15px rgba(245,0,49,0.8)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(245,0,49,0.5)); }
+}
+
+.restricted-header { margin-bottom: 2rem; }
 
 .restricted-title {
   font-family: var(--font-heading);
   font-size: 2.5rem;
   font-weight: 900;
   color: #fff;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.05em;
   margin-bottom: 0.5rem;
 }
 
 .restricted-subtitle {
-  font-family: var(--font-heading);
   font-size: 1rem;
-  font-weight: 700;
-  color: var(--color-primary);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-}
-
-.restricted-message {
-  margin-bottom: 2.5rem;
-  padding: 1rem;
-  border-left: 2px solid var(--color-border);
-}
-.restricted-message p {
   color: var(--color-text-muted);
-  line-height: 1.7;
-  font-size: 1.05rem;
+  line-height: 1.6;
 }
 
 .discord-btn {
   width: 100%;
-  background: var(--color-primary);
-  color: #fff;
-  border: 1px solid var(--color-accent);
-  padding: 1.1rem 2rem;
-  font-family: var(--font-heading);
-  font-size: 1.2rem;
-  font-weight: 800;
-  cursor: pointer;
-  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 10px 30px -10px var(--color-primary);
+  transition: var(--transition-smooth);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  position: relative;
-  overflow: hidden;
-  clip-path: polygon(14px 0%, 100% 0%, calc(100% - 14px) 100%, 0% 100%);
 }
 
-/* Sheen sweep on hover */
-.discord-btn::before {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%;
-  width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  transition: left 0.5s;
-}
-.discord-btn:hover::before { left: 100%; }
 .discord-btn:hover {
   background: var(--color-accent);
-  box-shadow: 0 0 30px rgba(248,0,47,0.5);
-  transform: translateY(-2px);
+  box-shadow: 0 15px 40px -5px var(--color-primary-glow);
+  transform: translateY(-3px);
 }
 
-.discord-btn svg { width: 26px; height: 26px; flex-shrink: 0; }
+.discord-btn svg {
+  width: 24px;
+  height: 24px;
+}
 
 .restricted-footer {
-  margin-top: 1.5rem;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  margin-top: 2rem;
   padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  width: 100%;
 }
+
 .restricted-footer p {
-  color: rgba(255,255,255,0.2);
-  font-size: 0.8rem;
-  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.3);
+  font-size: 0.85rem;
 }

@@ -12,28 +12,35 @@ const Ranking = () => {
   const [sortBy, setSortBy] = useState('points');
   const [loading, setLoading] = useState(true);
 
-  if (!user) {
-    return <RestrictedContent />;
-  }
-
   useEffect(() => {
+    if (!user) return;
     fetchRanking();
     const interval = setInterval(fetchRanking, 10000);
     return () => clearInterval(interval);
-  }, [sortBy]);
+  }, [sortBy, user]);
 
   const fetchRanking = async () => {
     try {
       const response = await axios.get(API_CONFIG.ENDPOINTS.API.RANKING, {
         params: { sortBy }
       });
-      setPlayers(response.data);
+      // API may return array directly or { ranking: [...] } or { players: [...] }
+      const data = response.data;
+      const arr = Array.isArray(data)
+        ? data
+        : data?.ranking ?? data?.players ?? data?.data ?? [];
+      setPlayers(arr);
     } catch (error) {
       console.error('Error al obtener ranking:', error);
+      setPlayers([]);
     } finally {
       setLoading(false);
     }
   };
+
+  if (!user) {
+    return <RestrictedContent />;
+  }
 
   const sortOptions = [
     { value: 'points', label: 'PUNTOS' },

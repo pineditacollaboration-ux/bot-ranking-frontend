@@ -12,21 +12,22 @@ const Seasons = () => {
   const [seasonStats, setSeasonStats] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  if (!user) {
-    return <RestrictedContent />;
-  }
-
   useEffect(() => {
+    if (!user) return;
     fetchSeasons();
-  }, []);
+  }, [user]);
 
   const fetchSeasons = async () => {
     try {
       const response = await axios.get(API_CONFIG.ENDPOINTS.API.SEASONS);
-      setSeasons(response.data);
-      if (response.data.length > 0) {
-        setSelectedSeason(response.data[0]);
-        fetchSeasonStats(response.data[0]);
+      const data = response.data;
+      const arr = Array.isArray(data)
+        ? data
+        : data?.seasons ?? data?.data ?? [];
+      setSeasons(arr);
+      if (arr.length > 0) {
+        setSelectedSeason(arr[0]);
+        fetchSeasonStats(arr[0]);
       }
     } catch (error) {
       console.error('Error al obtener temporadas:', error);
@@ -40,11 +41,20 @@ const Seasons = () => {
       const response = await axios.get(API_CONFIG.ENDPOINTS.API.RANKING, {
         params: { season, limit: 10 }
       });
-      setSeasonStats(response.data);
+      const data = response.data;
+      const arr = Array.isArray(data)
+        ? data
+        : data?.ranking ?? data?.players ?? data?.data ?? [];
+      setSeasonStats(arr);
     } catch (error) {
       console.error('Error al obtener estadísticas de temporada:', error);
+      setSeasonStats([]);
     }
   };
+
+  if (!user) {
+    return <RestrictedContent />;
+  }
 
   const handleSeasonChange = (season) => {
     setSelectedSeason(season);

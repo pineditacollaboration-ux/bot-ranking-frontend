@@ -1,81 +1,167 @@
-/* ============================================
-   SEASONS PAGE — Historical Data Archives
-   ============================================ */
-
 .seasons {
-  min-height: calc(100vh - 80px);
-  padding: 4rem 2rem;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  position: relative;
-  z-index: 10;
+  padding: 4rem 2rem;
+  min-height: calc(100vh - 85px);
 }
 
-.seasons-grid {
+.seasons-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.seasons-title {
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.season-selector {
+  display: flex;
+  gap: 0.75rem;
+  background: var(--color-bg-panel);
+  border: 1px solid var(--color-border);
+  padding: 0.5rem;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.season-btn {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: none;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: var(--transition-smooth);
+}
+
+.season-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+.season-btn.active {
+  background: var(--color-primary);
+  color: #fff;
+  box-shadow: 0 5px 15px rgba(245, 0, 49, 0.3);
+}
+
+.season-content {
+  animation: fadeUpReveal 0.6s ease-out;
+}
+
+.season-info {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.season-info h2 {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.season-info p {
+  color: var(--color-text-muted);
+  font-size: 1.1rem;
+}
+
+.season-ranking h3 {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 1rem;
+}
+
+.ranking-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
+  gap: 1.5rem;
 }
 
-.season-card {
-  background: rgba(10, 10, 14, 0.6);
-  border: 1px solid rgba(255,255,255,0.05);
-  border-top: 3px solid #333;
-  backdrop-filter: blur(15px);
-  padding: 2rem;
-  border-radius: 8px;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
+.ranking-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: var(--color-bg-panel);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--panel-radius);
+  padding: 1.5rem;
+  transition: var(--transition-smooth);
 }
 
-.season-card:hover {
-  border-top-color: var(--color-primary);
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 -5px 20px rgba(248,0,47,0.2);
-  background: rgba(248,0,47,0.03);
+.ranking-item:hover {
+  transform: translateY(-5px);
+  border-color: rgba(245, 0, 49, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.season-card::before {
-  content: 'ARCHIVE';
-  position: absolute;
-  top: 10px; right: -20px;
-  background: #333; color: #fff;
-  font-family: var(--font-heading);
-  font-size: 0.7rem; font-weight: 900;
-  padding: 0.2rem 2rem;
-  transform: rotate(45deg);
-}
-
-.season-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.s-name {
+.rank-position {
   font-family: var(--font-heading);
   font-size: 2rem;
   font-weight: 900;
-  color: #fff;
-  margin-bottom: 0.5rem;
-}
-.s-date {
-  color: var(--color-text-muted);
-  font-size: 0.9rem;
-  margin-bottom: 1.5rem;
+  color: var(--color-primary);
+  min-width: 40px;
+  text-align: center;
 }
 
-.s-stats {
-  display: flex;
-  justify-content: space-between;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  padding-top: 1rem;
+.player-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.1);
 }
-.s-stat-item {
+
+.player-info {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
-.s-val { font-weight: bold; color: var(--color-primary); font-size: 1.2rem; }
-.s-lbl { color: #888; font-size: 0.8rem; text-transform: uppercase; }
+
+.player-name {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.player-stats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.player-stats span {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.no-data {
+  text-align: center;
+  padding: 5rem 2rem;
+  background: var(--color-bg-panel);
+  border-radius: var(--panel-radius);
+  border: 1px dashed var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+}
