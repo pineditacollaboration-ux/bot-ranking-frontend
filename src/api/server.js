@@ -238,6 +238,7 @@ app.get('/api/stats', async (req, res) => {
       totalPlayers,
       discordMembers,
       totalMatches,
+      totalWins: totalMatches, // Temporalmente igual a totalMatches hasta calcular wins reales
       activePlayers,
       activeMatches: activeMatchCount,
       botOnline: _clientRef ? _clientRef.isReady() : false,
