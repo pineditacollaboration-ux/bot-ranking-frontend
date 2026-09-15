@@ -69,13 +69,13 @@ const Ranking = () => {
     const isTop3 = idx < 3;
     const rankNum = idx + 1;
 
-    /* gated row: censor data */
+    /* gated row: censor only name/avatar, show real numbers */
     const displayName    = isGated ? '???' : p.username;
     const displayHash    = isGated ? '#????' : `#${p.discordId?.slice(-4) ?? '????'}`;
-    const displayPoints  = isGated ? '—' : (p.points ?? 0).toLocaleString();
-    const displayWins    = isGated ? '—' : p.wins;
-    const displayLosses  = isGated ? '—' : p.losses;
-    const displayMvps    = isGated ? '—' : p.mvps;
+    const displayPoints  = (p.points ?? 0).toLocaleString();
+    const displayWins    = p.wins;
+    const displayLosses  = p.losses;
+    const displayMvps    = p.mvps;
     const avatarSrc      = isGated ? null : getAvatarUrl(p.discordId, p.avatar);
 
     const inner = (
