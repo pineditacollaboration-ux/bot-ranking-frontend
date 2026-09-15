@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { API_CONFIG } from '../config/api';
 import RestrictedContent from '../components/RestrictedContent';
-import { Trophy } from 'lucide-react';
+// Removed lucide-react
 import './Seasons.css';
 
 const getAvatarUrl = (discordId, avatarHash) => {
@@ -95,7 +95,7 @@ const Seasons = () => {
 
       {seasons.length === 0 && !loading && (
         <div className="seasons-empty">
-          <div className="seasons-empty-icon"><Trophy size={64} style={{ opacity: 0.3 }} /></div>
+          <div className="seasons-empty-icon"><span style={{ fontSize: '64px', opacity: 0.3 }}>🏆</span></div>
           <div className="seasons-empty-text">No hay temporadas registradas</div>
           <div className="seasons-empty-sub">Las temporadas aparecerán aquí cuando estén disponibles</div>
         </div>
@@ -121,7 +121,7 @@ const Seasons = () => {
             </div>
           ) : seasonStats.length === 0 ? (
             <div className="seasons-empty">
-              <div className="seasons-empty-icon"><Trophy size={64} style={{ opacity: 0.3 }} /></div>
+              <div className="seasons-empty-icon"><span style={{ fontSize: '64px', opacity: 0.3 }}>🏆</span></div>
               <div className="seasons-empty-text">Sin datos para esta temporada</div>
             </div>
           ) : (

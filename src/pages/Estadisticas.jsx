@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { API_CONFIG } from '../config/api';
 import RestrictedContent from '../components/RestrictedContent';
-import { Users, Swords, Activity, Trophy, Medal, Crown, Shield, Target, Clock } from 'lucide-react';
+// Removed lucide-react
 import './Estadisticas.css';
 
 const Estadisticas = () => {
@@ -56,23 +56,23 @@ const Estadisticas = () => {
   const fmt = n => loading ? '—' : (n ?? 0).toLocaleString('es');
 
   const kpis = [
-    { icon: <Users size={28} />, label: 'JUGADORES TOTALES', val: fmt(stats?.totalPlayers), sub: 'Vinculados a la plataforma' },
-    { icon: <Swords size={28} />, label: 'PARTIDAS JUGADAS',  val: fmt(stats?.totalMatches), sub: 'Registradas en el servidor' },
-    { icon: <Activity size={28} />, label: 'JUGADORES ACTIVOS', val: fmt(stats?.activePlayers), sub: 'Con partidas recientes' },
-    { icon: <Trophy size={28} />, label: 'PARTIDAS ACTIVAS',  val: fmt(stats?.activeMatches), sub: 'En curso actualmente' },
+    { icon: <span>👤</span>, label: 'JUGADORES TOTALES', val: fmt(stats?.totalPlayers), sub: 'Vinculados a la plataforma' },
+    { icon: <span>⚔️</span>, label: 'PARTIDAS JUGADAS',  val: fmt(stats?.totalMatches), sub: 'Registradas en el servidor' },
+    { icon: <span>⚡</span>, label: 'JUGADORES ACTIVOS', val: fmt(stats?.activePlayers), sub: 'Con partidas recientes' },
+    { icon: <span>🏆</span>, label: 'PARTIDAS ACTIVAS',  val: fmt(stats?.activeMatches), sub: 'En curso actualmente' },
   ];
 
   const topCards = [
     {
-      cls: 't1', icon: <Crown size={36} className="text-gold" />, crown: 'MÁS PUNTOS',
+      cls: 't1', icon: <span style={{fontSize: 36}} className="text-gold">👑</span>, crown: 'MÁS PUNTOS',
       player: topPoints, score: topPoints?.points, unit: 'PUNTOS',
     },
     {
-      cls: 't2', icon: <Medal size={36} className="text-crimson" />, crown: 'MÁS VICTORIAS',
+      cls: 't2', icon: <span style={{fontSize: 36}} className="text-crimson">🎖️</span>, crown: 'MÁS VICTORIAS',
       player: topWins, score: topWins?.wins, unit: 'WINS',
     },
     {
-      cls: 't3', icon: <Shield size={36} className="text-green" />, crown: 'MÁS MVP',
+      cls: 't3', icon: <span style={{fontSize: 36}} className="text-green">🛡️</span>, crown: 'MÁS MVP',
       player: topMvp, score: topMvp?.mvps, unit: 'MVPs',
     },
   ];
@@ -101,7 +101,7 @@ const Estadisticas = () => {
       </div>
 
       <div className="stats-section anim-fade-up d5">
-        <div className="stats-section-title"><Crown size={16} /> TOP JUGADORES</div>
+        <div className="stats-section-title"><span>👑</span> TOP JUGADORES</div>
         <div className="top-trio">
           {topCards.map((tc, i) => {
             if (!tc.player) return (
