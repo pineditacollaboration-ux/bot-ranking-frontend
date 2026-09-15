@@ -20,17 +20,17 @@ const getAvatarUrl = (discordId, avatarHash) => {
 };
 
 const SORT_OPTIONS = [
-  { id: 'season', label: 'T. ACTUAL', icon: <Star size={16} /> },
-  { id: 'points', label: 'GLOBAL', icon: <Star size={16} /> },
+  { id: 'points', label: 'PUNTOS', icon: <Star size={16} /> },
   { id: 'wins', label: 'VICTORIAS', icon: <Trophy size={16} /> },
   { id: 'mvps', label: 'MVP', icon: <Shield size={16} /> },
+  { id: 'streak', label: 'RACHA', icon: <Flame size={16} /> },
   { id: 'losses', label: 'DERROTAS', icon: <Activity size={16} /> },
 ];
 
 const Ranking = () => {
   const { user } = useAuth();
   const [ranking, setRanking] = useState([]);
-  const [sortBy, setSortBy] = useState('season');
+  const [sortBy, setSortBy] = useState('points');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -43,7 +43,7 @@ const Ranking = () => {
   const fetchRanking = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(API_CONFIG.ENDPOINTS.API.RANKING, { params: { type: sortBy } });
+      const res = await axios.get(API_CONFIG.ENDPOINTS.API.RANKING, { params: { sortBy } });
       const d = res.data;
       const arr = Array.isArray(d) ? d : d?.ranking ?? d?.players ?? d?.data ?? [];
       setRanking(arr);
@@ -66,7 +66,7 @@ const Ranking = () => {
 
   return (
     <div className="ranking-page">
-      <div className="ranking-header">
+      <div className="ranking-header anim-fade-up">
         <div className="ranking-title-row">
           <div>
             <div className="badge badge-live" style={{ marginBottom: 10 }}>
@@ -99,49 +99,36 @@ const Ranking = () => {
         <>
           {/* PODIUM DIRECT TOP 3 */}
           {top3.length >= 3 && (
-            <div className="podium-container">
+            <div className="podium-container anim-fade-up d1">
               {[top3[1], top3[0], top3[2]].map((p, idx) => {
                 const pos = idx === 0 ? 2 : idx === 1 ? 1 : 3;
-                const censor = !user;
-                const dName = censor ? '???' : p.username;
-                const dPts = censor ? '—' : (p.points ?? 0).toLocaleString();
-                const dWins = censor ? '—' : p.wins;
-                const dMvps = censor ? '—' : p.mvps;
-                const dAvatar = censor ? null : getAvatarUrl(p.discordId, p.avatar);
-
-                const cardContent = (
-                    <div className="podium-card" style={censor ? { filter: 'blur(3px)', userSelect: 'none' } : {}}>
+                return (
+                  <Link to={user ? `/profile/${p.discordId}` : '/login'} key={p.discordId} className={`podium-slot pos-${pos}`}>
+                    <div className="podium-card">
                       <div className="podium-rank-badge">{pos}</div>
                       {pos === 1 && <CrownIcon className="podium-crown" />}
                       <div className="podium-avatar-frame">
-                        {dAvatar ?
-                          <img
-                            src={dAvatar}
-                            alt={dName}
-                            className="podium-avatar"
-                            onError={(e) => { e.target.onerror = null; e.target.src = 'https://cdn.discordapp.com/embed/avatars/0.png'; }}
-                          /> : <div className="podium-avatar" style={{background:'#222', display:'flex', alignItems:'center', justifyContent:'center'}}>?</div>
-                        }
+                        <img
+                          src={getAvatarUrl(p.discordId, p.avatar)}
+                          alt={p.username}
+                          className="podium-avatar"
+                          onError={(e) => { e.target.onerror = null; e.target.src = 'https://cdn.discordapp.com/embed/avatars/0.png'; }}
+                        />
                       </div>
-                      <div className="podium-name">{dName}</div>
-                      <div className="podium-points">{dPts}</div>
-                      <div className="podium-stat"><span>{dWins} W</span> / <span>{dMvps} MVP</span></div>
-                      {!censor && <div className="podium-stat-label">WR: {winRate(p.wins, p.losses)}%</div>}
+                      <div className="podium-name">{p.username}</div>
+                      <div className="podium-points">{(p.points ?? 0).toLocaleString()}</div>
+                      <div className="podium-stat"><span>{p.wins} W</span> / <span>{p.mvps} MVP</span></div>
+                      <div className="podium-stat-label">WR: {winRate(p.wins, p.losses)}%</div>
                     </div>
-                );
-
-                return censor ? (
-                   <div key={p.discordId ?? idx} className={`podium-slot pos-${pos}`}>{cardContent}</div>
-                ) : (
-                  <Link to={`/profile/${p.discordId}`} key={p.discordId} className={`podium-slot pos-${pos}`}>{cardContent}</Link>
+                  </Link>
                 );
               })}
             </div>
           )}
 
           {/* TABLE RANKING */}
-          <div className="ranking-table-wrap" style={{ position: 'relative' }}>
-            <div className="ranking-table-head">
+          <div className="ranking-table-card anim-fade-up d2">
+            <div className="rt-head">
               <span style={{ textAlign: 'center' }}>POS</span>
               <span>JUGADOR</span>
               <span className="right" style={{ color: 'var(--text-bright)' }}>PUNTOS</span>
@@ -150,51 +137,25 @@ const Ranking = () => {
               <span className="right">WR%</span>
             </div>
             
-            <div className="ranking-table-body">
-              {restOfPlayers.map((p, i) => {
-                const censor = !user;
-                const inner = (
-                   <div className="ranking-row" style={censor ? { filter: 'blur(3px)', userSelect: 'none', pointerEvents: 'none' } : {}}>
-                    <div className="row-rank">{i + 4}</div>
-                    <div className="row-player">
-                      {censor ?
-                        <div className="row-avatar" style={{background:'#222', display:'flex', alignItems:'center', justifyContent:'center'}}>?</div> :
-                        <img
-                          src={getAvatarUrl(p.discordId, p.avatar)}
-                          alt={p.username}
-                          className="row-avatar"
-                          onError={(e) => { e.target.onerror = null; e.target.src = 'https://cdn.discordapp.com/embed/avatars/0.png'; }}
-                        />
-                      }
-                      <div className="row-player-info">
-                        <span className="row-player-name">{censor ? '???' : p.username}</span>
-                      </div>
-                    </div>
-                    <div className="row-stat right highlight">{censor ? '—' : (p.points ?? 0).toLocaleString()}</div>
-                    <div className="row-stat right">{censor ? '—' : p.wins}</div>
-                    <div className="row-stat right">{censor ? '—' : p.mvps}</div>
-                    <div className="row-stat right">{censor ? '—' : `${winRate(p.wins, p.losses)}%`}</div>
-                   </div>
-                );
-
-                return censor ? (
-                   <div key={p.discordId ?? i}>{inner}</div>
-                ) : (
-                  <Link to={`/profile/${p.discordId}`} key={p.discordId} style={{textDecoration:'none', color:'inherit'}}>
-                    {inner}
-                  </Link>
-                );
-              })}
-
-              {!user && (
-                <div style={{ position: 'absolute', inset: 0, zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(to top, rgba(2,2,5,0.9) 20%, rgba(2,2,5,0.5) 80%, transparent)' }}>
-                  <div style={{ padding: '20px', textAlign: 'center', background: 'var(--bg-card)', border: '1px solid var(--crimson)', borderRadius: '16px', boxShadow: '0 10px 40px rgba(0,0,0,0.5)' }}>
-                    <div style={{ color: 'var(--crimson)', fontSize: '12px', letterSpacing: '3px', fontWeight: 'bold', marginBottom: '8px' }}>ACCESO RESTRINGIDO</div>
-                    <h2 style={{ fontSize: '32px', margin: '0 0 16px 0' }}>INICIA SESIÓN<br/><span style={{ color: 'var(--crimson)' }}>PARA VER TODO</span></h2>
-                    <Link to="/login" className="nav-discord-btn" style={{ display: 'inline-flex', justifyContent: 'center' }}>ENTRAR PARA VER RANKING</Link>
+            <div className="rt-body">
+              {restOfPlayers.map((p, i) => (
+                <Link to={user ? `/profile/${p.discordId}` : '/login'} key={p.discordId} className="rt-row">
+                  <div className="rt-cell center pos-num">{i + 4}</div>
+                  <div className="rt-cell player-cell">
+                    <img
+                      src={getAvatarUrl(p.discordId, p.avatar)}
+                      alt={p.username}
+                      className="player-avatar"
+                      onError={(e) => { e.target.onerror = null; e.target.src = 'https://cdn.discordapp.com/embed/avatars/0.png'; }}
+                    />
+                    <span className="player-name">{p.username}</span>
                   </div>
-                </div>
-              )}
+                  <div className="rt-cell right pts">{(p.points ?? 0).toLocaleString()}</div>
+                  <div className="rt-cell right wins">{p.wins}</div>
+                  <div className="rt-cell right mvps">{p.mvps}</div>
+                  <div className="rt-cell right target">{winRate(p.wins, p.losses)}%</div>
+                </Link>
+              ))}
             </div>
             
             {ranking.length === 0 && !loading && (
@@ -208,7 +169,7 @@ const Ranking = () => {
 };
 
 const CrownIcon = ({ className }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
     <path d="M2.5 19h19v2h-19zm19.53-12.2l-4.04 6.2h-11.98l-4.04-6.2 3.66-2.56 2.33 4.2 3.53-7.44 3.53 7.44 2.33-4.2z" />
   </svg>
 );
