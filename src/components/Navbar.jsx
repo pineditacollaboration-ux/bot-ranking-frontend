@@ -39,9 +39,9 @@ const Navbar = () => {
   }, [mobileOpen]);
 
   const getAvatar = () => {
-    if (user?.avatar?.startsWith('http')) return user.avatar;
-    if (user?.avatar) return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-    return null;
+    if (!user?.avatar || user.avatar === 'null' || user.avatar === 'undefined') return `https://cdn.discordapp.com/embed/avatars/0.png`;
+    if (user.avatar.startsWith('http')) return user.avatar;
+    return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
   };
 
   return (
@@ -90,8 +90,8 @@ const Navbar = () => {
                 </button>
               </>
             ) : (
-              <Link to="/login" className="nav-discord-btn">
-                <DiscordIcon /> ENTRAR
+              <Link to="/login" className="nav-enter-btn">
+                <span>ENTRAR</span>
               </Link>
             )}
 

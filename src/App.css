@@ -14,15 +14,15 @@
   --gold-dim:    #c9a400;
   --gold-light:  #fff0a0;
 
-  /* Dark palette */
-  --bg-void:   #020205;
-  --bg-deep:   #06060f;
-  --bg-dark:   #0c0c1a;
-  --bg-mid:    #111128;
-  --bg-card:   #14142a;
-  --bg-panel:  #1a1a35;
-  --bg-border: #252548;
-  --bg-hover:  #1e1e3a;
+  /* Dark palette — true black */
+  --bg-void:   #020202;
+  --bg-deep:   #040408;
+  --bg-dark:   #07070c;
+  --bg-mid:    #0d0d14;
+  --bg-card:   #0a0a10;
+  --bg-panel:  #111118;
+  --bg-border: #1a1a26;
+  --bg-hover:  #0f0f18;
 
   /* Text */
   --text-pure:   #ffffff;
@@ -73,7 +73,7 @@
 html { scroll-behavior: smooth; }
 body {
   font-family: 'Inter', 'Rajdhani', sans-serif;
-  background: var(--bg-void);
+  background: #020202;
   color: var(--text-bright);
   overflow-x: hidden;
   min-height: 100vh;
@@ -105,8 +105,8 @@ body::before {
 .app-bg-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.12;
+  filter: blur(140px);
+  opacity: 0.06;
 }
 .app-bg-orb-1 {
   width: 600px; height: 600px;
