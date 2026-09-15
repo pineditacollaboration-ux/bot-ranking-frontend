@@ -24,14 +24,8 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [sRes, rRes] = await Promise.all([
-          axios.get(API_CONFIG.ENDPOINTS.API.STATS),
-          axios.get(API_CONFIG.ENDPOINTS.API.RANKING, { params: { type: 'season', limit: 3 } }),
-        ]);
+        const sRes = await axios.get(API_CONFIG.ENDPOINTS.API.STATS);
         setStats(sRes.data);
-        const d = rRes.data;
-        const arr = Array.isArray(d) ? d : d?.players ?? d?.ranking ?? d?.data ?? [];
-        setTop3(arr.slice(0, 3));
       } catch (_) {}
     };
     fetchData();
@@ -96,40 +90,9 @@ const Home = () => {
           </div>
         </div>
 
-        {/* ── RIGHT: Live Top 3 ── */}
+        {/* ── RIGHT: Visual Filler ── */}
         <div className="hhr-right">
-          <div className="hhr-top3-panel">
-            <div className="hhr-top3-label">
-              <span className="hhr-t3-line" />
-              TOP JUGADORES
-              <span className="hhr-t3-line" />
-            </div>
-
-            {top3.length === 0 ? (
-              <div className="hhr-top3-empty">Cargando...</div>
-            ) : (
-              top3.map((p, idx) => (
-                <Link to={user ? `/profile/${p.discordId}` : '/ranking'} key={p.discordId} className="hhr-top3-row" style={{ textDecoration: 'none' }}>
-                  <span className="hhr-t3-medal">{medals[idx]}</span>
-                  <img
-                    src={getAvatarUrl(p.discordId, p.avatar)}
-                    alt={p.username}
-                    className="hhr-t3-avatar"
-                    onError={e => { e.target.onerror = null; e.target.src = 'https://cdn.discordapp.com/embed/avatars/0.png'; }}
-                  />
-                  <div className="hhr-t3-info">
-                    <span className="hhr-t3-name">{p.username}</span>
-                    <span className="hhr-t3-sub">{(p.seasonPoints ?? p.points ?? 0).toLocaleString()} pts · {p.wins ?? 0} wins</span>
-                  </div>
-                  <span className="hhr-t3-rank">#{idx + 1}</span>
-                </Link>
-              ))
-            )}
-
-            <Link to="/ranking" className="hhr-top3-cta">
-              VER RANKING COMPLETO →
-            </Link>
-          </div>
+           <div className="hhr-char-glow"></div>
         </div>
 
       </div>
