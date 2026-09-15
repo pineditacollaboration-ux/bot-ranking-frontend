@@ -28,7 +28,7 @@ const Home = () => {
             </p>
 
             <div className="hhr-actions">
-              <a href="https://discord.gg/royalranked" target="_blank" rel="noreferrer" className="btn-real-red-skew">
+              <a href="https://discord.gg/zscGKBdfGA" target="_blank" rel="noreferrer" className="btn-real-red-skew">
                 <span className="btn-inner">
                   <span className="btn-icon">🎮</span>
                   ENTRA EN NUESTRO DISCORD
