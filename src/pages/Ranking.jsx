@@ -19,7 +19,8 @@ const getAvatarUrl = (discordId, avatarHash) => {
 };
 
 const SORT_OPTIONS = [
-  { id: 'points',  label: 'PUNTOS' },
+  { id: 'season', label: 'T. ACTUAL' },
+  { id: 'points',  label: 'GLOBAL' },
   { id: 'wins',   label: 'VICTORIAS' },
   { id: 'losses', label: 'DERROTAS' },
   { id: 'mvps',   label: 'MVP' },
@@ -35,7 +36,7 @@ const DiscordIcon = () => (
 const Ranking = () => {
   const { user, login } = useAuth();
   const [ranking, setRanking]   = useState([]);
-  const [sortBy, setSortBy]     = useState('points');
+  const [sortBy, setSortBy]     = useState('season');
   const [loading, setLoading]   = useState(true);
   const [statsObj, setStatsObj] = useState(null);
 
@@ -49,7 +50,7 @@ const Ranking = () => {
   const fetchRanking = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(API_CONFIG.ENDPOINTS.API.RANKING, { params: { sortBy } });
+      const res = await axios.get(API_CONFIG.ENDPOINTS.API.RANKING, { params: { type: sortBy } });
       const d = res.data;
       const arr = Array.isArray(d) ? d : d?.ranking ?? d?.players ?? d?.data ?? [];
       setRanking(arr);
@@ -124,13 +125,13 @@ const Ranking = () => {
   };
 
   /* Which rows are locked */
-  const VISIBLE_FREE = 3; // top 3 always visible
+  const VISIBLE_FREE = 0; // everything censored if not logged in
 
   return (
     <div className="ranking-page">
 
       {/* ── HEADER ── */}
-      <div className="rk-header anim-fade-up">
+      <div className="rk-header">
         <div className="rk-header-left">
           <div className="rk-season-tag">
             <span className="rk-season-line" />
@@ -166,7 +167,7 @@ const Ranking = () => {
       </div>
 
       {/* ── FILTERS ── */}
-      <div className="rk-filters anim-fade-up d1">
+      <div className="rk-filters">
         <div className="rk-filter-group">
           <span className="rk-filter-label">ORDENAR POR</span>
           <div className="rk-pills">
@@ -184,7 +185,7 @@ const Ranking = () => {
       </div>
 
       {/* ── TABLE ── */}
-      <div className="rk-table-wrap anim-fade-up d2">
+      <div className="rk-table-wrap">
 
         {/* Table header */}
         <div className="rk-table-head">
