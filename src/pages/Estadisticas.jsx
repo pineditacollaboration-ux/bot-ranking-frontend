@@ -10,121 +10,133 @@ const Estadisticas = () => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Stats can be viewed even without login (public info)
   useEffect(() => {
     fetchStats();
-    const interval = setInterval(fetchStats, 10000);
-    return () => clearInterval(interval);
+    const iv = setInterval(fetchStats, 15000);
+    return () => clearInterval(iv);
   }, []);
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get(API_CONFIG.ENDPOINTS.API.STATS);
-      setStats(response.data);
-    } catch (error) {
-      console.error('Error al obtener estadísticas:', error);
-    } finally {
-      setLoading(false);
-    }
+      const res = await axios.get(API_CONFIG.ENDPOINTS.API.STATS);
+      setStats(res.data);
+    } catch (_) {}
+    finally { setLoading(false); }
   };
 
-  if (!user) {
-    return <RestrictedContent />;
-  }
+  if (!user) return <RestrictedContent />;
 
-  if (loading) {
-    return <div className="loading">Cargando estadísticas...</div>;
-  }
+  const getAvatar = (discordId, avatar) => {
+    if (avatar && avatar !== 'null' && avatar !== 'undefined') {
+      return `https://cdn.discordapp.com/avatars/${discordId}/${avatar}.png`;
+    }
+    return `https://cdn.discordapp.com/embed/avatars/0.png`;
+  };
+
+  const fmt = n => loading ? '—' : (n ?? 0).toLocaleString('es');
+
+  const kpis = [
+    { icon: '👥', label: 'JUGADORES TOTALES', val: fmt(stats?.totalPlayers), sub: 'Vinculados a la plataforma' },
+    { icon: '⚔️', label: 'PARTIDAS JUGADAS',  val: fmt(stats?.totalMatches), sub: 'Registradas en el servidor' },
+    { icon: '🔥', label: 'JUGADORES ACTIVOS', val: fmt(stats?.activePlayers), sub: 'Con partidas recientes' },
+    { icon: '🏆', label: 'TEMPORADA ACTUAL',  val: loading ? '—' : `S${stats?.currentSeason ?? 1}`, sub: 'En curso' },
+  ];
+
+  const topCards = [
+    {
+      cls: 't1', trophy: '🥇', crown: 'MÁS PUNTOS',
+      player: stats?.topPoints, score: stats?.topPoints?.points, unit: 'PUNTOS',
+    },
+    {
+      cls: 't2', trophy: '🥈', crown: 'MÁS VICTORIAS',
+      player: stats?.topWins, score: stats?.topWins?.wins, unit: 'WINS',
+    },
+    {
+      cls: 't3', trophy: '🥉', crown: 'MÁS MVP',
+      player: stats?.topMvp, score: stats?.topMvp?.mvps, unit: 'MVPs',
+    },
+  ];
+
+  const activities = [
+    { icon: '📊', key: 'PUNTOS PROMEDIO',  val: fmt(stats?.avgPoints) },
+    { icon: '🎯', key: 'TASA DE VICTORIA', val: loading ? '—' : `${stats?.winRate ?? 0}%` },
+    { icon: '⏱️', key: 'DURACIÓN PROMEDIO', val: loading ? '—' : `${stats?.avgMatchTime ?? 0} min` },
+  ];
 
   return (
-    <div className="estadisticas">
-      <div className="estadisticas-container">
-        <h1 className="page-title">ESTADÍSTICAS</h1>
-        <p className="page-subtitle">Métricas y análisis del servidor</p>
-
-        <div className="stats-overview">
-          <div className="stat-card-large">
-            <div className="stat-icon">👥</div>
-            <h3>JUGADORES TOTALES</h3>
-            <p className="stat-value">{stats?.totalPlayers || 0}</p>
-          </div>
-          <div className="stat-card-large">
-            <div className="stat-icon">⚔️</div>
-            <h3>PARTIDAS JUGADAS</h3>
-            <p className="stat-value">{stats?.totalMatches || 0}</p>
-          </div>
-          <div className="stat-card-large">
-            <div className="stat-icon">🔥</div>
-            <h3>JUGADORES ACTIVOS</h3>
-            <p className="stat-value">{stats?.activePlayers || 0}</p>
-          </div>
-          <div className="stat-card-large">
-            <div className="stat-icon">🏆</div>
-            <h3>TEMPORADA ACTUAL</h3>
-            <p className="stat-value">S{stats?.currentSeason || 1}</p>
-          </div>
+    <div className="estadisticas-page">
+      {/* Header */}
+      <div className="anim-fade-up" style={{ marginBottom: 40 }}>
+        <div className="badge badge-live" style={{ marginBottom: 10 }}>
+          <span className="dot" /> DATOS EN VIVO
         </div>
+        <h1 className="section-heading">ESTADÍSTICAS <span className="text-crimson">GLOBALES</span></h1>
+        <p className="section-lead">Métricas y análisis completos del servidor competitivo</p>
+      </div>
 
-        <div className="stats-section">
-          <h2 className="section-title">TOP JUGADORES</h2>
-          <div className="top-players-grid">
-            {stats?.topPoints && (
-              <div className="top-player-card">
-                <div className="top-badge">🥇 MÁS PUNTOS</div>
-                <img
-                  src={`https://cdn.discordapp.com/avatars/${stats.topPoints.discordId}/${stats.topPoints.avatar}.png`}
-                  alt={stats.topPoints.username}
-                  className="top-player-avatar"
-                />
-                <div className="top-player-name">{stats.topPoints.username}</div>
-                <div className="top-player-score">{stats.topPoints.points} pts</div>
-              </div>
-            )}
-            {stats?.topWins && (
-              <div className="top-player-card">
-                <div className="top-badge">🥈 MÁS VICTORIAS</div>
-                <img
-                  src={`https://cdn.discordapp.com/avatars/${stats.topWins.discordId}/${stats.topWins.avatar}.png`}
-                  alt={stats.topWins.username}
-                  className="top-player-avatar"
-                />
-                <div className="top-player-name">{stats.topWins.username}</div>
-                <div className="top-player-score">{stats.topWins.wins} wins</div>
-              </div>
-            )}
-            {stats?.topMvp && (
-              <div className="top-player-card">
-                <div className="top-badge">🥉 MÁS MVP</div>
-                <img
-                  src={`https://cdn.discordapp.com/avatars/${stats.topMvp.discordId}/${stats.topMvp.avatar}.png`}
-                  alt={stats.topMvp.username}
-                  className="top-player-avatar"
-                />
-                <div className="top-player-name">{stats.topMvp.username}</div>
-                <div className="top-player-score">{stats.topMvp.mvps} mvps</div>
-              </div>
-            )}
+      {/* KPIs */}
+      <div className="stats-kpi-grid">
+        {kpis.map((k, i) => (
+          <div key={k.label} className={`stats-kpi-card anim-fade-up d${i+1}`}>
+            <div className="stats-kpi-top">
+              <span className="stats-kpi-label">{k.label}</span>
+              <span className="stats-kpi-icon">{k.icon}</span>
+            </div>
+            <div className="stats-kpi-val">{k.val}</div>
+            <div className="stats-kpi-sub">{k.sub}</div>
           </div>
+        ))}
+      </div>
+
+      {/* TOP PLAYERS */}
+      <div className="stats-section anim-fade-up d5">
+        <div className="stats-section-title">👑 TOP JUGADORES</div>
+        <div className="top-trio">
+          {topCards.map((tc, i) => {
+            if (!tc.player) return (
+              <div key={tc.crown} className={`top-player-card ${tc.cls}`}>
+                <div className="top-player-trophy">{tc.trophy}</div>
+                <div style={{ width: 80, height: 80, borderRadius:'50%', background:'var(--bg-border)' }} />
+                <div className={`top-player-crown`}>{tc.crown}</div>
+                <div className="top-player-name" style={{ color: 'var(--text-dim)' }}>—</div>
+                <div className="top-player-score" style={{ color: 'var(--text-dim)' }}>—</div>
+              </div>
+            );
+            return (
+              <div key={tc.player.discordId} className={`top-player-card ${tc.cls}`}>
+                <div className="top-player-trophy">{tc.trophy}</div>
+                <img
+                  src={getAvatar(tc.player.discordId, tc.player.avatar)}
+                  alt={tc.player.username}
+                  className="top-player-avatar"
+                  onError={e => { e.target.onerror=null; e.target.src='https://cdn.discordapp.com/embed/avatars/0.png'; }}
+                />
+                <div className={`top-player-crown`}>{tc.crown}</div>
+                <div className="top-player-name">{tc.player.username}</div>
+                <div className="top-player-score">{(tc.score ?? 0).toLocaleString()}</div>
+                <div style={{ fontSize: 11, color: 'var(--text-dim)', letterSpacing: 3, textTransform: 'uppercase' }}>
+                  {tc.unit}
+                </div>
+              </div>
+            );
+          })}
         </div>
+      </div>
 
-        <div className="stats-section">
-          <h2 className="section-title">ACTIVIDAD RECIENTE</h2>
-          <div className="activity-stats">
-            <div className="activity-card">
-              <div className="activity-icon">📊</div>
-              <h3>PROMEDIO DE PUNTOS</h3>
-              <p className="activity-value">{stats?.avgPoints || 0}</p>
+      {/* ACTIVITY */}
+      <div className="stats-section anim-fade-up d6">
+        <div className="stats-section-title">📈 ACTIVIDAD RECIENTE</div>
+        <div className="activity-grid">
+          {activities.map((a, i) => (
+            <div key={a.key} className="activity-card">
+              <div className="activity-icon">{a.icon}</div>
+              <div className="activity-body">
+                <div className="activity-val">{a.val}</div>
+                <div className="activity-key">{a.key}</div>
+              </div>
             </div>
-            <div className="activity-card">
-              <div className="activity-icon">🎯</div>
-              <h3>TASA DE VICTORIA</h3>
-              <p className="activity-value">{stats?.winRate || 0}%</p>
-            </div>
-            <div className="activity-card">
-              <div className="activity-icon">⏱️</div>
-              <h3>TIEMPO PROMEDIO</h3>
-              <p className="activity-value">{stats?.avgMatchTime || 0} min</p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

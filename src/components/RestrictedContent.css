@@ -1,133 +1,78 @@
-.restricted-content {
-  flex: 1;
-  min-height: calc(100vh - 85px);
+/* ============================================================
+   RESTRICTED CONTENT — ROYAL RANKED
+   ============================================================ */
+
+.restricted-wrap {
+  min-height: calc(100vh - var(--navbar-h));
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  overflow: hidden;
-  padding: 2rem;
+  padding: calc(var(--navbar-h) + 40px) 20px 80px;
 }
 
-/* Animated background glow */
-.restricted-content::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40VW;
-  height: 40VW;
-  background: radial-gradient(circle, rgba(245, 0, 49, 0.15) 0%, transparent 60%);
-  filter: blur(80px);
-  z-index: -1;
-  animation: pulseGlow 4s ease-in-out infinite alternate;
-}
-
-@keyframes pulseGlow {
-  from { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
-  to   { opacity: 1;   transform: translate(-50%, -50%) scale(1.1); }
-}
-
-.restricted-overlay { position: relative; z-index: 1; width: 100%; max-width: 500px; }
-
-.restricted-box {
-  background: var(--color-bg-panel);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--color-border);
-  border-radius: var(--panel-radius);
-  padding: 4rem 3rem;
+.restricted-card {
+  max-width: 480px;
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--bg-border);
+  border-radius: var(--radius-xl);
+  padding: 56px 48px;
   text-align: center;
   position: relative;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  overflow: hidden;
+}
+.restricted-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--crimson), var(--gold));
 }
 
-/* Lock SVG icon */
-.restricted-lock-wrapper {
-  width: 72px;
-  height: 72px;
-  background: rgba(245, 0, 49, 0.1);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 2rem;
-  box-shadow: 0 0 30px rgba(245, 0, 49, 0.2);
+.restricted-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  display: block;
+  filter: drop-shadow(0 0 20px rgba(232,0,42,0.3));
 }
-
-.restricted-lock-svg {
-  width: 36px;
-  height: 36px;
-  color: var(--color-primary);
-  animation: lockPulse 2.5s ease-in-out infinite;
-}
-
-@keyframes lockPulse {
-  0% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(245,0,49,0.5)); }
-  50% { transform: scale(1.1); filter: drop-shadow(0 0 15px rgba(245,0,49,0.8)); }
-  100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(245,0,49,0.5)); }
-}
-
-.restricted-header { margin-bottom: 2rem; }
 
 .restricted-title {
-  font-family: var(--font-heading);
-  font-size: 2.5rem;
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.5rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  letter-spacing: 4px;
+  color: var(--text-pure);
+  margin-bottom: 12px;
+}
+.restricted-title span { color: var(--crimson); }
+
+.restricted-desc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin-bottom: 32px;
 }
 
-.restricted-subtitle {
-  font-size: 1rem;
-  color: var(--color-text-muted);
-  line-height: 1.6;
-}
-
-.discord-btn {
-  width: 100%;
-  display: flex;
+.restricted-btn {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  background: var(--color-primary);
-  color: #fff;
-  border: none;
-  padding: 1rem 2rem;
-  font-family: var(--font-heading);
-  font-size: 1.1rem;
-  font-weight: 700;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 10px 30px -10px var(--color-primary);
-  transition: var(--transition-smooth);
-  text-transform: uppercase;
-}
-
-.discord-btn:hover {
-  background: var(--color-accent);
-  box-shadow: 0 15px 40px -5px var(--color-primary-glow);
-  transform: translateY(-3px);
-}
-
-.discord-btn svg {
-  width: 24px;
-  height: 24px;
-}
-
-.restricted-footer {
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  gap: 10px;
   width: 100%;
+  padding: 16px;
+  background: #5865F2;
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: var(--t-mid);
+  box-shadow: 0 0 30px rgba(88,101,242,0.3);
 }
-
-.restricted-footer p {
-  color: rgba(255,255,255,0.3);
-  font-size: 0.85rem;
+.restricted-btn:hover {
+  background: #4752c4;
+  transform: translateY(-2px);
+  box-shadow: 0 0 50px rgba(88,101,242,0.5);
 }
