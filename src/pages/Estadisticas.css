@@ -3,9 +3,8 @@
    ============================================================ */
 
 .estadisticas-page {
-  padding: calc(var(--navbar-h) + 60px) 24px 100px;
-  max-width: 1300px;
-  width: 100%;
+  padding: calc(var(--navbar-h) + 40px) 20px 80px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
@@ -13,23 +12,22 @@
 .stats-kpi-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-bottom: 48px;
+  gap: 16px;
+  margin-bottom: 40px;
 }
 
 .stats-kpi-card {
-  background: #07070b;
-  border: 1px solid #14141e;
+  background: var(--bg-card);
+  border: 1px solid var(--bg-border);
+  border-radius: var(--radius-lg);
   padding: 28px 24px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  transition: all 0.25s ease;
+  transition: var(--t-mid);
   position: relative;
   overflow: hidden;
-  transform: skewX(-4deg);
 }
-.stats-kpi-card > * { transform: skewX(4deg); }
 .stats-kpi-card:hover {
   border-color: rgba(232,0,42,0.2);
   transform: translateY(-4px);
@@ -96,7 +94,7 @@
 }
 
 /* ── TOP PLAYERS TRIPTYCH ── */
-.top-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; }
+.top-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 
 .top-player-card {
   background: var(--bg-card);
@@ -197,7 +195,7 @@
   font-size: 22px;
   flex-shrink: 0;
 }
-.activity-body { display: flex; flex-direction: column; gap: 4px; }
+.activity-body { }
 .activity-val {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 36px;
