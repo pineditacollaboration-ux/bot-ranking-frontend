@@ -19,11 +19,10 @@ const getAvatarUrl = (discordId, avatarHash) => {
 };
 
 const SORT_OPTIONS = [
-  { id: 'season', label: 'T. ACTUAL' },
-  { id: 'points',  label: 'GLOBAL' },
-  { id: 'wins',   label: 'VICTORIAS' },
-  { id: 'losses', label: 'DERROTAS' },
-  { id: 'mvps',   label: 'MVP' },
+  { id: 'points',  label: 'PUNTOS' },
+  { id: 'wins',    label: 'VICTORIAS' },
+  { id: 'losses',  label: 'DERROTAS' },
+  { id: 'mvps',    label: 'MVP' },
 ];
 
 /* DiscordIcon inline */
@@ -36,7 +35,7 @@ const DiscordIcon = () => (
 const Ranking = () => {
   const { user, login } = useAuth();
   const [ranking, setRanking]   = useState([]);
-  const [sortBy, setSortBy]     = useState('season');
+  const [sortBy, setSortBy]     = useState('points');
   const [loading, setLoading]   = useState(true);
   const [statsObj, setStatsObj] = useState(null);
 
