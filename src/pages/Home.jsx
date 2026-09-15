@@ -90,9 +90,40 @@ const Home = () => {
           </div>
         </div>
 
-        {/* ── RIGHT: Visual Filler ── */}
+        {/* ── RIGHT: How It Works Panel ── */}
         <div className="hhr-right">
            <div className="hhr-char-glow"></div>
+           <div className="hhr-info-card">
+              <div className="hhr-info-title">
+                <span className="hhr-info-icon">⚔️</span> ¿CÓMO FUNCIONA?
+              </div>
+              
+              <div className="hhr-steps">
+                <div className="hhr-step">
+                  <div className="step-num">1</div>
+                  <div className="step-text">
+                    <strong>ÚNETE A LA COMUNIDAD</strong>
+                    <span>Entra a nuestro Discord y vincula tu cuenta.</span>
+                  </div>
+                </div>
+                
+                <div className="hhr-step">
+                  <div className="step-num">2</div>
+                  <div className="step-text">
+                    <strong>COMPITE EN LOBBIES</strong>
+                    <span>Juega en los distintos modos y registra victorias.</span>
+                  </div>
+                </div>
+                
+                <div className="hhr-step">
+                  <div className="step-num">3</div>
+                  <div className="step-text">
+                    <strong>ESCALA EL RANKING</strong>
+                    <span>Acumula Puntos, Mejora tu Winrate y gana premios.</span>
+                  </div>
+                </div>
+              </div>
+           </div>
         </div>
 
       </div>

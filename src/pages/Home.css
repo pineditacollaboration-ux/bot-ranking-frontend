@@ -153,129 +153,103 @@
   background: #1e1e28;
 }
 
-/* ── RIGHT: TOP 3 PANEL ── */
+/* ── RIGHT: INFO PANEL ── */
 .hhr-right {
   flex: 1;
-  max-width: 420px;
+  max-width: 480px;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
-.hhr-top3-panel {
+.hhr-char-glow {
+  position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(232,0,42,0.15) 0%, transparent 65%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hhr-info-card {
+  position: relative;
+  z-index: 1;
   width: 100%;
+  background: rgba(5, 5, 8, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-top: 1px solid rgba(232,0,42,0.3);
+  padding: 30px;
+  transform: skewX(-4deg);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.hhr-info-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: #fff;
+  margin-bottom: 24px;
+  transform: skewX(4deg);
+}
+
+.hhr-steps {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 20px;
+  transform: skewX(4deg);
 }
 
-.hhr-top3-label {
+.hhr-step {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 4px;
-  color: #555;
-  text-transform: uppercase;
-  margin-bottom: 10px;
+  gap: 16px;
+  padding: 14px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.03);
+  border-left: 2px solid var(--crimson);
+  transition: all 0.3s ease;
 }
-.hhr-t3-line {
-  flex: 1;
-  height: 1px;
-  background: #1a1a24;
+.hhr-step:hover {
+  background: rgba(255,255,255,0.05);
+  border-left-color: #ff3355;
+  transform: translateX(5px);
 }
 
-.hhr-top3-row {
+.step-num {
+  width: 36px; height: 36px;
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 14px 18px;
-  background: #05050a;
-  border: 1px solid #10101a;
-  border-left: 3px solid transparent;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: inherit;
-}
-.hhr-top3-row:hover {
-  background: #09090f;
-  border-left-color: var(--crimson);
-}
-.hhr-top3-row:first-of-type {
-  border-left-color: #ffd700;
-}
-
-.hhr-t3-medal {
+  justify-content: center;
+  background: rgba(232,0,42,0.1);
+  color: var(--crimson);
+  font-family: 'Bebas Neue', sans-serif;
   font-size: 20px;
   flex-shrink: 0;
-  width: 28px;
-  text-align: center;
+  border-radius: 4px;
 }
-.hhr-t3-avatar {
-  width: 40px; height: 40px;
-  border-radius: 2px;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-.hhr-t3-info {
-  flex: 1;
+
+.step-text {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  min-width: 0;
+  gap: 4px;
 }
-.hhr-t3-name {
+.step-text strong {
   font-family: 'Rajdhani', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.hhr-t3-sub {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  color: #555;
-}
-.hhr-t3-rank {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 18px;
-  color: #333;
+  color: #f0f0f0;
+  font-size: 14px;
   letter-spacing: 1px;
 }
-
-.hhr-top3-empty {
-  text-align: center;
-  color: #555;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 13px;
-  letter-spacing: 2px;
-  padding: 30px 0;
-}
-
-.hhr-top3-cta {
-  display: block;
-  text-align: center;
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 700;
+.step-text span {
+  font-family: 'Inter', sans-serif;
+  color: #888;
   font-size: 11px;
-  letter-spacing: 3px;
-  color: var(--crimson);
-  text-decoration: none;
-  text-transform: uppercase;
-  margin-top: 12px;
-  padding: 10px;
-  border: 1px solid rgba(232,0,42,0.2);
-  transition: all 0.2s ease;
-}
-.hhr-top3-cta:hover {
-  background: rgba(232,0,42,0.06);
-  border-color: rgba(232,0,42,0.4);
 }
 
 /* ── RESPONSIVE ── */
