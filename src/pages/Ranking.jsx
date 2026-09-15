@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { API_CONFIG } from '../config/api';
 import { useAuth } from '../context/AuthContext';
-import RestrictedContent from '../components/RestrictedContent';
+import { API_CONFIG } from '../config/api';
+import { Trophy, Swords, Medal, Star, Shield, Flame, Activity } from 'lucide-react';
 import './Ranking.css';
 
 const getAvatarUrl = (discordId, avatarHash) => {
@@ -20,207 +20,158 @@ const getAvatarUrl = (discordId, avatarHash) => {
 };
 
 const SORT_OPTIONS = [
-  { value: 'points',  label: '⭐ PUNTOS' },
-  { value: 'wins',    label: '🏆 VICTORIAS' },
-  { value: 'mvps',   label: '👑 MVP' },
-  { value: 'streak', label: '🔥 RACHA' },
-  { value: 'losses', label: '💀 DERROTAS' },
+  { id: 'points', label: 'PUNTOS', icon: <Star size={16} /> },
+  { id: 'wins', label: 'VICTORIAS', icon: <Trophy size={16} /> },
+  { id: 'mvps', label: 'MVP', icon: <Shield size={16} /> },
+  { id: 'streak', label: 'RACHA', icon: <Flame size={16} /> },
+  { id: 'losses', label: 'DERROTAS', icon: <Activity size={16} /> },
 ];
-
-const SHIMMER_ROWS = 8;
 
 const Ranking = () => {
   const { user } = useAuth();
-  const [players, setPlayers] = useState([]);
+  const [ranking, setRanking] = useState([]);
   const [sortBy, setSortBy] = useState('points');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!user) return;
-    setLoading(true);
     fetchRanking();
-    const iv = setInterval(fetchRanking, 15000);
-    return () => clearInterval(iv);
-  }, [sortBy, user]);
+    const interval = setInterval(fetchRanking, 15000);
+    return () => clearInterval(interval);
+  }, [sortBy]);
 
   const fetchRanking = async () => {
     try {
+      setLoading(true);
       const res = await axios.get(API_CONFIG.ENDPOINTS.API.RANKING, { params: { sortBy } });
       const d = res.data;
       const arr = Array.isArray(d) ? d : d?.ranking ?? d?.players ?? d?.data ?? [];
-      setPlayers(arr);
-    } catch {
-      setPlayers([]);
+      setRanking(arr);
+      setError(null);
+    } catch (err) {
+      setError('Error al sincronizar el ranking con Discord');
     } finally {
       setLoading(false);
     }
   };
 
-  if (!user) return <RestrictedContent />;
+  const winRate = (wins, losses) => {
+    const total = wins + losses;
+    if (total === 0) return 0;
+    return ((wins / total) * 100).toFixed(1);
+  };
 
-  const top3 = players.slice(0, 3);
-  const rest = players.slice(3);
+  const top3 = ranking.slice(0, 3);
+  const restOfPlayers = ranking.slice(3);
 
   return (
     <div className="ranking-page">
-      {/* Header */}
-      <div className="ranking-page-header anim-fade-up">
-        <div className="ranking-page-header-top">
-          <div className="ranking-title-block">
-            <div className="badge badge-live" style={{ width: 'fit-content', marginBottom: 8 }}>
-              <span className="dot" /> RANKING EN VIVO
+      <div className="ranking-header anim-fade-up">
+        <div className="ranking-title-row">
+          <div>
+            <div className="badge badge-live" style={{ marginBottom: 10 }}>
+              <span className="dot" /> ONLINE
             </div>
-            <h1 className="section-heading">CLASIFICACIÓN <span className="text-crimson">GLOBAL</span></h1>
-            <p className="section-lead">Los mejores jugadores de la comunidad Royal Ranked</p>
+            <h1 className="section-heading">RANKING <span className="text-crimson">GLOBAL</span></h1>
           </div>
-          <div className="sort-pills">
+
+          <div className="ranking-filters">
             {SORT_OPTIONS.map(opt => (
               <button
-                key={opt.value}
-                className={`sort-pill ${sortBy === opt.value ? 'active' : ''}`}
-                onClick={() => setSortBy(opt.value)}
+                key={opt.id}
+                className={`filter-pill ${sortBy === opt.id ? 'active' : ''}`}
+                onClick={() => setSortBy(opt.id)}
               >
-                {opt.label}
+                {opt.icon} {opt.label}
               </button>
             ))}
           </div>
         </div>
+        {error && <div className="error-message">{error}</div>}
       </div>
 
-      {/* PODIUM (top 3) */}
-      {!loading && top3.length >= 3 && (
-        <div className="podium-section anim-fade-up d1">
-          {/* Reorder: 2nd, 1st, 3rd */}
-          {[top3[1], top3[0], top3[2]].map((player, displayIdx) => {
-            const realRank = displayIdx === 0 ? 2 : displayIdx === 1 ? 1 : 3;
-            const rankClass = `rank-${realRank}`;
-            const avatarUrl = getAvatarUrl(player.discordId, player.avatar);
-            const winRate = player.matchesPlayed > 0
-              ? ((player.wins / player.matchesPlayed) * 100).toFixed(0)
-              : 0;
-
-            return (
-              <Link
-                key={player.discordId}
-                to={`/profile/${player.discordId}`}
-                className={`podium-card ${rankClass}`}
-              >
-                {realRank === 1 && <div className="podium-crown">👑</div>}
-
-                <div className="podium-rank-label">
-                  {realRank === 1 ? '1°' : realRank === 2 ? '2°' : '3°'}
-                </div>
-
-                <div className="podium-avatar-wrap">
-                  <img
-                    src={avatarUrl}
-                    alt={player.username}
-                    className="podium-avatar"
-                    onError={e => {
-                      e.target.onerror = null;
-                      e.target.src = 'https://cdn.discordapp.com/embed/avatars/0.png';
-                    }}
-                  />
-                  <div className="podium-platform-badge">
-                    {player.platform === 'pc' ? '🖥️' : '📱'}
-                  </div>
-                </div>
-
-                <div className="podium-name">{player.username}</div>
-
-                <div className="podium-points">{(player.points ?? 0).toLocaleString()}</div>
-                <div className="podium-pts-label">PUNTOS</div>
-
-                <div className="podium-stats-row">
-                  <div className="podium-stat">
-                    <span className="podium-stat-val">{player.wins}</span>
-                    <span className="podium-stat-key">WINS</span>
-                  </div>
-                  <div className="podium-stat">
-                    <span className="podium-stat-val">{player.mvps}</span>
-                    <span className="podium-stat-key">MVP</span>
-                  </div>
-                  <div className="podium-stat">
-                    <span className="podium-stat-val">{winRate}%</span>
-                    <span className="podium-stat-key">WR</span>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
+      {loading && ranking.length === 0 ? (
+        <div className="loading-screen" style={{ minHeight: '50vh' }}>
+          <div className="loading-ring" />
+          <div className="loading-text">Sincronizando con Discord...</div>
         </div>
-      )}
-
-      {/* TABLE (rank 4+) */}
-      <div className="ranking-table-wrap anim-fade-up d2">
-        <div className="ranking-table-head">
-          <span className="center">#</span>
-          <span>JUGADOR</span>
-          <span className="right">PUNTOS</span>
-          <span className="right">WINS</span>
-          <span className="right">DERROTAS</span>
-          <span className="center">MVP</span>
-          <span className="right">RACHA</span>
-        </div>
-
-        <div className="ranking-table-body">
-          {loading ? (
-            Array.from({ length: SHIMMER_ROWS }).map((_, i) => (
-              <div key={i} className="shimmer-row">
-                <div className="shimmer-cell" style={{ height: 20, borderRadius: 4 }} />
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <div className="shimmer-avatar" />
-                  <div className="shimmer-cell" style={{ flex: 1, height: 18 }} />
-                </div>
-                <div className="shimmer-cell" />
-                <div className="shimmer-cell" />
-                <div className="shimmer-cell" />
-                <div className="shimmer-cell" />
-                <div className="shimmer-cell" />
-              </div>
-            ))
-          ) : rest.length === 0 && top3.length === 0 ? (
-            <div className="ranking-empty">No hay jugadores en el ranking todavía</div>
-          ) : (
-            rest.map((player, i) => {
-              const pos = i + 4;
-              const avatarUrl = getAvatarUrl(player.discordId, player.avatar);
-              return (
-                <Link
-                  key={player.discordId}
-                  to={`/profile/${player.discordId}`}
-                  className="ranking-row"
-                >
-                  <div className="row-rank">{pos}</div>
-                  <div className="row-player">
-                    <img
-                      src={avatarUrl}
-                      alt={player.username}
-                      className="row-avatar"
-                      onError={e => { e.target.onerror=null; e.target.src='https://cdn.discordapp.com/embed/avatars/0.png'; }}
-                    />
-                    <div className="row-player-info">
-                      <span className="row-player-name">{player.username}</span>
-                      <span className="row-player-platform">
-                        {player.platform === 'pc' ? '🖥️ PC' : '📱 MÓVIL'}
-                      </span>
+      ) : (
+        <>
+          {/* PODIUM DIRECT TOP 3 */}
+          {top3.length >= 3 && (
+            <div className="podium-container anim-fade-up d1">
+              {[top3[1], top3[0], top3[2]].map((p, idx) => {
+                const pos = idx === 0 ? 2 : idx === 1 ? 1 : 3;
+                return (
+                  <Link to={user ? `/profile/${p.discordId}` : '/login'} key={p.discordId} className={`podium-slot pos-${pos}`}>
+                    <div className="podium-card">
+                      <div className="podium-rank-badge">{pos}</div>
+                      {pos === 1 && <CrownIcon className="podium-crown" />}
+                      <div className="podium-avatar-frame">
+                        <img
+                          src={getAvatarUrl(p.discordId, p.avatar)}
+                          alt={p.username}
+                          className="podium-avatar"
+                          onError={(e) => { e.target.onerror = null; e.target.src = 'https://cdn.discordapp.com/embed/avatars/0.png'; }}
+                        />
+                      </div>
+                      <div className="podium-name">{p.username}</div>
+                      <div className="podium-points">{(p.points ?? 0).toLocaleString()}</div>
+                      <div className="podium-stat"><span>{p.wins} W</span> / <span>{p.mvps} MVP</span></div>
+                      <div className="podium-stat-label">WR: {winRate(p.wins, p.losses)}%</div>
                     </div>
-                  </div>
-                  <div className="row-stat highlight">{(player.points ?? 0).toLocaleString()}</div>
-                  <div className="row-stat">{player.wins}</div>
-                  <div className="row-stat">{player.losses}</div>
-                  <div className="row-stat center">{player.mvps}</div>
-                  <div className="row-streak">
-                    {player.streak > 0 ? `🔥 ${player.streak}` : player.streak ?? 0}
-                  </div>
-                </Link>
-              );
-            })
+                  </Link>
+                );
+              })}
+            </div>
           )}
-        </div>
-      </div>
+
+          {/* TABLE RANKING */}
+          <div className="ranking-table-card anim-fade-up d2">
+            <div className="rt-head">
+              <span style={{ textAlign: 'center' }}>POS</span>
+              <span>JUGADOR</span>
+              <span className="right" style={{ color: 'var(--text-bright)' }}>PUNTOS</span>
+              <span className="right">WINS</span>
+              <span className="right">MVP</span>
+              <span className="right">WR%</span>
+            </div>
+            
+            <div className="rt-body">
+              {restOfPlayers.map((p, i) => (
+                <Link to={user ? `/profile/${p.discordId}` : '/login'} key={p.discordId} className="rt-row">
+                  <div className="rt-cell center pos-num">{i + 4}</div>
+                  <div className="rt-cell player-cell">
+                    <img
+                      src={getAvatarUrl(p.discordId, p.avatar)}
+                      alt={p.username}
+                      className="player-avatar"
+                      onError={(e) => { e.target.onerror = null; e.target.src = 'https://cdn.discordapp.com/embed/avatars/0.png'; }}
+                    />
+                    <span className="player-name">{p.username}</span>
+                  </div>
+                  <div className="rt-cell right pts">{(p.points ?? 0).toLocaleString()}</div>
+                  <div className="rt-cell right wins">{p.wins}</div>
+                  <div className="rt-cell right mvps">{p.mvps}</div>
+                  <div className="rt-cell right target">{winRate(p.wins, p.losses)}%</div>
+                </Link>
+              ))}
+            </div>
+            
+            {ranking.length === 0 && !loading && (
+              <div className="empty-state">No hay jugadores para esta estadística</div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
+
+const CrownIcon = ({ className }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M2.5 19h19v2h-19zm19.53-12.2l-4.04 6.2h-11.98l-4.04-6.2 3.66-2.56 2.33 4.2 3.53-7.44 3.53 7.44 2.33-4.2z" />
+  </svg>
+);
 
 export default Ranking;

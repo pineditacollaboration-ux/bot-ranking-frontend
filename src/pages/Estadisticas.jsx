@@ -3,24 +3,42 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { API_CONFIG } from '../config/api';
 import RestrictedContent from '../components/RestrictedContent';
+import { Users, Swords, Activity, Trophy, Medal, Crown, Shield, Target, Clock } from 'lucide-react';
 import './Estadisticas.css';
 
 const Estadisticas = () => {
   const { user } = useAuth();
   const [stats, setStats] = useState(null);
+  const [topPoints, setTopPoints] = useState(null);
+  const [topWins, setTopWins] = useState(null);
+  const [topMvp, setTopMvp] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Stats can be viewed even without login (public info)
   useEffect(() => {
-    fetchStats();
-    const iv = setInterval(fetchStats, 15000);
+    fetchData();
+    const iv = setInterval(fetchData, 15000);
     return () => clearInterval(iv);
   }, []);
 
-  const fetchStats = async () => {
+  const fetchData = async () => {
     try {
-      const res = await axios.get(API_CONFIG.ENDPOINTS.API.STATS);
-      setStats(res.data);
+      const [statsRes, ptsRes, winsRes, mvpRes] = await Promise.all([
+        axios.get(API_CONFIG.ENDPOINTS.API.STATS),
+        axios.get(API_CONFIG.ENDPOINTS.API.RANKING, { params: { sortBy: 'points', limit: 1 } }),
+        axios.get(API_CONFIG.ENDPOINTS.API.RANKING, { params: { sortBy: 'wins', limit: 1 } }),
+        axios.get(API_CONFIG.ENDPOINTS.API.RANKING, { params: { sortBy: 'mvps', limit: 1 } })
+      ]);
+      setStats(statsRes.data);
+      
+      const getFirst = (res) => {
+        const d = res.data;
+        const arr = Array.isArray(d) ? d : d?.players ?? d?.ranking ?? d?.data ?? [];
+        return arr[0] || null;
+      };
+
+      setTopPoints(getFirst(ptsRes));
+      setTopWins(getFirst(winsRes));
+      setTopMvp(getFirst(mvpRes));
     } catch (_) {}
     finally { setLoading(false); }
   };
@@ -38,36 +56,29 @@ const Estadisticas = () => {
   const fmt = n => loading ? '—' : (n ?? 0).toLocaleString('es');
 
   const kpis = [
-    { icon: '👥', label: 'JUGADORES TOTALES', val: fmt(stats?.totalPlayers), sub: 'Vinculados a la plataforma' },
-    { icon: '⚔️', label: 'PARTIDAS JUGADAS',  val: fmt(stats?.totalMatches), sub: 'Registradas en el servidor' },
-    { icon: '🔥', label: 'JUGADORES ACTIVOS', val: fmt(stats?.activePlayers), sub: 'Con partidas recientes' },
-    { icon: '🏆', label: 'TEMPORADA ACTUAL',  val: loading ? '—' : `S${stats?.currentSeason ?? 1}`, sub: 'En curso' },
+    { icon: <Users size={28} />, label: 'JUGADORES TOTALES', val: fmt(stats?.totalPlayers), sub: 'Vinculados a la plataforma' },
+    { icon: <Swords size={28} />, label: 'PARTIDAS JUGADAS',  val: fmt(stats?.totalMatches), sub: 'Registradas en el servidor' },
+    { icon: <Activity size={28} />, label: 'JUGADORES ACTIVOS', val: fmt(stats?.activePlayers), sub: 'Con partidas recientes' },
+    { icon: <Trophy size={28} />, label: 'PARTIDAS ACTIVAS',  val: fmt(stats?.activeMatches), sub: 'En curso actualmente' },
   ];
 
   const topCards = [
     {
-      cls: 't1', trophy: '🥇', crown: 'MÁS PUNTOS',
-      player: stats?.topPoints, score: stats?.topPoints?.points, unit: 'PUNTOS',
+      cls: 't1', icon: <Crown size={36} className="text-gold" />, crown: 'MÁS PUNTOS',
+      player: topPoints, score: topPoints?.points, unit: 'PUNTOS',
     },
     {
-      cls: 't2', trophy: '🥈', crown: 'MÁS VICTORIAS',
-      player: stats?.topWins, score: stats?.topWins?.wins, unit: 'WINS',
+      cls: 't2', icon: <Medal size={36} className="text-crimson" />, crown: 'MÁS VICTORIAS',
+      player: topWins, score: topWins?.wins, unit: 'WINS',
     },
     {
-      cls: 't3', trophy: '🥉', crown: 'MÁS MVP',
-      player: stats?.topMvp, score: stats?.topMvp?.mvps, unit: 'MVPs',
+      cls: 't3', icon: <Shield size={36} className="text-green" />, crown: 'MÁS MVP',
+      player: topMvp, score: topMvp?.mvps, unit: 'MVPs',
     },
-  ];
-
-  const activities = [
-    { icon: '📊', key: 'PUNTOS PROMEDIO',  val: fmt(stats?.avgPoints) },
-    { icon: '🎯', key: 'TASA DE VICTORIA', val: loading ? '—' : `${stats?.winRate ?? 0}%` },
-    { icon: '⏱️', key: 'DURACIÓN PROMEDIO', val: loading ? '—' : `${stats?.avgMatchTime ?? 0} min` },
   ];
 
   return (
     <div className="estadisticas-page">
-      {/* Header */}
       <div className="anim-fade-up" style={{ marginBottom: 40 }}>
         <div className="badge badge-live" style={{ marginBottom: 10 }}>
           <span className="dot" /> DATOS EN VIVO
@@ -76,13 +87,12 @@ const Estadisticas = () => {
         <p className="section-lead">Métricas y análisis completos del servidor competitivo</p>
       </div>
 
-      {/* KPIs */}
       <div className="stats-kpi-grid">
         {kpis.map((k, i) => (
           <div key={k.label} className={`stats-kpi-card anim-fade-up d${i+1}`}>
             <div className="stats-kpi-top">
               <span className="stats-kpi-label">{k.label}</span>
-              <span className="stats-kpi-icon">{k.icon}</span>
+              <span className="stats-kpi-icon" style={{ color: 'var(--text-muted)' }}>{k.icon}</span>
             </div>
             <div className="stats-kpi-val">{k.val}</div>
             <div className="stats-kpi-sub">{k.sub}</div>
@@ -90,14 +100,13 @@ const Estadisticas = () => {
         ))}
       </div>
 
-      {/* TOP PLAYERS */}
       <div className="stats-section anim-fade-up d5">
-        <div className="stats-section-title">👑 TOP JUGADORES</div>
+        <div className="stats-section-title"><Crown size={16} /> TOP JUGADORES</div>
         <div className="top-trio">
           {topCards.map((tc, i) => {
             if (!tc.player) return (
               <div key={tc.crown} className={`top-player-card ${tc.cls}`}>
-                <div className="top-player-trophy">{tc.trophy}</div>
+                <div className="top-player-trophy">{tc.icon}</div>
                 <div style={{ width: 80, height: 80, borderRadius:'50%', background:'var(--bg-border)' }} />
                 <div className={`top-player-crown`}>{tc.crown}</div>
                 <div className="top-player-name" style={{ color: 'var(--text-dim)' }}>—</div>
@@ -106,7 +115,7 @@ const Estadisticas = () => {
             );
             return (
               <div key={tc.player.discordId} className={`top-player-card ${tc.cls}`}>
-                <div className="top-player-trophy">{tc.trophy}</div>
+                <div className="top-player-trophy">{tc.icon}</div>
                 <img
                   src={getAvatar(tc.player.discordId, tc.player.avatar)}
                   alt={tc.player.username}
@@ -122,22 +131,6 @@ const Estadisticas = () => {
               </div>
             );
           })}
-        </div>
-      </div>
-
-      {/* ACTIVITY */}
-      <div className="stats-section anim-fade-up d6">
-        <div className="stats-section-title">📈 ACTIVIDAD RECIENTE</div>
-        <div className="activity-grid">
-          {activities.map((a, i) => (
-            <div key={a.key} className="activity-card">
-              <div className="activity-icon">{a.icon}</div>
-              <div className="activity-body">
-                <div className="activity-val">{a.val}</div>
-                <div className="activity-key">{a.key}</div>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </div>

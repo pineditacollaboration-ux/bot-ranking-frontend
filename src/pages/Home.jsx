@@ -3,46 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { API_CONFIG } from '../config/api';
+import { ChevronRight, Trophy, Swords, Medal, AlertCircle, Crosshair, TrendingUp, Users } from 'lucide-react';
 import './Home.css';
-
-const DiscordIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
-  </svg>
-);
-
-const FEATURES = [
-  {
-    icon: '⚔️',
-    title: 'Sistema Ranked',
-    desc: 'Compite en partidas organizadas y sube de posición con cada victoria. Sistema de puntos justo y transparente.',
-  },
-  {
-    icon: '📊',
-    title: 'Stats en Tiempo Real',
-    desc: 'Todas tus estadísticas sincronizadas al instante con el servidor de Discord. Cero retrasos, datos siempre precisos.',
-  },
-  {
-    icon: '🏆',
-    title: 'Temporadas Históricas',
-    desc: 'Revive cada temporada, analiza tus progresos y demuestra tu evolución a lo largo del tiempo.',
-  },
-  {
-    icon: '👑',
-    title: 'Hall of Fame',
-    desc: 'Los mejores jugadores de cada temporada quedan inmortalizados. ¿Tienes lo que se necesita para estar ahí?',
-  },
-  {
-    icon: '🎯',
-    title: 'MVP System',
-    desc: 'Cada partida premia al mejor jugador. Acumula MVPs y demuestra que eres el más letal de la comunidad.',
-  },
-  {
-    icon: '💰',
-    title: 'Wager Matches',
-    desc: 'Apuesta puntos contra otros jugadores y duplica tus ganancias. Solo para los que tienen temple de acero.',
-  },
-];
 
 const Home = () => {
   const { user } = useAuth();
@@ -51,8 +13,8 @@ const Home = () => {
 
   useEffect(() => {
     fetchStats();
-    const interval = setInterval(fetchStats, 15000);
-    return () => clearInterval(interval);
+    const inv = setInterval(fetchStats, 15000);
+    return () => clearInterval(inv);
   }, []);
 
   const fetchStats = async () => {
@@ -64,177 +26,135 @@ const Home = () => {
   };
 
   const fmt = n => statsLoading ? '—' : (n ?? 0).toLocaleString('es');
-  const winRate = stats && stats.totalMatches > 0
-    ? ((stats.totalWins / stats.totalMatches) * 100).toFixed(1) : null;
 
-  /* ── LOGGED-IN DASHBOARD ── */
-  if (user) {
-    const avatarUrl = user.avatar
-      ? (user.avatar.startsWith('http') ? user.avatar : `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`)
-      : null;
+  // Win rate in API isn't present, so we compute from matches/wins, but wait...
+  // Global win rate of all matches played makes no sense (it's always 50% since someone wins, someone loses, unless draws exist).
+  // I'll show Average Active Players per match or something similar requested by users, 
+  // or fallback to showing the Active Matches.
+  const globalStats = [
+    { key: 'JUGADORES REGISTRADOS', icon: <Users size={22} />, val: fmt(stats?.totalPlayers) },
+    { key: 'PARTIDAS JUGADAS', icon: <Swords size={22} />, val: fmt(stats?.totalMatches) },
+    { key: 'MIEMBROS DISCORD', icon: <Medal size={22} />, val: fmt(stats?.discordMembers) },
+    { key: 'TASA DE ACTIVIDAD', icon: <TrendingUp size={22} />, val: statsLoading ? '—' : `${((stats?.activePlayers / stats?.totalPlayers) * 100 || 0).toFixed(1)}%` },
+  ];
 
+  /* ── PUBLIC HERO ── */
+  if (!user) {
     return (
-      <div className="dashboard-page">
-        {/* Welcome */}
-        <div className="dashboard-welcome anim-fade-up">
-          {avatarUrl ? (
-            <img src={avatarUrl} alt={user.username} className="dashboard-welcome-avatar"
-              onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }}
-            />
-          ) : null}
-          <div className="dashboard-welcome-avatar-fallback" style={{ display: avatarUrl ? 'none' : 'flex' }}>
-            {user.username?.[0]?.toUpperCase() ?? '?'}
-          </div>
-          <div className="dashboard-welcome-text">
-            <h1>BIENVENIDO, <span style={{ color: 'var(--crimson)' }}>{user.username?.toUpperCase()}</span></h1>
-            <p>Dashboard en vivo — datos sincronizados con tu servidor de Discord</p>
+      <div className="home-page">
+        <div className="home-hero anim-fade-up">
+          <div className="home-hero-bg" />
+          <h1 className="home-hero-title">EL SIGUIENTE NIVEL DEL<br/><span>COMPETITIVO</span></h1>
+          <p className="home-hero-desc">
+            Únete a la liga, compite en partidas dinámicas y escala
+            en el ranking oficial. El servidor donde las leyendas nacen.
+          </p>
+          <div className="home-hero-actions">
+            <Link to="/ranking" className="btn-primary">
+              <Trophy size={18} /> VER RANKING
+            </Link>
+            <Link to="/login" className="btn-secondary">
+              INICIAR SESIÓN
+            </Link>
           </div>
         </div>
 
-        {/* KPIs */}
-        <div className="dashboard-kpi-grid">
-          {[
-            { label: 'JUGADORES', val: fmt(stats?.totalPlayers), icon: '👥', sub: 'Vinculados a la plataforma', cls: 'c1' },
-            { label: 'PARTIDAS',  val: fmt(stats?.totalMatches), icon: '⚔️', sub: 'Registradas en el servidor',  cls: 'c2' },
-            { label: 'VICTORIAS', val: fmt(stats?.totalWins),   icon: '🏆', sub: 'Otorgadas en total',           cls: 'c3' },
-            { label: 'WIN RATE',  val: winRate ? `${winRate}%` : '—', icon: '🎯', sub: 'Promedio global',       cls: 'c4' },
-          ].map((k, i) => (
-            <div key={k.label} className={`kpi-card ${k.cls} anim-fade-up d${i+1}`}>
-              <div className="kpi-top">
-                <span className="kpi-label">{k.label}</span>
-                <span className="kpi-icon">{k.icon}</span>
+        <div className="home-stats-ticker anim-fade-up d1">
+          {globalStats.map(s => (
+            <div key={s.key} className="ticker-item">
+              <div className="ticker-icon">{s.icon}</div>
+              <div className="ticker-info">
+                <span className="ticker-val">{s.val}</span>
+                <span className="ticker-key">{s.key}</span>
               </div>
-              <div className="kpi-value">{k.val}</div>
-              <div className="kpi-sub">{k.sub}</div>
             </div>
           ))}
-        </div>
-
-        {/* Quick links */}
-        <div className="features-grid anim-fade-up d5" style={{ maxWidth: '100%' }}>
-          <Link to="/ranking" className="feature-card">
-            <div className="feature-icon">🏆</div>
-            <div className="feature-title">VER RANKING</div>
-            <div className="feature-desc">Consulta la clasificación global de todos los jugadores de la comunidad.</div>
-          </Link>
-          <Link to="/temporadas" className="feature-card">
-            <div className="feature-icon">🎖️</div>
-            <div className="feature-title">TEMPORADAS</div>
-            <div className="feature-desc">Revisa el histórico de temporadas y los campeones de cada una.</div>
-          </Link>
-          <Link to="/estadisticas" className="feature-card">
-            <div className="feature-icon">📊</div>
-            <div className="feature-title">ESTADÍSTICAS</div>
-            <div className="feature-desc">Métricas avanzadas y análisis completo del servidor competitivo.</div>
-          </Link>
         </div>
       </div>
     );
   }
 
-  /* ── LANDING PAGE (no logueado) ── */
+  /* ── LOGGED-IN DASHBOARD ── */
+  const avatarUrl = !user.avatar || user.avatar === 'null' || user.avatar === 'undefined'
+    ? `https://cdn.discordapp.com/embed/avatars/0.png`
+    : (user.avatar.startsWith('http') ? user.avatar : `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`);
+
   return (
-    <>
-      {/* HERO */}
-      <section className="hero">
-        <div className="hero-bg">
-          <div className="hero-bg-gradient" />
-          <div className="hero-grid" />
-        </div>
-
-        <div className="hero-container">
-          {/* Left */}
-          <div className="hero-left">
-            <div className="hero-season-tag anim-fade-up">
-              <div className="badge badge-live">
-                <span className="dot" />
-                EN VIVO
-              </div>
-              <span className="hero-season-text">TEMPORADA ACTIVA</span>
+    <div className="home-page">
+      <div className="home-dashboard-header anim-fade-up">
+        <div className="dash-header-bg" />
+        <div className="dash-header-content">
+          <img
+            src={avatarUrl}
+            alt="avatar"
+            className="dash-header-avatar"
+            onError={(e) => { e.target.onerror = null; e.target.src = 'https://cdn.discordapp.com/embed/avatars/0.png'; }}
+          />
+          <div className="dash-header-text">
+            <div className="badge badge-live" style={{ marginBottom: 12 }}>
+              <span className="dot" /> ONLINE
             </div>
-
-            <h1 className="hero-title anim-fade-up d1">
-              DOMINA<br />
-              <span className="line-2">EL RANKED</span>
-            </h1>
-
-            <p className="hero-description anim-fade-up d2">
-              La plataforma competitiva definitiva para Free Fire.
-              Rankings en tiempo real, estadísticas avanzadas y una comunidad
-              de élite que vive para ganar.
-            </p>
-
-            <div className="hero-ctas anim-fade-up d3">
-              <Link to="/login" className="btn-primary">
-                <DiscordIcon />
-                ENTRAR CON DISCORD
-              </Link>
-              <a href="https://discord.gg/VBrarJu9DP" target="_blank" rel="noopener noreferrer" className="btn-outline">
-                🔗 UNIRSE AL SERVIDOR
-              </a>
-            </div>
-
-            <div className="hero-tickers anim-fade-up d4">
-              <div className="hero-ticker">
-                <span className="hero-ticker-val">{fmt(stats?.totalPlayers)}</span>
-                <span className="hero-ticker-label">Jugadores</span>
-              </div>
-              <div className="hero-ticker">
-                <span className="hero-ticker-val">{fmt(stats?.totalMatches)}</span>
-                <span className="hero-ticker-label">Partidas</span>
-              </div>
-              <div className="hero-ticker">
-                <span className="hero-ticker-val">{winRate ? `${winRate}%` : '—'}</span>
-                <span className="hero-ticker-label">Win Rate Avg</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Right — floating stat cards */}
-          <div className="hero-right">
-            {[
-              { icon: '👥', iconCls: 'red', val: fmt(stats?.totalPlayers), label: 'JUGADORES ACTIVOS', sub: 'En la plataforma', trend: '+12%' },
-              { icon: '⚔️', iconCls: 'gold', val: fmt(stats?.totalMatches), label: 'BATALLAS ÉPICAS', sub: 'Registradas y contadas', trend: '+28%' },
-              { icon: '🏆', iconCls: 'blue', val: fmt(stats?.totalWins), label: 'VICTORIAS TOTALES', sub: 'Otorgadas con honor', trend: '+19%' },
-            ].map((c, i) => (
-              <div key={c.label} className={`hero-card anim-fade-up d${i+2}`}>
-                <div className={`hero-card-icon ${c.iconCls}`}>{c.icon}</div>
-                <div className="hero-card-body">
-                  <div className="hero-card-val">{c.val}</div>
-                  <div className="hero-card-label">{c.label}</div>
-                  <div className="hero-card-sub">{c.sub}</div>
-                </div>
-                <div className="hero-card-trend">↑ {c.trend}</div>
-              </div>
-            ))}
+            <h1>BIENVENIDO, <span>{user.username}</span></h1>
+            <p>Dashboard en vivo — datos sincronizados con tu servidor de Discord</p>
           </div>
         </div>
+      </div>
 
-        {/* Scroll hint */}
-        <div className="scroll-indicator">
-          <div className="scroll-mouse"><div className="scroll-wheel" /></div>
-          <span className="scroll-label">Scrollear</span>
+      {/* STATS GRID */}
+      <div className="home-stats-grid anim-fade-up d1">
+        <div className="home-stat-card">
+          <div className="hsc-top">
+            <span>JUGADORES</span>
+            <Users size={18} />
+          </div>
+          <div className="hsc-val">{fmt(stats?.totalPlayers)}</div>
+          <div className="hsc-sub">Vinculados a la plataforma</div>
         </div>
-      </section>
+        <div className="home-stat-card">
+          <div className="hsc-top">
+            <span>PARTIDAS</span>
+            <Swords size={18} />
+          </div>
+          <div className="hsc-val">{fmt(stats?.totalMatches)}</div>
+          <div className="hsc-sub">Registradas en el servidor</div>
+        </div>
+        <div className="home-stat-card">
+          <div className="hsc-top">
+            <span>PARTIDAS ACTIVAS</span>
+            <Crosshair size={18} />
+          </div>
+          <div className="hsc-val">{fmt(stats?.activeMatches)}</div>
+          <div className="hsc-sub">Desarrollándose en este instante</div>
+        </div>
+        <div className="home-stat-card primary">
+          <div className="hsc-top">
+            <span>TASA DE ACTIVIDAD</span>
+            <TrendingUp size={18} />
+          </div>
+          <div className="hsc-val">{statsLoading ? '—' : `${((stats?.activePlayers / stats?.totalPlayers) * 100 || 0).toFixed(1)}%`}</div>
+          <div className="hsc-sub">Jugadores promedio activos</div>
+        </div>
+      </div>
 
-      {/* FEATURES */}
-      <section className="features-section">
-        <div className="features-header anim-fade-up">
-          <div className="badge badge-gold" style={{ margin: '0 auto 16px' }}>⚡ POR QUÉ ROYAL RANKED</div>
-          <h2 className="section-heading">PLATAFORMA DE ÉLITE</h2>
-          <p className="section-lead">Todo lo que necesitas para competir, mejorar y dominar</p>
-        </div>
-        <div className="features-grid">
-          {FEATURES.map((f, i) => (
-            <div key={f.title} className={`feature-card anim-fade-up d${i+1}`}>
-              <div className="feature-icon">{f.icon}</div>
-              <div className="feature-title">{f.title}</div>
-              <div className="feature-desc">{f.desc}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-    </>
+      {/* QUICK LINKS */}
+      <div className="home-features-grid anim-fade-up d2">
+        <Link to="/ranking" className="feature-card">
+          <div className="feature-icon"><Trophy size={32} /></div>
+          <h3>VER RANKING</h3>
+          <p>Consulta la clasificación global de todos los jugadores de la comunidad.</p>
+        </Link>
+        <Link to="/seasons" className="feature-card">
+          <div className="feature-icon"><Medal size={32} /></div>
+          <h3>TEMPORADAS</h3>
+          <p>Revisa el histórico de temporadas y los campeones de cada una.</p>
+        </Link>
+        <Link to="/estadisticas" className="feature-card">
+          <div className="feature-icon"><AlertCircle size={32} /></div>
+          <h3>ESTADÍSTICAS</h3>
+          <p>Métricas avanzadas y análisis completo del servidor competitivo.</p>
+        </Link>
+      </div>
+    </div>
   );
 };
 

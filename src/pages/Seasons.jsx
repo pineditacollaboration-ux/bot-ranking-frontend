@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { API_CONFIG } from '../config/api';
 import RestrictedContent from '../components/RestrictedContent';
+import { Trophy } from 'lucide-react';
 import './Seasons.css';
 
 const getAvatarUrl = (discordId, avatarHash) => {
@@ -69,7 +69,6 @@ const Seasons = () => {
 
   return (
     <div className="seasons-page">
-      {/* Header */}
       <div className="seasons-header anim-fade-up">
         <div className="seasons-title-row">
           <div>
@@ -94,19 +93,16 @@ const Seasons = () => {
         </div>
       </div>
 
-      {/* No seasons */}
       {seasons.length === 0 && !loading && (
         <div className="seasons-empty">
-          <div className="seasons-empty-icon">🏆</div>
+          <div className="seasons-empty-icon"><Trophy size={64} style={{ opacity: 0.3 }} /></div>
           <div className="seasons-empty-text">No hay temporadas registradas</div>
           <div className="seasons-empty-sub">Las temporadas aparecerán aquí cuando estén disponibles</div>
         </div>
       )}
 
-      {/* Season content */}
       {selectedSeason && (
         <>
-          {/* Season hero */}
           <div className="season-hero anim-fade-up d1">
             <div className="season-hero-badge">RESULTADOS FINALES</div>
             <div className="season-hero-title">TEMPORADA <span>{selectedSeason}</span></div>
@@ -125,12 +121,11 @@ const Seasons = () => {
             </div>
           ) : seasonStats.length === 0 ? (
             <div className="seasons-empty">
-              <div className="seasons-empty-icon">😶</div>
+              <div className="seasons-empty-icon"><Trophy size={64} style={{ opacity: 0.3 }} /></div>
               <div className="seasons-empty-text">Sin datos para esta temporada</div>
             </div>
           ) : (
             <>
-              {/* PODIUM top 3 */}
               {top3.length >= 3 && (
                 <div className="season-podium anim-fade-up d2">
                   {[top3[1], top3[0], top3[2]].map((p, idx) => {
@@ -164,7 +159,6 @@ const Seasons = () => {
                 </div>
               )}
 
-              {/* Rest */}
               {rest.length > 0 && (
                 <div className="season-rest-table anim-fade-up d3">
                   <div className="season-rest-head">
