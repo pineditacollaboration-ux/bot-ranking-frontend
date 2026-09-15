@@ -1,6 +1,6 @@
 {
   "installCommand": "npm install --force",
-  "buildCommand": "npm run build",
+  "buildCommand": "chmod +x node_modules/.bin/vite && npm run build",
   "outputDirectory": "dist",
   "rewrites": [
     {
