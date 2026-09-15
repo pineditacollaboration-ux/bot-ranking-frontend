@@ -176,34 +176,42 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  background: rgba(5, 5, 8, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.05);
-  border-top: 1px solid rgba(232,0,42,0.3);
-  padding: 30px;
-  transform: skewX(-4deg);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  background: rgba(8, 8, 12, 0.9);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid rgba(232,0,42,0.4);
+  padding: 34px;
+  transform: skewX(-4deg) translateZ(0);
+  backface-visibility: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
 }
 
 .hhr-info-title {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-family: 'Rajdhani', sans-serif;
   font-weight: 700;
   font-size: 16px;
   letter-spacing: 2px;
   color: #fff;
   margin-bottom: 24px;
-  transform: skewX(4deg);
+  transform: skewX(4deg) translateZ(0);
+  backface-visibility: hidden;
+}
+.hhr-info-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hhr-steps {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  transform: skewX(4deg);
+  transform: skewX(4deg) translateZ(0);
+  backface-visibility: hidden;
 }
 
 .hhr-step {
