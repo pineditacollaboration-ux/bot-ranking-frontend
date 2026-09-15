@@ -7,15 +7,16 @@ import RestrictedContent from '../components/RestrictedContent';
 import './Seasons.css';
 
 const getAvatarUrl = (discordId, avatarHash) => {
-  if (avatarHash && avatarHash !== 'null' && avatarHash !== 'undefined') {
-    return `https://cdn.discordapp.com/avatars/${discordId}/${avatarHash}.png`;
+  if (!avatarHash || avatarHash === 'null' || avatarHash === 'undefined') {
+    try {
+      const idx = discordId ? (BigInt(discordId) >> 22n) % 6n : 0n;
+      return `https://cdn.discordapp.com/embed/avatars/${idx}.png`;
+    } catch {
+      return `https://cdn.discordapp.com/embed/avatars/0.png`;
+    }
   }
-  try {
-    const idx = discordId ? (BigInt(discordId) >> 22n) % 6n : 0n;
-    return `https://cdn.discordapp.com/embed/avatars/${idx}.png`;
-  } catch {
-    return `https://cdn.discordapp.com/embed/avatars/0.png`;
-  }
+  if (avatarHash.startsWith('http')) return avatarHash;
+  return `https://cdn.discordapp.com/avatars/${discordId}/${avatarHash}.png`;
 };
 
 const Seasons = () => {

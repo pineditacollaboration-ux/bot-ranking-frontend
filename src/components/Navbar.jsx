@@ -39,6 +39,7 @@ const Navbar = () => {
   }, [mobileOpen]);
 
   const getAvatar = () => {
+    if (user?.avatar?.startsWith('http')) return user.avatar;
     if (user?.avatar) return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
     return null;
   };

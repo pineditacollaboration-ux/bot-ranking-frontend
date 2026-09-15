@@ -28,10 +28,11 @@ const Estadisticas = () => {
   if (!user) return <RestrictedContent />;
 
   const getAvatar = (discordId, avatar) => {
-    if (avatar && avatar !== 'null' && avatar !== 'undefined') {
-      return `https://cdn.discordapp.com/avatars/${discordId}/${avatar}.png`;
+    if (!avatar || avatar === 'null' || avatar === 'undefined') {
+      return `https://cdn.discordapp.com/embed/avatars/0.png`;
     }
-    return `https://cdn.discordapp.com/embed/avatars/0.png`;
+    if (avatar.startsWith('http')) return avatar;
+    return `https://cdn.discordapp.com/avatars/${discordId}/${avatar}.png`;
   };
 
   const fmt = n => loading ? '—' : (n ?? 0).toLocaleString('es');

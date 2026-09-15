@@ -56,9 +56,9 @@ const Profile = () => {
     );
   }
 
-  const avatarUrl = profile.avatar && profile.avatar !== 'null' && profile.avatar !== 'undefined'
-    ? `https://cdn.discordapp.com/avatars/${profile.discordId}/${profile.avatar}.png`
-    : `https://cdn.discordapp.com/embed/avatars/0.png`;
+  const avatarUrl = !profile.avatar || profile.avatar === 'null' || profile.avatar === 'undefined'
+    ? `https://cdn.discordapp.com/embed/avatars/0.png`
+    : (profile.avatar.startsWith('http') ? profile.avatar : `https://cdn.discordapp.com/avatars/${profile.discordId}/${profile.avatar}.png`);
 
   const winRate = profile.matchesPlayed > 0
     ? ((profile.wins / profile.matchesPlayed) * 100).toFixed(1)

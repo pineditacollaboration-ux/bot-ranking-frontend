@@ -70,7 +70,7 @@ const Home = () => {
   /* ── LOGGED-IN DASHBOARD ── */
   if (user) {
     const avatarUrl = user.avatar
-      ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
+      ? (user.avatar.startsWith('http') ? user.avatar : `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`)
       : null;
 
     return (
