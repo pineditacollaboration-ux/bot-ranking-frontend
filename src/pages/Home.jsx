@@ -26,7 +26,7 @@ const Home = () => {
       try {
         const [sRes, rRes] = await Promise.all([
           axios.get(API_CONFIG.ENDPOINTS.API.STATS),
-          axios.get(API_CONFIG.ENDPOINTS.API.RANKING, { params: { type: 'points', limit: 3 } }),
+          axios.get(API_CONFIG.ENDPOINTS.API.RANKING, { params: { type: 'season', limit: 3 } }),
         ]);
         setStats(sRes.data);
         const d = rRes.data;
@@ -119,7 +119,7 @@ const Home = () => {
                   />
                   <div className="hhr-t3-info">
                     <span className="hhr-t3-name">{p.username}</span>
-                    <span className="hhr-t3-sub">{(p.points ?? 0).toLocaleString()} pts · {p.wins ?? 0} wins</span>
+                    <span className="hhr-t3-sub">{(p.seasonPoints ?? p.points ?? 0).toLocaleString()} pts · {p.wins ?? 0} wins</span>
                   </div>
                   <span className="hhr-t3-rank">#{idx + 1}</span>
                 </Link>

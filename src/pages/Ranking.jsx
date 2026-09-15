@@ -19,7 +19,7 @@ const getAvatarUrl = (discordId, avatarHash) => {
 };
 
 const SORT_OPTIONS = [
-  { id: 'points',  label: 'PUNTOS' },
+  { id: 'season',  label: 'PUNTOS' },
   { id: 'wins',    label: 'VICTORIAS' },
   { id: 'losses',  label: 'DERROTAS' },
   { id: 'mvps',    label: 'MVP' },
@@ -35,7 +35,7 @@ const DiscordIcon = () => (
 const Ranking = () => {
   const { user, login } = useAuth();
   const [ranking, setRanking]   = useState([]);
-  const [sortBy, setSortBy]     = useState('points');
+  const [sortBy, setSortBy]     = useState('season');
   const [loading, setLoading]   = useState(true);
   const [statsObj, setStatsObj] = useState(null);
 
@@ -72,7 +72,7 @@ const Ranking = () => {
     /* gated row: censor only name/avatar, show real numbers */
     const displayName    = isGated ? '???' : p.username;
     const displayHash    = isGated ? '#????' : `#${p.discordId?.slice(-4) ?? '????'}`;
-    const displayPoints  = (p.points ?? 0).toLocaleString();
+    const displayPoints  = (sortBy === 'season' ? (p.seasonPoints ?? p.points ?? 0) : (p.points ?? 0)).toLocaleString();
     const displayWins    = p.wins;
     const displayLosses  = p.losses;
     const displayMvps    = p.mvps;
