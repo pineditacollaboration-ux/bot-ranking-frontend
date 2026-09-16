@@ -77,16 +77,16 @@
 .btn-real-red-skew {
   background: var(--crimson);
   color: #fff;
-  padding: 15px 32px;
+  padding: 16px 36px;
   text-decoration: none;
-  font-family: 'Rajdhani', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 2px;
+  font-size: 16px;
+  letter-spacing: 1px;
   transition: all 0.25s ease;
   box-shadow: 0 8px 28px rgba(232,0,42,0.3);
   text-transform: uppercase;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 .btn-real-red-skew:hover {
   background: #ff1a40;
@@ -97,11 +97,11 @@
   background: #08080a;
   border: 1px solid #222;
   color: #fff;
-  padding: 15px 22px;
+  padding: 16px 28px;
   text-decoration: none;
   display: flex; align-items: center; justify-content: center;
   transition: all 0.25s ease;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 .btn-real-dark-skew:hover {
   background: #111;
@@ -118,31 +118,31 @@
 .hhr-stats-bar {
   display: flex;
   align-items: center;
-  gap: 24px;
-  margin-top: 12px;
-  padding: 18px 24px;
+  gap: 32px;
+  margin-top: 18px;
+  padding: 24px 32px;
   background: #070709;
   border: 1px solid #1a1a24;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 .hhr-stat {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 .hst-val {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 22px;
+  font-size: 28px;
   color: #fff;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   line-height: 1;
 }
 .hst-key {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 3px;
-  color: #555;
+  letter-spacing: 2px;
+  color: #777;
   text-transform: uppercase;
 }
 .hhr-stat-div {
