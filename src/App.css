@@ -21,6 +21,39 @@ body {
     radial-gradient(circle at bottom left, rgba(230, 0, 57, 0.05) 0%, transparent 40%);
 }
 
+/* ── PREMIUM CUSTOM SCROLLBAR ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #E60039 0%, #7a0020 100%);
+  border-radius: 99px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 6px rgba(230, 0, 57, 0.4);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ff1a50 0%, #a60029 100%);
+  box-shadow: 0 0 10px rgba(230, 0, 57, 0.7);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #E60039 rgba(255, 255, 255, 0.03);
+}
+
 /* ── PREMIUM GAMING BUTTON SYSTEM (ROUNDED NEON) ── */
 .btn-skewed {
   position: relative;
