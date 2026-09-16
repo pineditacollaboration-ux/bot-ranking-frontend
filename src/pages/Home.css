@@ -1,145 +1,148 @@
-/* HOMEPAGE - ROYAL RANKED */
-
+/* ── HOME LAYOUT ── */
 .home-page-real {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: calc(var(--navbar-h) + 60px) 32px 100px;
-  min-height: calc(100vh - var(--navbar-h));
+  min-height: 100vh;
+  padding-top: var(--navbar-h);
   display: flex;
+  justify-content: center;
   align-items: center;
+  background: radial-gradient(circle at center top, rgba(30, 0, 10, 0.4) 0%, transparent 60%);
 }
 
 .home-hero-real {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 60px 40px;
   display: flex;
+  gap: 80px;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  gap: 60px;
 }
 
 /* ── LEFT ── */
 .hhr-left {
   flex: 1;
-  max-width: 560px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  z-index: 10;
 }
 
 .hhr-subtitle {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 12px;
-  font-family: 'Rajdhani', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 16px;
   letter-spacing: 4px;
   color: var(--crimson);
-  text-transform: uppercase;
 }
 .hhr-line {
-  width: 40px; height: 2px;
-  background-color: var(--crimson);
+  width: 48px;
+  height: 2px;
+  background: var(--crimson);
 }
 
 .hhr-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(72px, 11vw, 130px);
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: clamp(60px, 8vw, 110px);
+  line-height: 0.95;
   color: #fff;
-  line-height: 0.88;
-  letter-spacing: 2px;
-  margin: 0;
+  text-transform: uppercase;
+  margin: 10px 0;
+  letter-spacing: -2px;
 }
 .hhr-title-red {
-  background: linear-gradient(90deg, #ff8899, #e8002a);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--crimson);
 }
 
 .hhr-desc {
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  color: #888;
-  line-height: 1.7;
-  margin: 0 0 8px;
-  max-width: 480px;
+  font-size: 24px;
+  color: #aaa;
+  font-weight: 400;
+  line-height: 1.6;
+  max-width: 700px;
+  margin-bottom: 20px;
 }
 
 /* Actions */
 .hhr-actions {
   display: flex;
-  gap: 10px;
+  gap: 20px;
 }
 
-.btn-real-red-skew {
+.btn-primary-massive {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
   background: var(--crimson);
   color: #fff;
-  padding: 20px 44px;
+  padding: 24px 50px;
   text-decoration: none;
   font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 18px;
-  letter-spacing: 1.5px;
-  transition: all 0.25s ease;
-  box-shadow: 0 8px 28px rgba(232,0,42,0.3);
+  font-size: 20px;
+  letter-spacing: 1px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 12px;
   text-transform: uppercase;
-  border-radius: 8px;
+  border: none;
 }
-.btn-real-red-skew:hover {
+.btn-primary-massive:hover {
   background: #ff1a40;
-  box-shadow: 0 12px 36px rgba(232,0,42,0.5);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(232,0,42,0.4);
 }
-.btn-real-dark-skew {
-  background: #08080a;
-  border: 1px solid #222;
-  color: #fff;
-  padding: 20px 32px;
-  text-decoration: none;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.25s ease;
-  border-radius: 8px;
-}
-.btn-real-dark-skew:hover {
-  background: #111;
-  border-color: #555;
-  transform: translateY(-2px);
-}
-.btn-inner {
-  display: flex;
+
+.btn-secondary-massive {
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  background: #111;
+  border: 1px solid #333;
+  color: #fff;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.btn-secondary-massive:hover {
+  background: #222;
+  border-color: #555;
+  transform: translateY(-4px);
 }
 
 /* ── STATS BAR ── */
 .hhr-stats-bar {
   display: flex;
   align-items: center;
-  gap: 32px;
-  margin-top: 18px;
-  padding: 24px 32px;
-  background: #070709;
+  gap: 48px;
+  margin-top: 20px;
+  padding: 32px 48px;
+  background: #08080a;
   border: 1px solid #1a1a24;
-  border-radius: 8px;
+  border-radius: 12px;
+  max-width: 700px;
 }
 .hhr-stat {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 }
 .hst-val {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 28px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: 40px;
   color: #fff;
-  letter-spacing: 2px;
+  letter-spacing: -1px;
   line-height: 1;
 }
 .hst-key {
   font-family: 'Inter', sans-serif;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: 2px;
   color: #777;
@@ -147,119 +150,101 @@
 }
 .hhr-stat-div {
   width: 1px;
-  height: 30px;
+  height: 50px;
   background: #1e1e28;
 }
 
 /* ── RIGHT: INFO PANEL ── */
 .hhr-right {
   flex: 1;
-  max-width: 480px;
+  max-width: 580px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-}
-
-.hhr-char-glow {
-  position: absolute;
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(232,0,42,0.15) 0%, transparent 65%);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 0;
 }
 
 .hhr-info-card {
   position: relative;
   z-index: 1;
   width: 100%;
-  background: #0b0b10;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-top: 2px solid var(--crimson);
-  border-radius: 8px;
-  padding: 34px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  background: #0a0a0d;
+  border: 1px solid #1a1a20;
+  border-radius: 16px;
+  padding: 48px;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.8);
 }
 
 .hhr-info-title {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
+  gap: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
   letter-spacing: 2px;
   color: #fff;
-  margin-bottom: 24px;
-}
-.hhr-info-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-bottom: 36px;
 }
 
 .hhr-steps {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
 .hhr-step {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 16px;
-  background: #111116;
-  border: 1px solid #1a1a20;
-  border-left: 2px solid var(--crimson);
-  border-radius: 4px;
+  gap: 24px;
+  padding: 24px;
+  background: #121218;
+  border: 1px solid #1c1c24;
+  border-radius: 12px;
   transition: all 0.3s ease;
 }
 .hhr-step:hover {
-  background: #15151c;
-  border-left-color: #ff3355;
+  background: #16161d;
+  border-color: var(--crimson);
 }
 
 .step-num {
-  width: 36px; height: 36px;
+  width: 54px; height: 54px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgba(232,0,42,0.1);
   color: var(--crimson);
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 20px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: 24px;
   flex-shrink: 0;
-  border-radius: 4px;
+  border-radius: 12px;
 }
 
 .step-text {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 }
 .step-text strong {
-  font-family: 'Rajdhani', sans-serif;
-  color: #f0f0f0;
-  font-size: 14px;
-  letter-spacing: 1px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  color: #fff;
+  font-size: 20px;
 }
 .step-text span {
   font-family: 'Inter', sans-serif;
-  color: #888;
-  font-size: 11px;
+  color: #999;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 1000px) {
-  .home-hero-real { flex-direction: column; gap: 40px; }
-  .hhr-left { max-width: 100%; align-items: flex-start; }
-  .hhr-right { max-width: 100%; width: 100%; }
+@media (max-width: 1100px) {
+  .home-hero-real { flex-direction: column; gap: 60px; text-align: center; }
+  .hhr-left, .hhr-right { max-width: 100%; align-items: center; }
+  .hhr-desc { margin: 0 auto 30px; }
+  .hhr-actions { justify-content: center; }
+  .hhr-stats-bar { width: 100%; justify-content: center; }
+  .hhr-subtitle { margin: 0 auto; }
 }
-@media (max-width: 600px) {
-  .hhr-title { font-size: clamp(56px, 16vw, 90px); }
-  .hhr-stats-bar { flex-wrap: wrap; transform: none; }
-  .hhr-stat { transform: none; }
-}
-
