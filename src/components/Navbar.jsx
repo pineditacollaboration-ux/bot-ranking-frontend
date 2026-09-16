@@ -1,174 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
-const DiscordIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-  </svg>
-);
-
-const LogoutIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-    <polyline points="16 17 21 12 16 7"/>
-    <line x1="21" y1="12" x2="9" y2="12"/>
-  </svg>
-);
-
-const navItems = [
-  { path: '/',             label: 'INICIO',        icon: '🏠' },
-  { path: '/ranking',      label: 'RANKING',       icon: '🏆' },
-  { path: '/temporadas',   label: 'TEMPORADAS',    icon: '🎖️' },
-  { path: '/estadisticas', label: 'ESTADÍSTICAS',  icon: '📊' },
-];
-
 const Navbar = () => {
-  const { user, logout } = useAuth();
-  const location = useLocation();
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  // Close on route change
-  useEffect(() => { setMobileOpen(false); }, [location.pathname]);
-
-  // Lock body when open
-  useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [mobileOpen]);
-
-  const getAvatar = () => {
-    if (!user?.avatar || user.avatar === 'null' || user.avatar === 'undefined') return `https://cdn.discordapp.com/embed/avatars/0.png`;
-    if (user.avatar.startsWith('http')) return user.avatar;
-    return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-  };
+  const { user, login } = useAuth();
 
   return (
-    <>
-      <nav className="navbar">
-        <div className="navbar-container">
-          {/* Logo */}
-          <Link to="/" className="navbar-logo">
-            <img src="/logo.gif" alt="Royal Ranked" className="logo-image" loading="eager" />
-          </Link>
+    <nav className="navbar-premium">
+      <div className="navbar-container">
+        
+        <Link to="/" className="nav-logo">
+          <img src="/logo.gif" alt="Royal Ranked" className="logo-img" />
+        </Link>
+        
+        <div className="nav-links">
+          <Link to="/" className="nav-link">HOME</Link>
+          <Link to="/ranking" className="nav-link active">RANKING</Link>
+          <Link to="/temporadas" className="nav-link">TEMPORADAS</Link>
+          <Link to="/estadisticas" className="nav-link">ESTADÍSTICAS</Link>
+          <a href="https://discord.gg/zscGKBdfGA" target="_blank" rel="noreferrer" className="nav-link">DISCORD ↗</a>
+        </div>
 
-          {/* Desktop nav */}
-          <div className="navbar-nav">
-            {navItems.map(item => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`nav-link ${location.pathname === item.path ? 'active' : ''}`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Auth */}
-          <div className="navbar-auth">
-            {user ? (
-              <>
-                <Link to={`/profile/${user.id}`} className="user-chip">
-                  {getAvatar() ? (
-                    <img
-                      src={getAvatar()}
-                      alt={user.username}
-                      className="user-chip-avatar"
-                      onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }}
-                    />
-                  ) : null}
-                  <div className="user-chip-avatar-fallback" style={{ display: getAvatar() ? 'none' : 'flex' }}>
-                    {user.username?.[0]?.toUpperCase() ?? '?'}
-                  </div>
-                  <div className="user-online-dot" />
-                  <span className="user-chip-name">{user.username}</span>
-                </Link>
-                <button onClick={logout} className="logout-btn">
-                  <LogoutIcon /> SALIR
-                </button>
-              </>
-            ) : (
-              <Link to="/login" className="nav-enter-btn">
-                <span>ENTRAR</span>
-              </Link>
-            )}
-
-            {/* Hamburger */}
-            <button
-              className={`hamburger-btn ${mobileOpen ? 'open' : ''}`}
-              onClick={() => setMobileOpen(v => !v)}
-              aria-label="Menú"
-            >
-              <span /><span /><span />
+        <div className="nav-right">
+          {user ? (
+            <Link to={`/profile/${user.id}`} className="btn-skewed btn-white">
+              <span className="btn-skewed-content">{user.username}</span>
+            </Link>
+          ) : (
+            <button onClick={login} className="btn-skewed btn-white">
+              <span className="btn-skewed-content">ENTRAR</span>
             </button>
-          </div>
+          )}
         </div>
-      </nav>
 
-      {/* Mobile Drawer */}
-      <div className={`mobile-drawer ${mobileOpen ? 'open' : ''}`}>
-        <div className="mobile-drawer-overlay" onClick={() => setMobileOpen(false)} />
-        <div className="mobile-drawer-panel">
-          <div className="mobile-drawer-header">
-            <span className="mobile-drawer-title">MENÚ</span>
-            <button className="mobile-close-btn" onClick={() => setMobileOpen(false)}>✕</button>
-          </div>
-
-          <div className="mobile-nav-items">
-            {navItems.map(item => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`mobile-nav-link ${location.pathname === item.path ? 'active' : ''}`}
-                onClick={() => setMobileOpen(false)}
-              >
-                <div className="mobile-nav-dot" />
-                <span>{item.icon}</span>
-                {item.label}
-              </Link>
-            ))}
-          </div>
-
-          <div className="mobile-drawer-footer">
-            {user ? (
-              <>
-                <Link
-                  to={`/profile/${user.id}`}
-                  className="user-chip"
-                  style={{ width: '100%', borderRadius: 'var(--radius-md)' }}
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {getAvatar() ? (
-                    <img src={getAvatar()} alt={user.username} className="user-chip-avatar" />
-                  ) : (
-                    <div className="user-chip-avatar-fallback">
-                      {user.username?.[0]?.toUpperCase() ?? '?'}
-                    </div>
-                  )}
-                  <div className="user-online-dot" />
-                  <span className="user-chip-name">{user.username}</span>
-                </Link>
-                <button
-                  onClick={() => { logout(); setMobileOpen(false); }}
-                  className="logout-btn"
-                  style={{ width: '100%', justifyContent: 'center' }}
-                >
-                  <LogoutIcon /> CERRAR SESIÓN
-                </button>
-              </>
-            ) : (
-              <Link to="/login" className="nav-discord-btn" onClick={() => setMobileOpen(false)}
-                style={{ justifyContent: 'center' }}>
-                <DiscordIcon /> INICIAR SESIÓN
-              </Link>
-            )}
-          </div>
-        </div>
       </div>
-    </>
+    </nav>
   );
 };
-
 export default Navbar;

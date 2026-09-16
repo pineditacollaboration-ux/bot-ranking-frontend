@@ -7,22 +7,17 @@ import './Ranking.css';
 
 const getAvatarUrl = (discordId, avatarHash) => {
   if (!avatarHash || avatarHash === 'null' || avatarHash === 'undefined') {
-    try {
-      const idx = discordId ? (BigInt(discordId) >> 22n) % 6n : 0n;
-      return `https://cdn.discordapp.com/embed/avatars/${idx}.png`;
-    } catch {
-      return `https://cdn.discordapp.com/embed/avatars/0.png`;
-    }
+    return 'https://cdn.discordapp.com/embed/avatars/0.png';
   }
   if (avatarHash.startsWith('http')) return avatarHash;
   return `https://cdn.discordapp.com/avatars/${discordId}/${avatarHash}.png`;
 };
 
 const SORT_OPTIONS = [
-  { id: 'season',  label: 'PUNTOS RANKED' },
-  { id: 'wins',    label: 'VICTORIAS' },
+  { id: 'season',  label: 'PONTOS' },
+  { id: 'wins',    label: 'VITÓRIAS' },
   { id: 'losses',  label: 'DERROTAS' },
-  { id: 'mvps',    label: 'JUGADOR MVP' },
+  { id: 'mvps',    label: 'MVP' },
 ];
 
 const DiscordIcon = () => (
@@ -63,141 +58,147 @@ const Ranking = () => {
     } catch (_) {}
   };
 
-  const VISIBLE_FREE = 0;
-
   const PlayerRow = ({ p, idx, isGated }) => {
-    const isTop1 = idx === 0;
-    const isTop2 = idx === 1;
-    const isTop3 = idx === 2;
-    const isTop = isTop1 || isTop2 || isTop3;
+    const isTop = idx < 3;
     const rankNum = idx + 1;
 
     const displayName    = isGated ? '???' : p.username;
     const displayHash    = isGated ? '#????' : `#${p.discordId?.slice(-4) ?? '????'}`;
     const displayPoints  = (p.points ?? 0).toLocaleString();
-    const displayWins    = p.wins ?? 0;
-    const displayLosses  = p.losses ?? 0;
-    const displayMvps    = p.mvps ?? 0;
     const avatarSrc      = isGated ? null : getAvatarUrl(p.discordId, p.avatar);
 
-    const inner = (
-      <div className={`rt-row ${isTop ? 'top3-row' : ''} ${isGated ? 'gated-row' : ''}`}>
-        <div className="rt-cell cell-rank">
-          <div className={`rank-badge ${isTop1 ? 'rank-badge-top1' : isTop2 ? 'rank-badge-top2' : isTop3 ? 'rank-badge-top3' : ''}`}>
-            {isTop1 ? '🥇' : isTop2 ? '🥈' : isTop3 ? '🥉' : rankNum}
+    return (
+      <div className={`tbl-row ${isGated ? 'gated-row' : ''}`}>
+        <div className="tbl-cell tbl-rank">
+          <div className={`rank-badge ${idx===0 ? 'gold' : idx===1 ? 'silver' : idx===2 ? 'bronze' : ''}`}>
+             <span className="rank-badge-content">{isTop ? '🏆 ' : ''}{rankNum}</span>
           </div>
         </div>
 
-        <div className="rt-cell cell-player">
-          <div className={`rt-avatar-wrap ${isGated ? 'blurred' : ''}`}>
-            {avatarSrc
-              ? <img src={avatarSrc} alt={displayName} onError={e => { e.target.onerror = null; e.target.src = 'https://cdn.discordapp.com/embed/avatars/0.png'; }} />
-              : <div className="rt-avatar-placeholder">?</div>
-            }
+        <div className="tbl-cell tbl-player">
+          <div className={`player-avatar-wrap ${isGated ? 'blur' : ''}`}>
+             {avatarSrc ? <img src={avatarSrc} alt="" /> : <div className="avatar-ph">?</div>}
           </div>
-          <div className="rt-player-info">
-            <span className={`rt-username ${isGated ? 'blurred' : ''}`}>{displayName}</span>
-            <span className="rt-hash">{displayHash}</span>
+          <div className="player-info">
+             <span className={`player-name ${isGated ? 'blur' : ''}`}>{displayName}</span>
+             <span className="player-hash">{displayHash}</span>
           </div>
         </div>
 
-        <div className="rt-cell cell-pts">
-          <span className={`pts-num ${isGated ? 'blurred' : ''}`}>{displayPoints}</span>
-          {!isGated && <span className="pts-label">PTS</span>}
+        <div className="tbl-cell tbl-points">
+           <span className="electric">{displayPoints}</span>
+           <span className="pts-txt">PTS</span>
         </div>
-        <div className={`rt-cell cell-wins ${isGated ? 'blurred' : ''}`}>{displayWins}</div>
-        <div className={`rt-cell cell-losses ${isGated ? 'blurred' : ''}`}>{displayLosses}</div>
-        <div className="rt-cell cell-mvp">
-          {isGated ? <span className="blurred">—</span> : <span className="mvp-badge">⭐ {displayMvps}</span>}
+        <div className="tbl-cell tbl-wins text-green">{p.wins ?? 0}</div>
+        <div className="tbl-cell tbl-losses">{p.losses ?? 0}</div>
+        <div className="tbl-cell tbl-mvp">
+           {isGated ? <span className="blur">—</span> : <span className="mvp-star">⭐ {p.mvps ?? 0}</span>}
         </div>
       </div>
     );
-
-    if (!isGated) {
-      return <Link to={`/profile/${p.discordId}`} key={p.discordId} style={{ textDecoration: 'none', color: 'inherit' }}>{inner}</Link>;
-    }
-    return <div key={idx}>{inner}</div>;
   };
 
   return (
-    <div className="ranking-page">
-
-      <div className="rk-header-modern">
-        <div className="rk-header-left">
-          <div className="rk-season-tag">
-            <span className="rk-season-line" />
-            {statsObj?.currentSeason ? statsObj.currentSeason.toUpperCase() : 'CARGANDO'}
-          </div>
-          <h1 className="rk-big-title">
-            GLOBAL <span className="rk-red-grad">RANKING</span>
-          </h1>
-          <p className="rk-subtext">La clasificación oficial de los mejores jugadores de la plataforma.</p>
-        </div>
-
-        <div className="rk-header-right">
-          <div className="rk-stat-pill">
-            <div className="rk-stat-pill-top">
-              <span className="rsp-icon">👤</span>
-              <span className="rsp-key">JUGADORES</span>
+    <div className="rank-wrapper">
+      <div className="rank-container">
+        
+        {/* Header */}
+        <div className="rank-header">
+          <div className="rh-left">
+            <div className="hero-subtitle">
+              <span className="hero-line"></span>
+              {statsObj?.currentSeason ? statsObj.currentSeason.toUpperCase() : 'TEMPORADA 1 — 2026'}
             </div>
-            <span className="rsp-val">{(statsObj?.totalPlayers ?? 0).toLocaleString()}</span>
+            <h1 className="hero-title">
+              <span className="text-white">RANKING<br/></span>
+              <span className="text-gradient">OFICIAL</span>
+            </h1>
+            <p className="hero-desc">
+              Os melhores jogadores da ranked. Cada ponto conquistado com<br/>sangue e suor.
+            </p>
           </div>
-          <div className="rk-stat-pill">
-            <div className="rk-stat-pill-top">
-              <span className="rsp-icon" style={{ color: '#ff4444' }}>⚡</span>
-              <span className="rsp-key">LOBBIES ACTIVOS</span>
-            </div>
-            <span className="rsp-val">{statsObj?.activeMatches ?? 0}</span>
+
+          <div className="rh-right">
+             <div className="stat-card">
+               <div className="stat-card-inner">
+                 <span className="sc-icon text-red">👤</span>
+                 <span className="sc-val">{(statsObj?.totalPlayers ?? 0).toLocaleString()}+</span>
+                 <span className="sc-key">JOGADORES</span>
+               </div>
+             </div>
+             <div className="stat-card">
+               <div className="stat-card-inner">
+                 <span className="sc-icon text-white">⚡</span>
+                 <span className="sc-val">{statsObj?.activeMatches ?? 0}+</span>
+                 <span className="sc-key">LOBBIES ATIVOS</span>
+               </div>
+             </div>
+             <div className="stat-card">
+               <div className="stat-card-inner">
+                 <span className="sc-icon text-red">⭐</span>
+                 <span className="sc-val">S1</span>
+                 <span className="sc-key">TEMPORADA</span>
+               </div>
+             </div>
           </div>
         </div>
-      </div>
 
-      <div className="rk-filters-modern">
-        {SORT_OPTIONS.map(o => (
-          <button key={o.id} className={`rk-pill ${sortBy === o.id ? 'active' : ''}`} onClick={() => setSortBy(o.id)}>
-            {o.label}
-          </button>
-        ))}
-      </div>
-
-      <div className="rk-table-wrap">
-        <div className="rk-table-head">
-          <div className="rk-th" style={{ width: '100px', textAlign: 'left' }}>RANGO</div>
-          <div className="rk-th" style={{ flex: 1, textAlign: 'left' }}>JUGADOR</div>
-          <div className="rk-th right-align" style={{ width: '180px' }}>⚡ PUNTOS</div>
-          <div className="rk-th center-align" style={{ width: '140px' }}>🛡 VICTORIAS</div>
-          <div className="rk-th center-align" style={{ width: '140px' }}>DERROTAS</div>
-          <div className="rk-th center-align" style={{ width: '140px' }}>⭐ MVP</div>
+        {/* Filters */}
+        <div className="rank-filters">
+           <div className="rf-group">
+              <span className="rf-label">DIVISÃO</span>
+              <div className="rf-pills">
+                 <button className="btn-skewed rf-pill active"><span className="btn-skewed-content">MASCULINO</span></button>
+                 <button className="btn-skewed rf-pill"><span className="btn-skewed-content">FEMININO</span></button>
+              </div>
+           </div>
+           <div className="rf-group">
+              <span className="rf-label">ORDENAR POR</span>
+              <div className="rf-pills">
+                 {SORT_OPTIONS.map(o => (
+                   <button key={o.id} className={`btn-skewed rf-pill ${sortBy === o.id ? 'active' : ''}`} onClick={() => setSortBy(o.id)}>
+                     <span className="btn-skewed-content">{o.label}</span>
+                   </button>
+                 ))}
+              </div>
+           </div>
         </div>
 
-        <div className="rk-table-body">
-          {loading && ranking.length === 0 ? (
-             <div className="rk-empty">Sincronizando ranking...</div>
-          ) : ranking.length === 0 ? (
-             <div className="rk-empty">No hay jugadores registrados aún.</div>
-          ) : (
-            <>
-              {ranking.map((p, idx) => (
-                <PlayerRow key={p.discordId ?? idx} p={p} idx={idx} isGated={!user && idx >= VISIBLE_FREE} />
-              ))}
+        {/* TABLE */}
+        <div className="table-wrapper">
+           <div className="tbl-head">
+              <div className="tbl-th" style={{width: '90px'}}>#</div>
+              <div className="tbl-th" style={{flex: 1}}>JOGADOR</div>
+              <div className="tbl-th align-r" style={{width: '180px'}}>⚡ PONTOS</div>
+              <div className="tbl-th align-c" style={{width: '120px'}}>🛡 VITÓRIAS</div>
+              <div className="tbl-th align-c" style={{width: '120px'}}>DERROTAS</div>
+              <div className="tbl-th align-c" style={{width: '120px'}}>⭐ MVP</div>
+           </div>
 
-              {!user && ranking.length > VISIBLE_FREE && (
-                <div className="rk-gate-overlay">
-                  <div className="rk-gate-card">
-                    <h2>INICIA SESIÓN <span>PARA VER</span></h2>
-                    <p className="rk-gate-desc">
-                      Conecta tu cuenta de Discord para acceder al ranking completo.
-                    </p>
-                    <button className="rk-gate-btn" onClick={login}>
-                      <DiscordIcon />
-                      ENTRAR CON DISCORD
-                    </button>
-                  </div>
-                </div>
-              )}
-            </>
-          )}
+           <div className="tbl-body">
+             {loading && ranking.length === 0 ? (
+                <div className="tbl-empty">Carregando...</div>
+             ) : (
+               <>
+                 {ranking.map((p, i) => (
+                   <PlayerRow key={p.discordId ?? i} p={p} idx={i} isGated={!user && i >= 0} />
+                 ))}
+
+                 {/* Premium Overlay */}
+                 {!user && ranking.length > 0 && (
+                   <div className="tbl-overlay">
+                      <h2 className="to-title"><span className="text-gradient">RANKING</span> RESTRITO</h2>
+                      <p className="to-sub">Faça login com seu Discord para ver o ranking completo da temporada.</p>
+                      <button onClick={login} className="btn-skewed btn-red" style={{marginTop: '20px'}}>
+                         <span className="btn-skewed-content"><DiscordIcon/> ENTRAR CON DISCORD</span>
+                      </button>
+                   </div>
+                 )}
+               </>
+             )}
+           </div>
         </div>
+
       </div>
     </div>
   );
