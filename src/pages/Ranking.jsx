@@ -14,7 +14,7 @@ const getAvatarUrl = (discordId, avatarHash) => {
 };
 
 const SORT_OPTIONS = [
-  { id: 'season',  label: 'PUNTOS' },
+  { id: 'points',  label: 'PUNTOS' },
   { id: 'wins',    label: 'VICTORIAS' },
   { id: 'losses',  label: 'DERROTAS' },
   { id: 'mvps',    label: 'MVP' },
@@ -29,7 +29,7 @@ const DiscordIcon = () => (
 const Ranking = () => {
   const { user, login } = useAuth();
   const [ranking, setRanking]   = useState([]);
-  const [sortBy, setSortBy]     = useState('season');
+  const [sortBy, setSortBy]     = useState('points');
   const [loading, setLoading]   = useState(true);
   const [statsObj, setStatsObj] = useState(null);
 
@@ -43,10 +43,15 @@ const Ranking = () => {
   const fetchRanking = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(API_CONFIG.ENDPOINTS.API.RANKING, { params: { type: sortBy } });
+      const res = await axios.get(API_CONFIG.ENDPOINTS.API.RANKING, { params: { sortBy, limit: 50 } });
       const d = res.data;
       const arr = Array.isArray(d) ? d : d?.ranking ?? d?.players ?? d?.data ?? [];
-      setRanking(arr);
+      // Sort client-side as safety net in case API doesn't sort
+      const sorted = [...arr].sort((a, b) => {
+        const field = sortBy === 'points' ? 'points' : sortBy === 'wins' ? 'wins' : sortBy === 'losses' ? 'losses' : 'mvps';
+        return (b[field] ?? 0) - (a[field] ?? 0);
+      });
+      setRanking(sorted);
     } catch (_) {}
     finally { setLoading(false); }
   };
@@ -58,14 +63,23 @@ const Ranking = () => {
     } catch (_) {}
   };
 
-  const PlayerRow = ({ p, idx, isGated }) => {
+  const PlayerRow = ({ p, idx, isGated, activeSortBy }) => {
     const isTop = idx < 3;
     const rankNum = idx + 1;
 
-    const displayName    = isGated ? '???' : p.username;
-    const displayHash    = isGated ? '#????' : `#${p.discordId?.slice(-4) ?? '????'}`;
-    const displayPoints  = (p.points ?? 0).toLocaleString();
-    const avatarSrc      = isGated ? null : getAvatarUrl(p.discordId, p.avatar);
+    const displayName = isGated ? '???' : p.username;
+    const displayHash = isGated ? '#????' : `#${p.discordId?.slice(-4) ?? '????'}`;
+    const avatarSrc   = isGated ? null : getAvatarUrl(p.discordId, p.avatar);
+
+    // Primary value shown in points column — changes based on active sort
+    const primaryVal  = activeSortBy === 'wins'   ? (p.wins ?? 0).toLocaleString()
+                      : activeSortBy === 'losses' ? (p.losses ?? 0).toLocaleString()
+                      : activeSortBy === 'mvps'   ? (p.mvps ?? 0).toLocaleString()
+                      : (p.points ?? 0).toLocaleString();
+    const primaryUnit = activeSortBy === 'wins'   ? 'WINS'
+                      : activeSortBy === 'losses' ? 'DER'
+                      : activeSortBy === 'mvps'   ? 'MVP'
+                      : 'PTS';
 
     return (
       <div className={`tbl-row ${isGated ? 'gated-row' : ''}`}>
@@ -86,13 +100,13 @@ const Ranking = () => {
         </div>
 
         <div className="tbl-cell tbl-points">
-           <span className="electric">{displayPoints}</span>
-           <span className="pts-txt">PTS</span>
+           <span className="electric">{primaryVal}</span>
+           <span className="pts-txt">{primaryUnit}</span>
         </div>
-        <div className="tbl-cell tbl-wins text-green">{p.wins ?? 0}</div>
-        <div className="tbl-cell tbl-losses">{p.losses ?? 0}</div>
+        <div className={`tbl-cell tbl-wins text-green ${activeSortBy === 'wins' ? 'col-active-green' : ''}`}>{p.wins ?? 0}</div>
+        <div className={`tbl-cell tbl-losses ${activeSortBy === 'losses' ? 'col-active-red' : ''}`}>{p.losses ?? 0}</div>
         <div className="tbl-cell tbl-mvp">
-           {isGated ? <span className="blur">—</span> : <span className="mvp-star">⭐ {p.mvps ?? 0}</span>}
+           {isGated ? <span className="blur">—</span> : <span className={`mvp-star ${activeSortBy === 'mvps' ? 'col-active-gold' : ''}`}>⭐ {p.mvps ?? 0}</span>}
         </div>
       </div>
     );
@@ -164,9 +178,11 @@ const Ranking = () => {
            <div className="tbl-head">
               <div className="tbl-th" style={{width: '90px'}}>#</div>
               <div className="tbl-th" style={{flex: 1}}>JUGADOR</div>
-              <div className="tbl-th align-r" style={{width: '180px'}}>⚡ PUNTOS</div>
-              <div className="tbl-th align-c" style={{width: '120px'}}>🛡 VICTORIAS</div>
-              <div className="tbl-th align-c" style={{width: '120px'}}>DERROTAS</div>
+              <div className="tbl-th align-r" style={{width: '180px'}}>
+                {sortBy === 'wins' ? '🛡 VICTORIAS' : sortBy === 'losses' ? 'DERROTAS' : sortBy === 'mvps' ? '⭐ MVP' : '⚡ PUNTOS'}
+              </div>
+              <div className="tbl-th align-c" style={{width: '120px'}}>🛡 VIC</div>
+              <div className="tbl-th align-c" style={{width: '120px'}}>DER</div>
               <div className="tbl-th align-c" style={{width: '120px'}}>⭐ MVP</div>
            </div>
 
@@ -176,7 +192,7 @@ const Ranking = () => {
              ) : (
                <>
                  {ranking.map((p, i) => (
-                   <PlayerRow key={p.discordId ?? i} p={p} idx={i} isGated={!user && i >= 0} />
+                   <PlayerRow key={p.discordId ?? i} p={p} idx={i} isGated={!user && i >= 0} activeSortBy={sortBy} />
                  ))}
 
                  {/* Premium Overlay */}

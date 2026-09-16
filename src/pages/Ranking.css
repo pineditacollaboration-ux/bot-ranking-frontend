@@ -152,6 +152,10 @@
 .tbl-mvp { width: 110px; justify-content: center; }
 
 .text-green { color: #00e06a; }
+.col-active-green { color: #00e06a; font-size: 19px; font-weight: 800; }
+.col-active-red   { color: var(--crimson); font-size: 19px; font-weight: 800; }
+.col-active-gold  { background: rgba(255,215,0,0.2); box-shadow: 0 0 8px rgba(255,215,0,0.3); }
+
 
 /* Rank Badge */
 .rank-badge {
