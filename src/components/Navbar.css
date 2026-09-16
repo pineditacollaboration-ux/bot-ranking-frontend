@@ -37,6 +37,7 @@
 }
 
 .nav-link {
+  position: relative;
   font-family: 'Chakra Petch', sans-serif;
   font-size: 16px;
   font-weight: 700;
@@ -44,13 +45,43 @@
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 2px;
-  transition: all 0.25s ease;
+  padding: 8px 0;
+  transition: all 0.3s ease;
 }
+
+/* Hover: glowing text and upward shift */
 .nav-link:hover {
   color: #fff;
-  text-shadow: 0 0 10px rgba(255,255,255,0.4);
+  text-shadow: 0 0 12px rgba(255,255,255,0.6);
+  transform: translateY(-2px);
 }
-.nav-link.active { color: #fff; }
+
+/* Active click state: squeeze down */
+.nav-link:active {
+  transform: translateY(1px) scale(0.95);
+}
+
+/* Cyberpunk Underline Animation */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--crimson);
+  box-shadow: 0 0 8px var(--crimson);
+  transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: #fff;
+}
 
 /* Hamburger menu (mobile) */
 .nav-hamburger {
