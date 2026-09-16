@@ -14,8 +14,8 @@ const getAvatarUrl = (discordId, avatarHash) => {
 };
 
 const SORT_OPTIONS = [
-  { id: 'season',  label: 'PONTOS' },
-  { id: 'wins',    label: 'VITÓRIAS' },
+  { id: 'season',  label: 'PUNTOS' },
+  { id: 'wins',    label: 'VICTORIAS' },
   { id: 'losses',  label: 'DERROTAS' },
   { id: 'mvps',    label: 'MVP' },
 ];
@@ -114,7 +114,7 @@ const Ranking = () => {
               <span className="text-gradient">OFICIAL</span>
             </h1>
             <p className="hero-desc">
-              Os melhores jogadores da ranked. Cada ponto conquistado com<br/>sangue e suor.
+              Los mejores jugadores de la ranked. Cada punto conquistado con<br/>sangre y sudor.
             </p>
           </div>
 
@@ -123,14 +123,14 @@ const Ranking = () => {
                <div className="stat-card-inner">
                  <span className="sc-icon text-red">👤</span>
                  <span className="sc-val">{(statsObj?.totalPlayers ?? 0).toLocaleString()}+</span>
-                 <span className="sc-key">JOGADORES</span>
+                 <span className="sc-key">JUGADORES</span>
                </div>
              </div>
              <div className="stat-card">
                <div className="stat-card-inner">
                  <span className="sc-icon text-white">⚡</span>
                  <span className="sc-val">{statsObj?.activeMatches ?? 0}+</span>
-                 <span className="sc-key">LOBBIES ATIVOS</span>
+                 <span className="sc-key">LOBBIES ACTIVOS</span>
                </div>
              </div>
              <div className="stat-card">
@@ -168,16 +168,16 @@ const Ranking = () => {
         <div className="table-wrapper">
            <div className="tbl-head">
               <div className="tbl-th" style={{width: '90px'}}>#</div>
-              <div className="tbl-th" style={{flex: 1}}>JOGADOR</div>
-              <div className="tbl-th align-r" style={{width: '180px'}}>⚡ PONTOS</div>
-              <div className="tbl-th align-c" style={{width: '120px'}}>🛡 VITÓRIAS</div>
+              <div className="tbl-th" style={{flex: 1}}>JUGADOR</div>
+              <div className="tbl-th align-r" style={{width: '180px'}}>⚡ PUNTOS</div>
+              <div className="tbl-th align-c" style={{width: '120px'}}>🛡 VICTORIAS</div>
               <div className="tbl-th align-c" style={{width: '120px'}}>DERROTAS</div>
               <div className="tbl-th align-c" style={{width: '120px'}}>⭐ MVP</div>
            </div>
 
            <div className="tbl-body">
              {loading && ranking.length === 0 ? (
-                <div className="tbl-empty">Carregando...</div>
+                <div className="tbl-empty">Cargando...</div>
              ) : (
                <>
                  {ranking.map((p, i) => (
@@ -187,8 +187,8 @@ const Ranking = () => {
                  {/* Premium Overlay */}
                  {!user && ranking.length > 0 && (
                    <div className="tbl-overlay">
-                      <h2 className="to-title"><span className="text-gradient">RANKING</span> RESTRITO</h2>
-                      <p className="to-sub">Faça login com seu Discord para ver o ranking completo da temporada.</p>
+                      <h2 className="to-title"><span className="text-gradient">RANKING</span> RESTRINGIDO</h2>
+                      <p className="to-sub">Inicia sesión con tu Discord para ver el ranking completo de la temporada.</p>
                       <button onClick={login} className="btn-skewed btn-red" style={{marginTop: '20px'}}>
                          <span className="btn-skewed-content"><DiscordIcon/> ENTRAR CON DISCORD</span>
                       </button>
