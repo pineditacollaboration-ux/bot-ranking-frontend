@@ -1,91 +1,44 @@
-/* FOOTER CSS */
-.rr-footer {
+.site-footer {
   width: 100%;
-  background-color: #040406;
-  border-top: 1px solid #111118;
-  padding: 60px 24px 30px;
-  margin-top: 40px;
-}
-
-.rr-footer-content {
-  max-width: 1300px;
-  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: transparent;
   display: flex;
-  justify-content: space-between;
-  gap: 40px;
-  flex-wrap: wrap;
-}
-
-.rr-footer-left {
-  max-width: 340px;
-}
-.rr-footer-brand {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 32px;
-  color: #fff;
-  letter-spacing: 2px;
-  margin: 0 0 10px;
-}
-.rr-footer-brand span {
-  color: var(--crimson);
-}
-.rr-footer-desc {
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  color: #777;
-  line-height: 1.6;
-  margin: 0;
-}
-
-.rr-footer-links {
-  display: flex;
-  gap: 60px;
-  flex-wrap: wrap;
-}
-
-.rr-footer-col {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.rr-footer-col h4 {
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  color: #fff;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin: 0 0 4px;
-}
-.rr-footer-col a {
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  color: #777;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-.rr-footer-col a:hover {
-  color: var(--crimson);
-}
-
-.rr-footer-bottom {
-  max-width: 1300px;
-  margin: 60px auto 0;
-  padding-top: 24px;
-  border-top: 1px solid #111118;
-  display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
+  margin-top: 60px;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.footer-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(230, 0, 57, 0.3), transparent);
+}
+
+.footer-text {
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 700;
+  letter-spacing: 4px;
+  font-size: 13px;
+  margin: 0;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.footer-muted {
   color: #555;
 }
 
-@media (max-width: 768px) {
-  .rr-footer-content {
-    flex-direction: column;
-  }
-  .rr-footer-links {
-    gap: 40px;
-  }
+.footer-brand {
+  color: var(--crimson);
+  text-shadow: 0 0 10px rgba(230, 0, 57, 0.4);
 }

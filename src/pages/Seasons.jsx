@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { API_CONFIG } from '../config/api';
 import RestrictedContent from '../components/RestrictedContent';
-// Removed lucide-react
+import { Trophy, Crown } from 'lucide-react';
 import './Seasons.css';
 
 const getAvatarUrl = (discordId, avatarHash) => {
@@ -95,7 +95,7 @@ const Seasons = () => {
 
       {seasons.length === 0 && !loading && (
         <div className="seasons-empty">
-          <div className="seasons-empty-icon"><span style={{ fontSize: '64px', opacity: 0.3 }}>🏆</span></div>
+          <div className="seasons-empty-icon"><Trophy size={64} style={{ opacity: 0.3 }} /></div>
           <div className="seasons-empty-text">No hay temporadas registradas</div>
           <div className="seasons-empty-sub">Las temporadas aparecerán aquí cuando estén disponibles</div>
         </div>
@@ -108,20 +108,26 @@ const Seasons = () => {
             <div className="season-hero-title">TEMPORADA <span>{selectedSeason}</span></div>
             <div className="season-hero-sub">
               {loading
-                ? 'Cargando estadísticas...'
+                ? <div className="skeleton-box" style={{ width: 250, height: 20, margin: '10px auto' }} />
                 : `${seasonStats.length} jugadores clasificados en esta temporada`
               }
             </div>
           </div>
 
           {loading ? (
-            <div className="loading-screen" style={{ minHeight: 300 }}>
-              <div className="loading-ring" />
-              <div className="loading-text">Cargando temporada...</div>
+            <div className="season-podium anim-fade-up d2">
+              {[2, 1, 3].map(pos => (
+                <div key={pos} className={`season-podium-card pos-${pos}`}>
+                  <div className="sp-pos">{pos}°</div>
+                  <div className="skeleton-box skeleton-avatar" />
+                  <div className="skeleton-box" style={{ width: 100, height: 20, marginTop: 10 }} />
+                  <div className="skeleton-box" style={{ width: 60, height: 30, margin: '14px 0' }} />
+                </div>
+              ))}
             </div>
           ) : seasonStats.length === 0 ? (
             <div className="seasons-empty">
-              <div className="seasons-empty-icon"><span style={{ fontSize: '64px', opacity: 0.3 }}>🏆</span></div>
+              <div className="seasons-empty-icon"><Trophy size={64} style={{ opacity: 0.3 }} /></div>
               <div className="seasons-empty-text">Sin datos para esta temporada</div>
             </div>
           ) : (
@@ -132,7 +138,7 @@ const Seasons = () => {
                     const pos = idx === 0 ? 2 : idx === 1 ? 1 : 3;
                     return (
                       <div key={p.discordId} className={`season-podium-card pos-${pos}`}>
-                        {pos === 1 && <div style={{ fontSize:24, position:'absolute', top:8 }}>👑</div>}
+                        {pos === 1 && <div style={{ position: 'absolute', top: 8 }}><Crown size={24} className="text-gold" /></div>}
                         <div className="sp-pos">{pos}°</div>
                         <img
                           src={getAvatarUrl(p.discordId, p.avatar)}

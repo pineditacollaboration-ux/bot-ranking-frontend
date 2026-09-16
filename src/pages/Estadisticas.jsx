@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { API_CONFIG } from '../config/api';
 import RestrictedContent from '../components/RestrictedContent';
-// Removed lucide-react
+import { Users, Swords, Zap, Trophy, Crown, Medal, Shield } from 'lucide-react';
 import './Estadisticas.css';
 
 const Estadisticas = () => {
@@ -53,26 +53,26 @@ const Estadisticas = () => {
     return `https://cdn.discordapp.com/avatars/${discordId}/${avatar}.png`;
   };
 
-  const fmt = n => loading ? '—' : (n ?? 0).toLocaleString('es');
+  const fmt = n => loading ? <div className="skeleton-box" style={{ height: 28, width: 80, display: 'inline-block' }} /> : (n ?? 0).toLocaleString('es');
 
   const kpis = [
-    { icon: <span>👤</span>, label: 'JUGADORES TOTALES', val: fmt(stats?.totalPlayers), sub: 'Vinculados a la plataforma' },
-    { icon: <span>⚔️</span>, label: 'PARTIDAS JUGADAS',  val: fmt(stats?.totalMatches), sub: 'Registradas en el servidor' },
-    { icon: <span>⚡</span>, label: 'JUGADORES ACTIVOS', val: fmt(stats?.activePlayers), sub: 'Con partidas recientes' },
-    { icon: <span>🏆</span>, label: 'PARTIDAS ACTIVAS',  val: fmt(stats?.activeMatches), sub: 'En curso actualmente' },
+    { icon: <Users size={20} />, label: 'JUGADORES TOTALES', val: fmt(stats?.totalPlayers), sub: 'Vinculados a la plataforma' },
+    { icon: <Swords size={20} />, label: 'PARTIDAS JUGADAS',  val: fmt(stats?.totalMatches), sub: 'Registradas en el servidor' },
+    { icon: <Zap size={20} />, label: 'JUGADORES ACTIVOS', val: fmt(stats?.activePlayers), sub: 'Con partidas recientes' },
+    { icon: <Trophy size={20} />, label: 'PARTIDAS ACTIVAS',  val: fmt(stats?.activeMatches), sub: 'En curso actualmente' },
   ];
 
   const topCards = [
     {
-      cls: 't1', icon: <span style={{fontSize: 36}} className="text-gold">👑</span>, crown: 'MÁS PUNTOS',
+      cls: 't1', icon: <Crown size={36} className="text-gold" />, crown: 'MÁS PUNTOS',
       player: topPoints, score: topPoints?.points, unit: 'PUNTOS',
     },
     {
-      cls: 't2', icon: <span style={{fontSize: 36}} className="text-crimson">🎖️</span>, crown: 'MÁS VICTORIAS',
+      cls: 't2', icon: <Medal size={36} className="text-crimson" />, crown: 'MÁS VICTORIAS',
       player: topWins, score: topWins?.wins, unit: 'WINS',
     },
     {
-      cls: 't3', icon: <span style={{fontSize: 36}} className="text-green">🛡️</span>, crown: 'MÁS MVP',
+      cls: 't3', icon: <Shield size={36} className="text-green" />, crown: 'MÁS MVP',
       player: topMvp, score: topMvp?.mvps, unit: 'MVPs',
     },
   ];
@@ -101,16 +101,16 @@ const Estadisticas = () => {
       </div>
 
       <div className="stats-section anim-fade-up d5">
-        <div className="stats-section-title"><span>👑</span> TOP JUGADORES</div>
+        <div className="stats-section-title" style={{ display: 'flex', alignItems: 'center', gap: 10 }}><Crown size={24} className="text-gold"/> TOP JUGADORES</div>
         <div className="top-trio">
           {topCards.map((tc, i) => {
             if (!tc.player) return (
               <div key={tc.crown} className={`top-player-card ${tc.cls}`}>
                 <div className="top-player-trophy">{tc.icon}</div>
-                <div style={{ width: 80, height: 80, borderRadius:'50%', background:'var(--bg-border)' }} />
+                <div className="skeleton-box" style={{ width: 80, height: 80, borderRadius: '50%' }} />
                 <div className={`top-player-crown`}>{tc.crown}</div>
-                <div className="top-player-name" style={{ color: 'var(--text-dim)' }}>—</div>
-                <div className="top-player-score" style={{ color: 'var(--text-dim)' }}>—</div>
+                <div className="skeleton-box" style={{ width: 100, height: 20, margin: '6px 0' }} />
+                <div className="skeleton-box" style={{ width: 60, height: 26, margin: '4px 0' }} />
               </div>
             );
             return (

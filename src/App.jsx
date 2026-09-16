@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import './App.css';
 
 const Home         = lazy(() => import('./pages/Home'));
@@ -56,6 +57,7 @@ function App() {
               <Route path="*"                    element={<Navigate to="/" />} />
             </Routes>
           </Suspense>
+          <Footer />
         </div>
       </Router>
     </AuthProvider>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { API_CONFIG } from '../config/api';
+import { Trophy, Users, Circle } from 'lucide-react';
 import './RestrictedContent.css';
 
 const DiscordIcon = () => (
@@ -24,8 +25,9 @@ const RestrictedContent = () => {
       .catch(() => {});
   }, []);
 
-  const totalPlayers = stats?.totalPlayers?.toLocaleString('es') ?? '—';
-  const currentSeason = stats?.currentSeason ? String(stats.currentSeason).toUpperCase() : '—';
+  const isLoading = stats === null;
+  const totalPlayers = isLoading ? <div className="skeleton-box" style={{height:20, width:60}}/> : stats.totalPlayers?.toLocaleString('es') ?? '—';
+  const currentSeason = isLoading ? <div className="skeleton-box" style={{height:20, width:40}}/> : (stats.currentSeason ? String(stats.currentSeason).toUpperCase() : '—');
   const isOnline = stats !== null;
 
   return (
@@ -74,19 +76,19 @@ const RestrictedContent = () => {
           {/* Motivational stats preview */}
           <div className="rc-stats-preview">
             <div className="rc-stat-item">
-              <span className="rc-stat-icon">🏆</span>
+              <span className="rc-stat-icon"><Trophy size={18} /></span>
               <span className="rc-stat-val">{currentSeason}</span>
               <span className="rc-stat-key">TEMPORADA ACTIVA</span>
             </div>
             <div className="rc-stat-divider" />
             <div className="rc-stat-item">
-              <span className="rc-stat-icon">👤</span>
+              <span className="rc-stat-icon"><Users size={18} /></span>
               <span className="rc-stat-val">{totalPlayers}</span>
               <span className="rc-stat-key">COMPETIDORES</span>
             </div>
             <div className="rc-stat-divider" />
             <div className="rc-stat-item">
-              <span className="rc-stat-icon rc-online-dot">{isOnline ? '🟢' : '🔴'}</span>
+              <span className="rc-stat-icon" style={{color: isOnline ? '#57F287' : '#ED4245'}}><Circle size={14} fill="currentColor" /></span>
               <span className="rc-stat-val" style={{ fontSize: '14px' }}>{isOnline ? 'ONLINE' : 'OFFLINE'}</span>
               <span className="rc-stat-key">ESTADO</span>
             </div>

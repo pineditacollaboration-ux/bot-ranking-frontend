@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { API_CONFIG } from '../config/api';
+import { Users, Zap, Trophy, Shield, Star } from 'lucide-react';
 import './Ranking.css';
 
 const getAvatarUrl = (discordId, avatarHash) => {
@@ -106,7 +107,7 @@ const Ranking = () => {
         <div className={`tbl-cell tbl-wins text-green ${activeSortBy === 'wins' ? 'col-active-green' : ''}`}>{p.wins ?? 0}</div>
         <div className={`tbl-cell tbl-losses ${activeSortBy === 'losses' ? 'col-active-red' : ''}`}>{p.losses ?? 0}</div>
         <div className="tbl-cell tbl-mvp">
-           {isGated ? <span className="blur">—</span> : <span className={`mvp-star ${activeSortBy === 'mvps' ? 'col-active-gold' : ''}`}>⭐ {p.mvps ?? 0}</span>}
+           {isGated ? <span className="blur">—</span> : <span className={`mvp-star ${activeSortBy === 'mvps' ? 'col-active-gold' : ''}`} style={{display: 'flex', alignItems: 'center', gap: 4}}><Star size={14} fill="currentColor"/> {p.mvps ?? 0}</span>}
         </div>
       </div>
     );
@@ -135,21 +136,21 @@ const Ranking = () => {
           <div className="rh-right">
              <div className="stat-card">
                <div className="stat-card-inner">
-                 <span className="sc-icon text-red">👤</span>
+                 <span className="sc-icon text-red"><Users size={20}/></span>
                  <span className="sc-val">{(statsObj?.totalPlayers ?? 0).toLocaleString()}+</span>
                  <span className="sc-key">JUGADORES</span>
                </div>
              </div>
              <div className="stat-card">
                <div className="stat-card-inner">
-                 <span className="sc-icon text-white">⚡</span>
+                 <span className="sc-icon text-white"><Zap size={20}/></span>
                  <span className="sc-val">{statsObj?.activeMatches ?? 0}+</span>
                  <span className="sc-key">LOBBIES ACTIVOS</span>
                </div>
              </div>
              <div className="stat-card">
                <div className="stat-card-inner">
-                 <span className="sc-icon text-red">⭐</span>
+                 <span className="sc-icon text-red"><Star size={20}/></span>
                  <span className="sc-val" style={{ fontSize: statsObj?.currentSeason && String(statsObj.currentSeason).length > 5 ? '16px' : undefined }}>
                    {statsObj?.currentSeason ? String(statsObj.currentSeason).toUpperCase() : 'S1'}
                  </span>
@@ -178,17 +179,33 @@ const Ranking = () => {
            <div className="tbl-head">
               <div className="tbl-th" style={{width: '90px'}}>#</div>
               <div className="tbl-th" style={{flex: 1}}>JUGADOR</div>
-              <div className="tbl-th align-r" style={{width: '180px'}}>
-                {sortBy === 'wins' ? '🛡 VICTORIAS' : sortBy === 'losses' ? 'DERROTAS' : sortBy === 'mvps' ? '⭐ MVP' : '⚡ PUNTOS'}
+              <div className="tbl-th align-r" style={{width: '180px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 6}}>
+                {sortBy === 'wins' ? <><Shield size={14}/> VICTORIAS</> : sortBy === 'losses' ? 'DERROTAS' : sortBy === 'mvps' ? <><Star size={14}/> MVP</> : <><Zap size={14}/> PUNTOS</>}
               </div>
-              <div className="tbl-th align-c" style={{width: '120px'}}>🛡 VIC</div>
+              <div className="tbl-th align-c" style={{width: '120px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4}}><Shield size={14}/> VIC</div>
               <div className="tbl-th align-c" style={{width: '120px'}}>DER</div>
-              <div className="tbl-th align-c" style={{width: '120px'}}>⭐ MVP</div>
+              <div className="tbl-th align-c" style={{width: '120px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4}}><Star size={14}/> MVP</div>
            </div>
 
            <div className="tbl-body">
              {loading && ranking.length === 0 ? (
-                <div className="tbl-empty">Cargando...</div>
+                <>
+                  {[1,2,3,4,5,6].map(i => (
+                    <div key={i} className="tbl-row">
+                      <div className="tbl-cell tbl-rank"><div className="skeleton-box" style={{width:46,height:34,borderRadius:4}} /></div>
+                      <div className="tbl-cell tbl-player"><div className="skeleton-box" style={{width:44,height:44,borderRadius:'50%'}} />
+                        <div style={{display:'flex',flexDirection:'column',gap:4,marginLeft:16}}>
+                          <div className="skeleton-box" style={{width:120,height:18}} />
+                          <div className="skeleton-box" style={{width:60,height:12}} />
+                        </div>
+                      </div>
+                      <div className="tbl-cell tbl-points" style={{justifyContent:'flex-end'}}><div className="skeleton-box" style={{width:80,height:22}} /></div>
+                      <div className="tbl-cell tbl-wins"><div className="skeleton-box" style={{width:30,height:22}} /></div>
+                      <div className="tbl-cell tbl-losses"><div className="skeleton-box" style={{width:30,height:22}} /></div>
+                      <div className="tbl-cell tbl-mvp"><div className="skeleton-box" style={{width:30,height:22}} /></div>
+                    </div>
+                  ))}
+                </>
              ) : (
                <>
                  {ranking.map((p, i) => (
