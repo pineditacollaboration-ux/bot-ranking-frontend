@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { API_CONFIG } from '../config/api';
-import { Users, Zap, Trophy, Shield, Star } from 'lucide-react';
+import { Users, Zap, Trophy, Shield, Star, Medal, Award } from 'lucide-react';
 import './Ranking.css';
 
 const getAvatarUrl = (discordId, avatarHash) => {
@@ -86,7 +86,10 @@ const Ranking = () => {
       <div className={`tbl-row ${isGated ? 'gated-row' : ''}`}>
         <div className="tbl-cell tbl-rank">
           <div className={`rank-badge ${idx===0 ? 'gold' : idx===1 ? 'silver' : idx===2 ? 'bronze' : ''}`}>
-             <span className="rank-badge-content">{isTop ? '🏆 ' : ''}{rankNum}</span>
+             <span className="rank-badge-content" style={{display:'flex',alignItems:'center',gap:4}}>
+               {idx===0 ? <Trophy size={13} fill="currentColor"/> : idx===1 ? <Medal size={13}/> : idx===2 ? <Award size={13}/> : null}
+               {rankNum}
+             </span>
           </div>
         </div>
 

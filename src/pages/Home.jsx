@@ -64,8 +64,14 @@ const Home = () => {
                 <span className="hbs-key">PARTIDAS JUGADAS</span>
              </div>
              <div className="hbs-item">
-                <span className="hbs-val" style={{ color: stats?.botOnline ? '#00e06a' : '#ff4444' }}>
-                  {stats?.botOnline ? 'ONLINE 🟢' : 'OFFLINE 🔴'}
+                <span className="hbs-val" style={{ color: stats?.botOnline ? '#00e06a' : '#ff4444', display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{
+                    display: 'inline-block', width: 10, height: 10, borderRadius: '50%',
+                    background: stats?.botOnline ? '#00e06a' : '#ff4444',
+                    boxShadow: stats?.botOnline ? '0 0 8px #00e06a' : '0 0 8px #ff4444',
+                    animation: 'pulse-dot 2s ease-in-out infinite'
+                  }}/>
+                  {stats?.botOnline ? 'ONLINE' : 'OFFLINE'}
                 </span>
                 <span className="hbs-key">ESTADO DEL BOT</span>
              </div>
