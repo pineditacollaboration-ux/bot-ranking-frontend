@@ -107,7 +107,7 @@ const Ranking = () => {
           <div className="rh-left">
             <div className="hero-subtitle">
               <span className="hero-line"></span>
-              {statsObj?.currentSeason ? statsObj.currentSeason.toUpperCase() : 'TEMPORADA 1 — 2026'}
+              {statsObj?.currentSeason ? String(statsObj.currentSeason).toUpperCase() : 'TEMPORADA 1 — 2026'}
             </div>
             <h1 className="hero-title">
               <span className="text-white">RANKING<br/></span>
@@ -136,8 +136,8 @@ const Ranking = () => {
              <div className="stat-card">
                <div className="stat-card-inner">
                  <span className="sc-icon text-red">⭐</span>
-                 <span className="sc-val" style={{ fontSize: statsObj?.currentSeason && statsObj.currentSeason.length > 5 ? '16px' : undefined }}>
-                   {statsObj?.currentSeason ? statsObj.currentSeason.toUpperCase() : 'S1'}
+                 <span className="sc-val" style={{ fontSize: statsObj?.currentSeason && String(statsObj.currentSeason).length > 5 ? '16px' : undefined }}>
+                   {statsObj?.currentSeason ? String(statsObj.currentSeason).toUpperCase() : 'S1'}
                  </span>
                  <span className="sc-key">TEMPORADA</span>
                </div>
