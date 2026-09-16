@@ -134,7 +134,7 @@ const Ranking = () => {
         <div className="rk-header-left">
           <div className="rk-season-tag">
             <span className="rk-season-line" />
-            {statsObj?.currentSeason ? `${statsObj.currentSeason.toUpperCase()} — 2026` : 'TEMPORADA OFICIAL'}
+            {statsObj?.currentSeason ? statsObj.currentSeason.toUpperCase() : '— CARGANDO —'}
           </div>
           <h1 className="rk-big-title">
             RANKING<br />
@@ -159,8 +159,10 @@ const Ranking = () => {
           </div>
           <div className="rk-stat-pill">
             <span className="rsp-icon" style={{ color: '#ffd700' }}>⭐</span>
-            <span className="rsp-val">{statsObj?.currentSeason || 'S1'}</span>
-            <span className="rsp-key">TEMPORADA</span>
+            <span className="rsp-val" style={{ fontSize: statsObj?.currentSeason && statsObj.currentSeason.length > 4 ? '14px' : undefined }}>
+              {statsObj?.currentSeason ?? '...'}
+            </span>
+            <span className="rsp-key">TEMPORADA ACTIVA</span>
           </div>
         </div>
       </div>
