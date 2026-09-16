@@ -134,7 +134,7 @@ const Ranking = () => {
         <div className="rk-header-left">
           <div className="rk-season-tag">
             <span className="rk-season-line" />
-            TEMPORADA 1 — 2026
+            {statsObj?.currentSeason ? `${statsObj.currentSeason.toUpperCase()} — 2026` : 'TEMPORADA OFICIAL'}
           </div>
           <h1 className="rk-big-title">
             RANKING<br />
@@ -159,7 +159,7 @@ const Ranking = () => {
           </div>
           <div className="rk-stat-pill">
             <span className="rsp-icon" style={{ color: '#ffd700' }}>⭐</span>
-            <span className="rsp-val">S1</span>
+            <span className="rsp-val">{statsObj?.currentSeason || 'S1'}</span>
             <span className="rsp-key">TEMPORADA</span>
           </div>
         </div>
@@ -241,3 +241,5 @@ const Ranking = () => {
 };
 
 export default Ranking;
+
+
