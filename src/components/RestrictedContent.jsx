@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { API_CONFIG } from '../config/api';
 import './RestrictedContent.css';
 
 const DiscordIcon = () => (
@@ -10,10 +12,21 @@ const DiscordIcon = () => (
 
 /**
  * Full-page gate for pages that are completely locked (Estadísticas, Temporadas).
- * Shows a blurred ghost UI behind the overlay card.
+ * Shows a blurred ghost UI behind the overlay card, plus a motivational stats preview.
  */
 const RestrictedContent = () => {
   const { login } = useAuth();
+  const [stats, setStats] = useState(null);
+
+  useEffect(() => {
+    axios.get(API_CONFIG.ENDPOINTS.API.STATS)
+      .then(res => setStats(res.data))
+      .catch(() => {});
+  }, []);
+
+  const totalPlayers = stats?.totalPlayers?.toLocaleString('es') ?? '—';
+  const currentSeason = stats?.currentSeason ? String(stats.currentSeason).toUpperCase() : '—';
+  const isOnline = stats !== null;
 
   return (
     <div className="rc-wrapper">
@@ -57,6 +70,27 @@ const RestrictedContent = () => {
             Conecta tu cuenta de Discord para acceder<br />
             al contenido completo de la plataforma.
           </p>
+
+          {/* Motivational stats preview */}
+          <div className="rc-stats-preview">
+            <div className="rc-stat-item">
+              <span className="rc-stat-icon">🏆</span>
+              <span className="rc-stat-val">{currentSeason}</span>
+              <span className="rc-stat-key">TEMPORADA ACTIVA</span>
+            </div>
+            <div className="rc-stat-divider" />
+            <div className="rc-stat-item">
+              <span className="rc-stat-icon">👤</span>
+              <span className="rc-stat-val">{totalPlayers}</span>
+              <span className="rc-stat-key">COMPETIDORES</span>
+            </div>
+            <div className="rc-stat-divider" />
+            <div className="rc-stat-item">
+              <span className="rc-stat-icon rc-online-dot">{isOnline ? '🟢' : '🔴'}</span>
+              <span className="rc-stat-val" style={{ fontSize: '14px' }}>{isOnline ? 'ONLINE' : 'OFFLINE'}</span>
+              <span className="rc-stat-key">ESTADO</span>
+            </div>
+          </div>
 
           <button className="rc-discord-btn" onClick={login}>
             <span className="rc-btn-inner">

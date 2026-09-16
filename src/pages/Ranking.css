@@ -86,7 +86,7 @@
 }
 .rf-pills {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 .rf-pill {
@@ -96,6 +96,7 @@
   padding: 10px 22px;
   font-size: 13px;
   cursor: pointer;
+  white-space: nowrap;
 }
 .rf-pill:hover { background: #111; color: #aaa; }
 .rf-pill.active { background: #fff; border-color: #fff; color: #000; }
@@ -275,8 +276,10 @@
   .rank-wrapper { padding-top: calc(var(--navbar-h) + 30px); padding-bottom: 60px; }
   .rank-container { padding: 0 16px; }
   .rank-header { margin-bottom: 30px; padding-bottom: 24px; }
-  .rank-filters { gap: 16px; margin-bottom: 24px; }
-  .rf-pill { padding: 8px 16px; font-size: 12px; }
+  .rank-filters { gap: 12px; margin-bottom: 24px; flex-direction: column; }
+  .rf-group { gap: 8px; }
+  .rf-pills { gap: 8px; flex-wrap: wrap; }
+  .rf-pill { padding: 8px 18px; font-size: 12px; flex-shrink: 0; }
   .rh-right { width: 100%; }
   .stat-card { padding: 10px 14px; }
   .sc-val { font-size: 16px; }

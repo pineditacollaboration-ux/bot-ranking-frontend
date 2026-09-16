@@ -194,7 +194,72 @@
   text-transform: uppercase;
 }
 
+
+/* ── STATS PREVIEW (motivational block) ── */
+.rc-stats-preview {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  padding: 14px 24px;
+  width: 100%;
+  justify-content: center;
+}
+
+.rc-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 0 20px;
+  flex: 1;
+}
+
+.rc-stat-icon {
+  font-size: 18px;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.rc-stat-val {
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #fff;
+  line-height: 1;
+}
+
+.rc-stat-key {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  color: #555;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.rc-stat-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
 @media (max-width: 900px) {
   .rc-ghost-cards { grid-template-columns: repeat(2, 1fr); }
   .rc-ghost-bar:first-child { height: 40px !important; }
+  .rc-stats-preview { padding: 12px 12px; }
+  .rc-stat-item { padding: 0 12px; }
+  .rc-stat-val { font-size: 16px; }
+  .rc-stat-key { font-size: 8px; letter-spacing: 1px; }
 }
+
+@media (max-width: 480px) {
+  .rc-stats-preview { gap: 0; }
+  .rc-stat-item { padding: 0 8px; }
+  .rc-stat-val { font-size: 14px; }
+}
+
