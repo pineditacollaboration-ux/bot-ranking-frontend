@@ -292,7 +292,7 @@ body::before {
 }
 .loading-text {
   font-family: 'Rajdhani', sans-serif;
-  font-size: 16px; letter-spacing: 1px;
+  font-size: 14px;
   letter-spacing: 3px;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -424,7 +424,7 @@ body::before {
   text-transform: uppercase;
   color: var(--text-soft);
 }
-.empty-state-desc { font-size: 16px; letter-spacing: 1px; max-width: 400px; }
+.empty-state-desc { font-size: 14px; max-width: 400px; }
 
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -439,4 +439,3 @@ body::before {
 @media (max-width: 768px) {
   .page { padding: calc(var(--navbar-h) + 20px) 16px 60px; }
 }
-
