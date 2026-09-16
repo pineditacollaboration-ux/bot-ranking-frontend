@@ -151,7 +151,7 @@ const Ranking = () => {
               <span className="rf-label">DIVISIÓN</span>
               <div className="rf-pills">
                  <button className="btn-skewed rf-pill active"><span className="btn-skewed-content">MASCULINO</span></button>
-                 <button className="btn-skewed rf-pill"><span className="btn-skewed-content">FEMININO</span></button>
+                 <button className="btn-skewed rf-pill"><span className="btn-skewed-content">FEMENINO</span></button>
               </div>
            </div>
            <div className="rf-group">
