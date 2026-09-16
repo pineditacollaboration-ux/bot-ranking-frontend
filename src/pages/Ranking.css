@@ -1,3 +1,4 @@
+/* ── RANKING PAGE ── */
 .rank-wrapper {
   padding-top: calc(var(--navbar-h) + 60px);
   padding-bottom: 100px;
@@ -11,39 +12,41 @@
   padding: 0 40px;
 }
 
+/* ── HEADER ── */
 .rank-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 60px;
-  border-bottom: 1px solid rgba(255,255,255,0.05); /* very subtle dark bottom line */
+  border-bottom: 1px solid rgba(255,255,255,0.05);
   padding-bottom: 40px;
+  gap: 40px;
 }
-
 .rh-left {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
-
 .rh-right {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  min-width: 250px;
+  min-width: 240px;
+  flex-shrink: 0;
 }
 
+/* Stat cards (right side) */
 .stat-card {
   transform: skewX(-14deg);
   background: #090909;
   border: 1px solid #1a1a1a;
-  padding: 18px 24px;
+  padding: 14px 20px;
 }
 .stat-card-inner {
   transform: skewX(14deg);
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 .sc-val {
   font-family: 'Chakra Petch', sans-serif;
@@ -54,7 +57,7 @@
 .sc-key {
   font-family: 'Chakra Petch', sans-serif;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 12px;
   color: #555;
   letter-spacing: 2px;
 }
@@ -64,52 +67,50 @@
 /* ── FILTERS ── */
 .rank-filters {
   display: flex;
-  gap: 60px;
+  gap: 40px;
   margin-bottom: 40px;
+  flex-wrap: wrap;
 }
 .rf-group {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 .rf-label {
   font-family: 'Chakra Petch', sans-serif;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 11px;
   color: #555;
   letter-spacing: 3px;
-  margin-left: 8px;
+  margin-left: 6px;
 }
 .rf-pills {
   display: flex;
   gap: 6px;
+  flex-wrap: wrap;
 }
 .rf-pill {
   background: #080808;
   border: 1px solid #1a1a1a;
   color: #666;
-  padding: 12px 28px;
-  font-size: 14px;
+  padding: 10px 22px;
+  font-size: 13px;
+  cursor: pointer;
 }
-.rf-pill:hover {
-  background: #111;
-  color: #aaa;
-}
-.rf-pill.active {
-  background: #fff;
-  border-color: #fff;
-  color: #000;
-}
+.rf-pill:hover { background: #111; color: #aaa; }
+.rf-pill.active { background: #fff; border-color: #fff; color: #000; }
 
 /* ── TABLE ── */
 .table-wrapper {
   width: 100%;
+  overflow-x: auto; /* horizontal scroll on small screens */
 }
 .tbl-head {
   display: flex;
   padding: 0 24px 16px;
   border-bottom: 1px solid #1a1a1a;
   margin-bottom: 12px;
+  min-width: 700px;
 }
 .tbl-th {
   font-family: 'Chakra Petch', sans-serif;
@@ -125,7 +126,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 4px; /* tiny gap between rows */
+  gap: 4px;
+  min-width: 700px;
 }
 
 /* Rows */
@@ -133,23 +135,20 @@
   display: flex;
   align-items: center;
   background: #0a0a0a;
-  padding: 16px 24px;
+  padding: 14px 24px;
   border-left: 2px solid transparent;
   transition: all 0.2s ease;
 }
-.tbl-row:hover {
-  background: #0e0e0e;
-  border-left-color: var(--crimson);
-}
+.tbl-row:hover { background: #0e0e0e; border-left-color: var(--crimson); }
 .gated-row { pointer-events: none; }
 
 .tbl-cell { display: flex; align-items: center; }
-.tbl-rank { width: 90px; }
-.tbl-player { flex: 1; gap: 20px; }
-.tbl-points { width: 180px; justify-content: flex-end; gap: 8px; }
-.tbl-wins { width: 120px; justify-content: center; font-family: 'Chakra Petch', sans-serif; font-size: 18px; font-weight: 700; }
-.tbl-losses { width: 120px; justify-content: center; font-family: 'Chakra Petch', sans-serif; font-size: 18px; font-weight: 700; color: #555; }
-.tbl-mvp { width: 120px; justify-content: center; }
+.tbl-rank { width: 80px; }
+.tbl-player { flex: 1; gap: 16px; }
+.tbl-points { width: 150px; justify-content: flex-end; gap: 8px; }
+.tbl-wins { width: 110px; justify-content: center; font-family: 'Chakra Petch', sans-serif; font-size: 17px; font-weight: 700; }
+.tbl-losses { width: 110px; justify-content: center; font-family: 'Chakra Petch', sans-serif; font-size: 17px; font-weight: 700; color: #555; }
+.tbl-mvp { width: 110px; justify-content: center; }
 
 .text-green { color: #00e06a; }
 
@@ -157,7 +156,7 @@
 .rank-badge {
   background: #111;
   border: 1px solid #222;
-  width: 50px; height: 36px;
+  width: 46px; height: 34px;
   display: flex;
   align-items: center; justify-content: center;
   transform: skewX(-14deg);
@@ -165,22 +164,20 @@
 .rank-badge-content {
   transform: skewX(14deg);
   font-family: 'Chakra Petch', sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   color: #888;
 }
-.rank-badge.gold { border-color: rgba(255, 215, 0, 0.4); }
+.rank-badge.gold { border-color: rgba(255,215,0,0.4); }
 .rank-badge.gold .rank-badge-content { color: #ffd700; }
-
-.rank-badge.silver { border-color: rgba(192, 192, 192, 0.4); }
+.rank-badge.silver { border-color: rgba(192,192,192,0.4); }
 .rank-badge.silver .rank-badge-content { color: #c0c0c0; }
-
-.rank-badge.bronze { border-color: rgba(205, 127, 50, 0.4); }
+.rank-badge.bronze { border-color: rgba(205,127,50,0.4); }
 .rank-badge.bronze .rank-badge-content { color: #cd7f32; }
 
 /* Avatar */
 .player-avatar-wrap {
-  width: 48px; height: 48px;
+  width: 44px; height: 44px;
   transform: skewX(-10deg);
   overflow: hidden;
   border: 1px solid #333;
@@ -196,45 +193,32 @@
   background: #222;
   display: flex; align-items: center; justify-content: center;
   transform: skewX(10deg);
-  font-family: 'Chakra Petch', sans-serif; font-size: 20px; font-weight: 700; color: #555;
+  font-family: 'Chakra Petch', sans-serif; font-size: 18px; font-weight: 700; color: #555;
 }
 
 .player-info { display: flex; flex-direction: column; gap: 2px; }
 .player-name {
   font-family: 'Chakra Petch', sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: #fff;
   text-transform: uppercase;
 }
-.player-hash {
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  color: #555;
-}
+.player-hash { font-family: 'Inter', sans-serif; font-size: 12px; color: #555; }
 
-.electric {
-  font-family: 'Inter', sans-serif;
-  font-size: 24px;
-  font-weight: 800;
-  color: #fff;
-}
-.pts-txt {
-  font-family: 'Chakra Petch', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  color: #555;
-}
+.electric { font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 800; color: #fff; }
+.pts-txt { font-family: 'Chakra Petch', sans-serif; font-size: 11px; font-weight: 700; color: #555; }
 
 .mvp-star {
   font-family: 'Chakra Petch', sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   color: #ffd700;
-  background: rgba(255, 215, 0, 0.1);
-  padding: 6px 14px;
+  background: rgba(255,215,0,0.1);
+  padding: 5px 12px;
   transform: skewX(-14deg);
   display: inline-block;
+  white-space: nowrap;
 }
 
 /* OVERLAY */
@@ -242,17 +226,18 @@
 .tbl-overlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(to bottom, rgba(5,5,5,0.4), rgba(5,5,5,0.95) 30%);
+  background: linear-gradient(to bottom, rgba(5,5,5,0.4), rgba(5,5,5,0.97) 25%);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding-top: 15vh;
+  padding: 15vh 20px 0;
+  text-align: center;
   z-index: 20;
 }
 .to-title {
   font-family: 'Inter', sans-serif;
-  font-size: 50px;
+  font-size: clamp(28px, 5vw, 50px);
   font-weight: 900;
   color: #fff;
   text-transform: uppercase;
@@ -260,8 +245,53 @@
 }
 .to-sub {
   font-family: 'Inter', sans-serif;
-  font-size: 18px;
+  font-size: clamp(14px, 2vw, 18px);
   color: #aaa;
   margin-top: 10px;
   margin-bottom: 20px;
+  max-width: 500px;
+}
+
+.tbl-empty {
+  padding: 80px 20px;
+  text-align: center;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 18px;
+  color: #555;
+}
+
+/* ── RESPONSIVE ── */
+
+/* Tablet ≤ 1024px */
+@media (max-width: 1024px) {
+  .rank-container { padding: 0 24px; }
+  .rank-header { flex-direction: column; align-items: flex-start; gap: 30px; }
+  .rh-right { flex-direction: row; flex-wrap: wrap; min-width: unset; }
+  .rank-filters { gap: 24px; }
+}
+
+/* Mobile ≤ 768px */
+@media (max-width: 768px) {
+  .rank-wrapper { padding-top: calc(var(--navbar-h) + 30px); padding-bottom: 60px; }
+  .rank-container { padding: 0 16px; }
+  .rank-header { margin-bottom: 30px; padding-bottom: 24px; }
+  .rank-filters { gap: 16px; margin-bottom: 24px; }
+  .rf-pill { padding: 8px 16px; font-size: 12px; }
+  .rh-right { width: 100%; }
+  .stat-card { padding: 10px 14px; }
+  .sc-val { font-size: 16px; }
+  .sc-key { font-size: 10px; }
+
+  /* Table: show scroll hint */
+  .table-wrapper { -webkit-overflow-scrolling: touch; }
+
+  /* Smaller overlay */
+  .tbl-overlay { padding-top: 10vh; }
+}
+
+/* Small mobile ≤ 480px */
+@media (max-width: 480px) {
+  .tbl-row { padding: 12px 16px; }
+  .player-name { font-size: 14px; }
+  .electric { font-size: 18px; }
 }

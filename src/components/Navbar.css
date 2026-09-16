@@ -3,11 +3,9 @@
   top: 0; left: 0; right: 0;
   height: var(--navbar-h);
   background: var(--bg-dark);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.05); /* very subtle dark bottom line */
+  border-bottom: 1px solid rgba(255,255,255,0.05);
   z-index: 1000;
 }
-
-/* Red top glowing line like on Real Trem (optional, or just subtle) */
 .navbar-premium::before {
   content: '';
   position: absolute;
@@ -52,6 +50,65 @@
   color: #fff;
   text-shadow: 0 0 10px rgba(255,255,255,0.4);
 }
-.nav-link.active {
-  color: #fff;
+.nav-link.active { color: #fff; }
+
+/* Hamburger menu (mobile) */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 6px;
+  background: none;
+  border: none;
+}
+.nav-hamburger span {
+  display: block;
+  width: 26px;
+  height: 2px;
+  background: #fff;
+  transition: all 0.3s ease;
+}
+
+/* Mobile drawer */
+.nav-drawer {
+  display: none;
+  position: fixed;
+  top: var(--navbar-h);
+  left: 0; right: 0;
+  background: #050505;
+  border-bottom: 1px solid #1a1a1a;
+  flex-direction: column;
+  padding: 24px 30px;
+  gap: 24px;
+  z-index: 999;
+}
+.nav-drawer.open { display: flex; }
+.nav-drawer .nav-link {
+  font-size: 20px;
+  letter-spacing: 3px;
+}
+.nav-drawer-btn {
+  margin-top: 8px;
+}
+
+/* ── RESPONSIVE ── */
+
+/* Tablet ≤ 1024px */
+@media (max-width: 1024px) {
+  .nav-links { gap: 30px; }
+  .nav-link { font-size: 14px; }
+}
+
+/* Mobile ≤ 768px */
+@media (max-width: 768px) {
+  :root { --navbar-h: 70px; }
+
+  .navbar-container { padding: 0 20px; }
+  .logo-img { height: 44px; }
+
+  /* hide desktop links, show hamburger */
+  .nav-links { display: none; }
+  .nav-right { display: none; }
+  .nav-hamburger { display: flex; }
 }
