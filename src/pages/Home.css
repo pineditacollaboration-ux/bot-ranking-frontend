@@ -77,12 +77,12 @@
 .btn-real-red-skew {
   background: var(--crimson);
   color: #fff;
-  padding: 16px 36px;
+  padding: 20px 44px;
   text-decoration: none;
   font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 16px;
-  letter-spacing: 1px;
+  font-size: 18px;
+  letter-spacing: 1.5px;
   transition: all 0.25s ease;
   box-shadow: 0 8px 28px rgba(232,0,42,0.3);
   text-transform: uppercase;
@@ -97,7 +97,7 @@
   background: #08080a;
   border: 1px solid #222;
   color: #fff;
-  padding: 16px 28px;
+  padding: 20px 32px;
   text-decoration: none;
   display: flex; align-items: center; justify-content: center;
   transition: all 0.25s ease;
@@ -262,3 +262,4 @@
   .hhr-stats-bar { flex-wrap: wrap; transform: none; }
   .hhr-stat { transform: none; }
 }
+

@@ -56,11 +56,11 @@
   --shadow-deep:     0 20px 60px rgba(0,0,0,0.8);
 
   /* Layout */
-  --navbar-h: 70px;
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
+  --navbar-h: 90px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 30px;
 
   /* Transitions */
   --t-fast:   0.15s cubic-bezier(0.4,0,0.2,1);
