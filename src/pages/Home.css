@@ -78,7 +78,7 @@
 .media-placeholder {
   width: 800px;
   height: 800px;
-  background: url('https://imgur.com/G3tN0X6.png') no-repeat center center;
+  background: url('/fondo.png') no-repeat center center;
   background-size: contain;
   margin-right: -100px;
   filter: drop-shadow(0 0 30px rgba(0,0,0,0.8));
