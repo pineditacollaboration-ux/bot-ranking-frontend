@@ -72,10 +72,12 @@ const Ranking = () => {
     /* gated row: censor only name/avatar, show real numbers */
     const displayName    = isGated ? '???' : p.username;
     const displayHash    = isGated ? '#????' : `#${p.discordId?.slice(-4) ?? '????'}`;
-    const displayPoints  = (sortBy === 'season' ? (p.seasonPoints ?? p.points ?? 0) : (p.points ?? 0)).toLocaleString();
-    const displayWins    = p.wins;
-    const displayLosses  = p.losses;
-    const displayMvps    = p.mvps;
+    const displayPoints  = (p.points ?? 0).toLocaleString();
+    const displayWins    = p.wins ?? 0;
+    const displayLosses  = p.losses ?? 0;
+    const displayMvps    = p.mvps ?? 0;
+    /* Primary stat for the active filter */
+    const primaryStat = sortBy === 'wins' ? displayWins : sortBy === 'losses' ? displayLosses : sortBy === 'mvps' ? displayMvps : displayPoints;
     const avatarSrc      = isGated ? null : getAvatarUrl(p.discordId, p.avatar);
 
     const inner = (
