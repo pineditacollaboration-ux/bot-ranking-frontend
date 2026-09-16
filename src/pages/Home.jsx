@@ -36,8 +36,7 @@ const Home = () => {
           </h1>
           
           <p className="hero-desc">
-            COMUNIDAD DESTINADA AL PÚBLICO COMPETITIVO DEL FREE FIRE. CALLS DE<br />
-            INTERACCIÓN, RANKEDS Y EVENTOS ÉPICOS.
+            HECHO CON MUCHO AMOR PARA TODA LA COMUNIDAD DE ROYAL.
           </p>
 
           <div className="hero-actions">
