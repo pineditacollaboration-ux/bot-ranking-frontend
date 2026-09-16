@@ -136,7 +136,9 @@ const Ranking = () => {
              <div className="stat-card">
                <div className="stat-card-inner">
                  <span className="sc-icon text-red">⭐</span>
-                 <span className="sc-val">S1</span>
+                 <span className="sc-val" style={{ fontSize: statsObj?.currentSeason && statsObj.currentSeason.length > 5 ? '16px' : undefined }}>
+                   {statsObj?.currentSeason ? statsObj.currentSeason.toUpperCase() : 'S1'}
+                 </span>
                  <span className="sc-key">TEMPORADA</span>
                </div>
              </div>
@@ -146,7 +148,7 @@ const Ranking = () => {
         {/* Filters */}
         <div className="rank-filters">
            <div className="rf-group">
-              <span className="rf-label">DIVISÃO</span>
+              <span className="rf-label">DIVISIÓN</span>
               <div className="rf-pills">
                  <button className="btn-skewed rf-pill active"><span className="btn-skewed-content">MASCULINO</span></button>
                  <button className="btn-skewed rf-pill"><span className="btn-skewed-content">FEMININO</span></button>
