@@ -24,8 +24,27 @@ const Profile = () => {
   const fetchProfile = async () => {
     try {
       const res = await axios.get(API_CONFIG.ENDPOINTS.API.PROFILE(discordId));
-      setProfile(res.data.user);
-      setRecentMatches(res.data.recentMatches ?? []);
+      const d = res.data;
+      // Real API returns a flat object (not { user, recentMatches })
+      // Normalize to a common shape the UI expects
+      const normalized = {
+        discordId: d.discordId ?? discordId,
+        username: d.username ?? d.user?.username ?? 'Desconocido',
+        avatar: d.avatar ?? d.user?.avatar ?? null,
+        rank: d.rank ?? null,
+        points: d.points ?? d.user?.points ?? d.currentSeason?.points ?? 0,
+        wins: d.wins ?? d.user?.wins ?? d.currentSeason?.wins ?? 0,
+        losses: d.losses ?? d.user?.losses ?? d.currentSeason?.losses ?? 0,
+        mvps: d.mvps ?? d.user?.mvps ?? d.currentSeason?.mvps ?? 0,
+        streak: d.streak ?? d.user?.streak ?? 0,
+        maxStreak: d.maxStreak ?? d.user?.maxStreak ?? 0,
+        matchesPlayed: (d.wins ?? 0) + (d.losses ?? 0),
+        wagerWon: d.wagerWon ?? d.user?.wagerWon ?? 0,
+        platform: d.platform ?? d.user?.platform ?? 'mobile',
+        isStaff: d.isStaff ?? d.user?.isStaff ?? false,
+      };
+      setProfile(normalized);
+      setRecentMatches(d.recentMatches ?? d.user?.recentMatches ?? []);
     } catch (_) {}
     finally { setLoading(false); }
   };
@@ -60,8 +79,9 @@ const Profile = () => {
     ? `https://cdn.discordapp.com/embed/avatars/0.png`
     : (profile.avatar.startsWith('http') ? profile.avatar : `https://cdn.discordapp.com/avatars/${profile.discordId}/${profile.avatar}.png`);
 
-  const winRate = profile.matchesPlayed > 0
-    ? ((profile.wins / profile.matchesPlayed) * 100).toFixed(1)
+  const matchesPlayed = (profile.wins ?? 0) + (profile.losses ?? 0);
+  const winRate = matchesPlayed > 0
+    ? ((profile.wins / matchesPlayed) * 100).toFixed(1)
     : 0;
 
   const stats = [
@@ -94,7 +114,7 @@ const Profile = () => {
           </div>
           <div className="profile-info">
             <h1 className="profile-name">{profile.username}</h1>
-            <div className="profile-discordid">ID: {profile.discordId}</div>
+            {profile.rank && <div className="profile-discordid">🏆 Rango #{profile.rank} en el servidor</div>}
             <div className="profile-badges">
               {profile.isStaff && <span className="profile-badge">👑 STAFF</span>}
               <span className="profile-badge badge-live" style={{ background: 'rgba(232,0,42,0.1)', borderColor: 'rgba(232,0,42,0.3)', color: 'var(--crimson-glow)' }}>

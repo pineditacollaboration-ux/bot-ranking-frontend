@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
 const Navbar = () => {
-  const { user, login } = useAuth();
+  const { user, login, logout } = useAuth();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -40,9 +40,14 @@ const Navbar = () => {
           {/* Desktop CTA */}
           <div className="nav-right">
             {user ? (
-              <Link to={`/profile/${user.id}`} className="btn-skewed btn-white">
-                <span className="btn-skewed-content">{user.username}</span>
-              </Link>
+              <div style={{ display:'flex', alignItems:'center', gap: 8 }}>
+                <Link to={`/profile/${user.id}`} className="btn-skewed btn-white">
+                  <span className="btn-skewed-content">{user.username}</span>
+                </Link>
+                <button onClick={logout} className="btn-skewed btn-dark" title="Cerrar sesión" style={{ padding: '10px 14px' }}>
+                  <span className="btn-skewed-content" style={{ fontSize: 15 }}>✕</span>
+                </button>
+              </div>
             ) : (
               <button onClick={login} className="btn-skewed btn-white">
                 <span className="btn-skewed-content">ENTRAR</span>
@@ -68,9 +73,14 @@ const Navbar = () => {
         )}
         <div className="nav-drawer-btn">
           {user ? (
-            <Link to={`/profile/${user.id}`} className="btn-skewed btn-red" onClick={() => setMenuOpen(false)}>
-              <span className="btn-skewed-content">{user.username}</span>
-            </Link>
+            <div style={{ display:'flex', gap: 8, width:'100%', justifyContent:'center' }}>
+              <Link to={`/profile/${user.id}`} className="btn-skewed btn-red" onClick={() => setMenuOpen(false)}>
+                <span className="btn-skewed-content">{user.username}</span>
+              </Link>
+              <button onClick={() => { logout(); setMenuOpen(false); }} className="btn-skewed btn-dark" style={{ padding: '10px 16px' }}>
+                <span className="btn-skewed-content">SALIR</span>
+              </button>
+            </div>
           ) : (
             <button onClick={() => { login(); setMenuOpen(false); }} className="btn-skewed btn-red">
               <span className="btn-skewed-content">ENTRAR CON DISCORD</span>
