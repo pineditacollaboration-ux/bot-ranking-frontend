@@ -32,7 +32,8 @@ const Estadisticas = () => {
       
       const getFirst = (res) => {
         const d = res.data;
-        const arr = Array.isArray(d) ? d : d?.players ?? d?.ranking ?? d?.data ?? [];
+        // Real API returns { type, players[], total, timestamp }
+        const arr = Array.isArray(d) ? d : (d?.players ?? d?.ranking ?? d?.data ?? []);
         return arr[0] || null;
       };
 

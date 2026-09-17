@@ -28,21 +28,17 @@ const Seasons = () => {
 
   useEffect(() => {
     if (!user) return;
-    fetchSeasons();
+    fetchCurrentSeasonData();
   }, [user]);
 
-  const fetchSeasons = async () => {
+  const fetchCurrentSeasonData = async () => {
     try {
-      const res = await axios.get(API_CONFIG.ENDPOINTS.API.SEASONS);
-      const d = res.data;
-      const arr = Array.isArray(d) ? d : d?.seasons ?? d?.data ?? [];
-      setSeasons(arr);
-      if (arr.length > 0) {
-        setSelectedSeason(arr[0]);
-        fetchSeasonStats(arr[0]);
-      } else {
-        setLoading(false);
-      }
+      // Get current season name from /api/stats
+      const statsRes = await axios.get(API_CONFIG.ENDPOINTS.API.STATS);
+      const currentSeason = statsRes.data?.currentSeason ?? 'Season 2';
+      setSeasons([currentSeason]);
+      setSelectedSeason(currentSeason);
+      fetchSeasonStats(currentSeason);
     } catch {
       setLoading(false);
     }
@@ -51,9 +47,10 @@ const Seasons = () => {
   const fetchSeasonStats = async (season) => {
     setLoading(true);
     try {
-      const res = await axios.get(API_CONFIG.ENDPOINTS.API.RANKING, { params: { season, limit: 20 } });
+      // Fetch top 20 from current ranking (real API returns { players[] })
+      const res = await axios.get(API_CONFIG.ENDPOINTS.API.RANKING, { params: { sortBy: 'points', limit: 20 } });
       const d = res.data;
-      const arr = Array.isArray(d) ? d : d?.ranking ?? d?.players ?? d?.data ?? [];
+      const arr = Array.isArray(d) ? d : (d?.players ?? d?.ranking ?? d?.data ?? []);
       setSeasonStats(arr);
     } catch {
       setSeasonStats([]);

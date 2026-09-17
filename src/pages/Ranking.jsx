@@ -46,13 +46,9 @@ const Ranking = () => {
       setLoading(true);
       const res = await axios.get(API_CONFIG.ENDPOINTS.API.RANKING, { params: { sortBy, limit: 50 } });
       const d = res.data;
-      const arr = Array.isArray(d) ? d : d?.ranking ?? d?.players ?? d?.data ?? [];
-      // Sort client-side as safety net in case API doesn't sort
-      const sorted = [...arr].sort((a, b) => {
-        const field = sortBy === 'points' ? 'points' : sortBy === 'wins' ? 'wins' : sortBy === 'losses' ? 'losses' : 'mvps';
-        return (b[field] ?? 0) - (a[field] ?? 0);
-      });
-      setRanking(sorted);
+      // Real API returns { type, players[], total, timestamp }
+      const arr = Array.isArray(d) ? d : (d?.players ?? d?.ranking ?? d?.data ?? []);
+      setRanking(arr);
     } catch (_) {}
     finally { setLoading(false); }
   };
