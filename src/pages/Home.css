@@ -82,7 +82,7 @@
 .media-placeholder {
   width: 700px;
   height: 700px;
-  background: url('/fondo.png') no-repeat center center;
+  background: url('/shadow.jpg') no-repeat center center;
   background-size: contain;
   margin-right: -80px;
   filter: drop-shadow(0 0 30px rgba(0,0,0,0.8));
