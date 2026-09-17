@@ -82,7 +82,7 @@
 .media-placeholder {
   width: 700px;
   height: 700px;
-  background: url('/shadow2.jpg') no-repeat center center;
+  background: url('/fondo.png') no-repeat center center;
   background-size: cover;
   margin-right: -80px;
   -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 70%);
