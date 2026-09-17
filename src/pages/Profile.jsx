@@ -13,13 +13,14 @@ const Profile = () => {
   const [recentMatches, setRecentMatches] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  if (!user) return <RestrictedContent />;
-
   useEffect(() => {
+    if (!user) return; // Si no hay usuario, no hacer fetch automático
     fetchProfile();
     const iv = setInterval(fetchProfile, 15000);
     return () => clearInterval(iv);
-  }, [discordId]);
+  }, [discordId, user]);
+
+  if (!user) return <RestrictedContent />;
 
   const fetchProfile = async () => {
     try {
