@@ -81,7 +81,7 @@ const Home = () => {
         {/* Right Side Image */}
         <div className="hero-media">
            <div className="media-placeholder">
-             <img src="/fondo.png?v=3" alt="Shadow Hero" />
+             <img src="/fondo2.png" alt="Shadow Hero" />
            </div>
         </div>
 

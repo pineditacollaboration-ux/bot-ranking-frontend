@@ -93,8 +93,8 @@
   height: 100%;
   object-fit: contain;
   mix-blend-mode: lighten; /* Elimina el fondo negro solido fusionándolo con el fondo del sitio */
-  -webkit-mask-image: radial-gradient(circle at center, black 50%, transparent 95%);
-  mask-image: radial-gradient(circle at center, black 50%, transparent 95%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 50%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 50%, transparent 100%);
   filter: drop-shadow(0 0 40px rgba(200, 0, 0, 0.3));
 }
 
