@@ -105,16 +105,26 @@
   gap: 32px;
   margin-top: 30px;
   padding: 20px 28px;
-  background: rgba(5,5,5,0.7);
-  border: 1px solid #1a1a1a;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
   width: fit-content;
-  border-radius: 8px;
+  border-radius: 12px;
   flex-wrap: wrap;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.4);
 }
 .hbs-item {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: flex-start;
+  gap: 2px;
+}
+.hbs-icon {
+  color: var(--crimson);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
 }
 .hbs-val {
   font-family: 'Chakra Petch', sans-serif;

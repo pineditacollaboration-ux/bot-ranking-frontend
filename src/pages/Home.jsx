@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Users, Swords, Trophy } from 'lucide-react';
 import { API_CONFIG } from '../config/api';
 import './Home.css';
 
@@ -47,30 +48,35 @@ const Home = () => {
               </span>
             </a>
             
-            <Link to="/ranking" className="btn-skewed btn-dark">
+            <Link to="/ranking" className="btn-skewed btn-dark btn-ranking">
               <span className="btn-skewed-content">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <Trophy size={18} />
+                VER RANKING
               </span>
             </Link>
           </div>
 
           <div className="home-bot-stats">
              <div className="hbs-item">
+                <div className="hbs-icon"><Users size={16} /></div>
                 <span className="hbs-val">{stats ? stats.totalPlayers.toLocaleString() : '—'}</span>
                 <span className="hbs-key">JUGADORES</span>
              </div>
              <div className="hbs-item">
+                <div className="hbs-icon"><Swords size={16} /></div>
                 <span className="hbs-val">{stats ? stats.totalMatches.toLocaleString() : '—'}</span>
                 <span className="hbs-key">PARTIDAS JUGADAS</span>
              </div>
              <div className="hbs-item">
-                <span className="hbs-val" style={{ color: stats?.botOnline ? '#00e06a' : '#ff4444', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div className="hbs-icon" style={{ color: stats?.botOnline ? '#00e06a' : '#ff4444' }}>
                   <span style={{
                     display: 'inline-block', width: 10, height: 10, borderRadius: '50%',
                     background: stats?.botOnline ? '#00e06a' : '#ff4444',
                     boxShadow: stats?.botOnline ? '0 0 8px #00e06a' : '0 0 8px #ff4444',
                     animation: 'pulse-dot 2s ease-in-out infinite'
                   }}/>
+                </div>
+                <span className="hbs-val" style={{ color: stats?.botOnline ? '#00e06a' : '#ff4444' }}>
                   {stats?.botOnline ? 'ONLINE' : 'OFFLINE'}
                 </span>
                 <span className="hbs-key">ESTADO DEL BOT</span>
@@ -80,7 +86,7 @@ const Home = () => {
 
         {/* Right Side Image */}
         <div className="hero-media">
-           <div className="media-placeholder">
+           <div className="media-placeholder" style={{ marginTop: '30px' }}>
              <img src="/fondo.png?v=4" alt="Shadow Hero" />
            </div>
         </div>
