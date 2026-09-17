@@ -82,10 +82,11 @@
 .media-placeholder {
   width: 700px;
   height: 700px;
-  background: url('/shadow.jpg') no-repeat center center;
-  background-size: contain;
+  background: url('/shadow2.jpg') no-repeat center center;
+  background-size: cover;
   margin-right: -80px;
-  filter: drop-shadow(0 0 30px rgba(0,0,0,0.8));
+  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 70%);
+  mask-image: radial-gradient(circle at center, black 40%, transparent 70%);
 }
 
 /* ── LIVE STATS BAR ── */
