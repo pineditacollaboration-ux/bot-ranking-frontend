@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { API_CONFIG } from '../config/api';
 import RestrictedContent from '../components/RestrictedContent';
+import { Trophy, Crown, Monitor, Smartphone, TrendingUp, Swords, Coins, Ghost } from 'lucide-react';
 import './Profile.css';
 
 const Profile = () => {
@@ -14,13 +15,10 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) return; // Si no hay usuario, no hacer fetch automático
     fetchProfile();
     const iv = setInterval(fetchProfile, 15000);
     return () => clearInterval(iv);
-  }, [discordId, user]);
-
-  if (!user) return <RestrictedContent />;
+  }, [discordId]);
 
   const fetchProfile = async () => {
     try {
@@ -63,7 +61,7 @@ const Profile = () => {
     return (
       <div className="profile-page">
         <div className="profile-not-found">
-          <div style={{ fontSize: 80 }}>😶</div>
+          <Ghost size={80} color="var(--text-muted)" strokeWidth={1} style={{ marginBottom: 16 }} />
           <h2>JUGADOR NO ENCONTRADO</h2>
           <p style={{ color: 'var(--text-muted)', fontSize: 14 }}>
             Este perfil no existe o no ha participado en partidas aún.
@@ -109,17 +107,17 @@ const Profile = () => {
               className="profile-avatar-img"
               onError={e => { e.target.onerror=null; e.target.src='https://cdn.discordapp.com/embed/avatars/0.png'; }}
             />
-            <div className="profile-platform-badge">
-              {profile.platform === 'pc' ? '🖥️' : '📱'}
+            <div className="profile-platform-badge" style={{ color: 'var(--text-soft)' }}>
+              {profile.platform === 'pc' ? <Monitor size={14} /> : <Smartphone size={14} />}
             </div>
           </div>
           <div className="profile-info">
             <h1 className="profile-name">{profile.username}</h1>
-            {profile.rank && <div className="profile-discordid">🏆 Rango #{profile.rank} en el servidor</div>}
+            {profile.rank && <div className="profile-discordid" style={{ display:'flex', alignItems:'center', gap: 6 }}><Trophy size={14} color="var(--gold)" /> Rango #{profile.rank} en el servidor</div>}
             <div className="profile-badges">
-              {profile.isStaff && <span className="profile-badge">👑 STAFF</span>}
+              {profile.isStaff && <span className="profile-badge"><Crown size={12} /> STAFF</span>}
               <span className="profile-badge badge-live" style={{ background: 'rgba(232,0,42,0.1)', borderColor: 'rgba(232,0,42,0.3)', color: 'var(--crimson-glow)' }}>
-                {profile.platform === 'pc' ? '🖥️ PC' : '📱 MÓVIL'}
+                {profile.platform === 'pc' ? <><Monitor size={12} /> PC</> : <><Smartphone size={12} /> MÓVIL</>}
               </span>
             </div>
           </div>
@@ -139,7 +137,7 @@ const Profile = () => {
       {/* WIN RATE BAR */}
       <div className="winrate-section anim-fade-up d2">
         <div className="winrate-header">
-          <span className="winrate-title">📈 TASA DE VICTORIA</span>
+          <span className="winrate-title" style={{ display:'flex', alignItems:'center', gap: 8 }}><TrendingUp size={16} color="var(--green)" /> TASA DE VICTORIA</span>
           <span className="winrate-pct">{winRate}%</span>
         </div>
         <div className="winrate-bar-bg">
@@ -154,7 +152,7 @@ const Profile = () => {
 
       {/* RECENT MATCHES */}
       <div className="matches-section anim-fade-up d3">
-        <div className="matches-title">⚔️ PARTIDAS RECIENTES</div>
+        <div className="matches-title" style={{ display:'flex', alignItems:'center', gap: 10 }}><Swords size={18} color="var(--text-dim)"/> PARTIDAS RECIENTES</div>
 
         {recentMatches.length === 0 ? (
           <div className="no-matches">No hay partidas recientes registradas</div>
@@ -172,11 +170,11 @@ const Profile = () => {
 
               <div className="match-versus">
                 <div className="match-team left">
-                  <span className="match-team-label">EQUIPO 1 {match.winner === 'team1' ? '🏆' : ''}</span>
+                  <span className="match-team-label">EQUIPO 1 {match.winner === 'team1' && <Trophy size={14} color="var(--gold)" style={{ marginLeft: 6 }}/>}</span>
                   {(match.team1 ?? []).map(p => (
                     <span key={p.discordId} className={`match-team-name ${match.winner === 'team1' ? 'winner' : ''}`}>
                       {p.username}
-                      {match.mvp === p.discordId && <span className="mvp-tag">👑</span>}
+                      {match.mvp === p.discordId && <span className="mvp-tag"><Crown size={14} color="var(--gold)" /></span>}
                     </span>
                   ))}
                 </div>
@@ -184,10 +182,10 @@ const Profile = () => {
                 <div className="match-vs-divider">VS</div>
 
                 <div className="match-team right">
-                  <span className="match-team-label">{match.winner === 'team2' ? '🏆' : ''} EQUIPO 2</span>
+                  <span className="match-team-label">{match.winner === 'team2' && <Trophy size={14} color="var(--gold)" style={{ marginRight: 6 }}/>} EQUIPO 2</span>
                   {(match.team2 ?? []).map(p => (
                     <span key={p.discordId} className={`match-team-name ${match.winner === 'team2' ? 'winner' : ''}`}>
-                      {match.mvp === p.discordId && <span className="mvp-tag">👑</span>}
+                      {match.mvp === p.discordId && <span className="mvp-tag"><Crown size={14} color="var(--gold)" /></span>}
                       {p.username}
                     </span>
                   ))}
@@ -195,7 +193,7 @@ const Profile = () => {
               </div>
 
               {match.wager > 0 && (
-                <div className="match-wager-tag">💰 WAGER: {match.wager} PTS</div>
+                <div className="match-wager-tag"><Coins size={14} color="var(--gold)"/> WAGER: {match.wager} PTS</div>
               )}
             </div>
           ))
