@@ -20,10 +20,19 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
-  filter: blur(5px);
-  opacity: 0.3;
+  filter: blur(4px);
+  opacity: 0.55;
   pointer-events: none;
   user-select: none;
+}
+
+.rc-ambient-glow {
+  position: absolute;
+  top: 10%; right: 20%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(230,0,57,0.15) 0%, transparent 60%);
+  border-radius: 50%;
+  z-index: -1;
 }
 
 .rc-ghost-header {
@@ -58,32 +67,37 @@
 
 .rc-ghost-cards {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 .rc-ghost-card {
-  height: 110px;
-  background: #0d0d16;
-  border: 1px solid #18182a;
+  height: 130px;
+  background: linear-gradient(135deg, #111 0%, #0a0a0f 100%);
+  border: 1px solid rgba(230,0,57,0.1);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .rc-ghost-rows {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 .rc-ghost-row {
   display: flex;
   align-items: center;
   gap: 16px;
   padding: 16px;
-  background: #07070c;
-  border-bottom: 1px solid #0e0e18;
+  background: linear-gradient(90deg, #09090f 0%, #050508 100%);
+  border-left: 3px solid rgba(230,0,57,0.3);
+  border-radius: 4px;
 }
 .rc-ghost-dot {
-  width: 40px; height: 40px;
-  border-radius: 2px;
-  background: #131320;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: #181825;
   flex-shrink: 0;
 }
 

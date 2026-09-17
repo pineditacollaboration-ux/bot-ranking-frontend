@@ -34,13 +34,20 @@ const RestrictedContent = () => {
     <div className="rc-wrapper">
       {/* Ghost UI behind — gives the "you're missing something" feeling */}
       <div className="rc-ghost" aria-hidden="true">
+        <div className="rc-ambient-glow" />
         <div className="rc-ghost-header">
-          <div className="rc-ghost-bar w40" />
+          <div className="rc-ghost-bar w40" style={{background: 'linear-gradient(90deg, rgba(230,0,57,0.2), #222230)'}} />
           <div className="rc-ghost-bar w70" />
           <div className="rc-ghost-bar w50" />
         </div>
         <div className="rc-ghost-cards">
-          {[1,2,3,4].map(i => <div key={i} className="rc-ghost-card" />)}
+          {[1,2,3].map(i => (
+            <div key={i} className="rc-ghost-card">
+              <div className="rc-ghost-dot" style={{width: 30, height: 30, borderRadius: '50%'}} />
+              <div className="rc-ghost-bar w50" style={{marginTop: 10}} />
+              <div className="rc-ghost-bar w30" style={{marginTop: 6, height: 10}} />
+            </div>
+          ))}
         </div>
         <div className="rc-ghost-rows">
           {[1,2,3,4,5,6,7].map(i => (
