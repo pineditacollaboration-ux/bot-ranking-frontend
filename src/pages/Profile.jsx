@@ -162,7 +162,7 @@ const Profile = () => {
               <div className="match-card-top">
                 <span className="match-type-badge">{match.gameType ?? 'RANKED'}</span>
                 <span className="match-date">
-                  {new Date(match.createdAt).toLocaleDateString('es', {
+                  {new Date(match.date || match.createdAt || Date.now()).toLocaleDateString('es', {
                     day: '2-digit', month: 'short', year: 'numeric'
                   })}
                 </span>
@@ -172,9 +172,9 @@ const Profile = () => {
                 <div className="match-team left">
                   <span className="match-team-label">EQUIPO 1 {match.winner === 'team1' && <Trophy size={14} color="var(--gold)" style={{ marginLeft: 6 }}/>}</span>
                   {(match.team1 ?? []).map(p => (
-                    <span key={p.discordId} className={`match-team-name ${match.winner === 'team1' ? 'winner' : ''}`}>
+                    <span key={p.id} className={`match-team-name ${match.winner === 'team1' ? 'winner' : ''}`}>
                       {p.username}
-                      {match.mvp === p.discordId && <span className="mvp-tag"><Crown size={14} color="var(--gold)" /></span>}
+                      {match.mvp === p.id && <span className="mvp-tag"><Crown size={14} color="var(--gold)" /></span>}
                     </span>
                   ))}
                 </div>
@@ -184,8 +184,8 @@ const Profile = () => {
                 <div className="match-team right">
                   <span className="match-team-label">{match.winner === 'team2' && <Trophy size={14} color="var(--gold)" style={{ marginRight: 6 }}/>} EQUIPO 2</span>
                   {(match.team2 ?? []).map(p => (
-                    <span key={p.discordId} className={`match-team-name ${match.winner === 'team2' ? 'winner' : ''}`}>
-                      {match.mvp === p.discordId && <span className="mvp-tag"><Crown size={14} color="var(--gold)" /></span>}
+                    <span key={p.id} className={`match-team-name ${match.winner === 'team2' ? 'winner' : ''}`}>
+                      {match.mvp === p.id && <span className="mvp-tag"><Crown size={14} color="var(--gold)" /></span>}
                       {p.username}
                     </span>
                   ))}

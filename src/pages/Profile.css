@@ -12,14 +12,17 @@
 .profile-header-card {
   position: relative;
   border-radius: var(--radius-xl);
-  border: 1px solid var(--bg-border);
+  border: 1px solid rgba(232,0,42,0.15);
   overflow: hidden;
   margin-bottom: 28px;
-  background: var(--bg-card);
+  background: rgba(10, 10, 15, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 0 20px rgba(232,0,42,0.02);
 }
 .profile-header-banner {
   height: 160px;
-  background: linear-gradient(135deg, #06060f 0%, #1a0010 40%, #0c0020 100%);
+  background: linear-gradient(135deg, #0a0005 0%, #1a0010 40%, #060015 100%);
   position: relative;
   overflow: hidden;
 }
@@ -112,31 +115,38 @@
 .profile-stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 3px;
+  gap: 8px; /* Separacion de tarjetas en vez de tabla sólida */
   margin-bottom: 28px;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid var(--bg-border);
 }
 .profile-stat-cell {
-  background: var(--bg-card);
+  background: rgba(10, 10, 15, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
   padding: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  transition: var(--t-mid);
+  transition: all 0.3s ease;
   position: relative;
+  overflow: hidden;
 }
 .profile-stat-cell::before {
   content: '';
   position: absolute;
-  top: 0; left: 20%; right: 20%;
-  height: 1px;
+  top: 0; left: 0; right: 0;
+  height: 2px;
   background: transparent;
   transition: var(--t-mid);
 }
-.profile-stat-cell:hover { background: var(--bg-hover); }
+.profile-stat-cell:hover {
+  background: rgba(232,0,42,0.03);
+  border-color: rgba(232,0,42,0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
 .profile-stat-cell:hover::before { background: var(--crimson); }
 .profile-stat-cell.primary .profile-stat-val { color: var(--crimson-glow); text-shadow: var(--glow-crimson-sm); }
 .profile-stat-val {
@@ -157,8 +167,10 @@
 
 /* ── WIN RATE BAR ── */
 .winrate-section {
-  background: var(--bg-card);
-  border: 1px solid var(--bg-border);
+  background: rgba(10, 10, 15, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-lg);
   padding: 24px 28px;
   margin-bottom: 28px;
@@ -230,18 +242,22 @@
 }
 
 .match-card {
-  background: var(--bg-card);
-  border: 1px solid var(--bg-border);
+  background: rgba(10, 10, 15, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-lg);
   padding: 20px 24px;
   margin-bottom: 12px;
-  transition: var(--t-mid);
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
 }
 .match-card:hover {
-  border-color: rgba(232,0,42,0.2);
-  background: var(--bg-hover);
+  border-color: rgba(232,0,42,0.25);
+  background: rgba(232,0,42,0.02);
+  transform: scale(1.005);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
 }
 .match-card-top {
   display: flex;
