@@ -119,6 +119,12 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 2px;
+  padding-right: 32px;
+  border-right: 1px solid rgba(220, 38, 38, 0.3);
+}
+.hbs-item:last-child {
+  padding-right: 0;
+  border-right: none;
 }
 .hbs-icon {
   color: var(--crimson);
