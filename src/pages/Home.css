@@ -92,9 +92,10 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  mix-blend-mode: lighten; /* Elimina el fondo negro solido fusionándolo con el fondo del sitio */
-  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 50%, transparent 100%);
-  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 50%, transparent 100%);
+  mix-blend-mode: lighten;
+  /* Degradado lineal: transparente arriba (pelo), negro solido en el centro, transparente abajo (pies) */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 80%, transparent 100%);
   filter: drop-shadow(0 0 40px rgba(200, 0, 0, 0.3));
 }
 
